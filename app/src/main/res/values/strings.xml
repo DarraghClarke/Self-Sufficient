@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">COMP41690</string>
+    <string name="shared_preferences">com.acdos.comp41690.preferences</string>
+    <string name="title_activity_setup">SetupActivity</string>
+    <string name="setup">Time to set up...</string>
+    <string name="start_screen">Default start screen...</string>
 </resources>
