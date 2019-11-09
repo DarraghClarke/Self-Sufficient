@@ -1,6 +1,10 @@
 package com.acdos.comp41690;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,15 +15,37 @@ import com.acdos.comp41690.data.WaterTrackingDbHelper;
 
 import java.time.Instant;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends Activity {
 
-public class MainActivity extends AppCompatActivity {
+    SharedPreferences prefs = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        testDb();
+
+        prefs = getSharedPreferences(
+                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstrun", true)) {
+            // Launch set-up view
+            Intent intent = new Intent(this, SetupActivity.class);
+
+            prefs.edit().putBoolean("firstrun", false).apply();
+
+            startActivity(intent);
+        }
+        // Launch dashboard view
+    }
+
+    private void testDb() {
         WaterTrackingDbHelper dbHelper = new WaterTrackingDbHelper(this);
 
         ContentValues values = new ContentValues();
