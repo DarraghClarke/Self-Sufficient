@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
 import com.acdos.comp41690.data.WaterTrackingDbHelper;
+import com.acdos.comp41690.setup.SetupPagerActivity;
 
 import java.time.Instant;
 
@@ -24,7 +25,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testDb();
+        //testDb();
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
@@ -36,7 +37,7 @@ public class MainActivity extends Activity {
 
         if (prefs.getBoolean("firstrun", true)) {
             // Launch set-up view
-            Intent intent = new Intent(this, SetupActivity.class);
+            Intent intent = new Intent(this, SetupPagerActivity.class);
 
             prefs.edit().putBoolean("firstrun", false).apply();
 

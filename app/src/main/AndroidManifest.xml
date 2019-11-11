@@ -12,8 +12,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".SetupActivity"
+            android:name=".setup.SetupActivity"
             android:label="@string/title_activity_setup"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".setup.SetupPagerActivity"
+            android:label="ScreenSlidePagerActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
