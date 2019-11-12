@@ -4,7 +4,7 @@
     <gradient
 
         android:type="linear"
-        android:startColor="@color/colorwater"
-        android:endColor="@color/colorwater2"
+        android:startColor="@color/colorWaterGradientStart"
+        android:endColor="@color/colorWaterGradientEnd"
         android:angle="90" />
 </shape>

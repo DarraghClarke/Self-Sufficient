@@ -3,6 +3,6 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorwater">#008777</color>
-    <color name="colorwater2">#FFFFFF</color>
+    <color name="colorWaterGradientStart">#008777</color>
+    <color name="colorWaterGradientEnd">#FFFFFF</color>
 </resources>
