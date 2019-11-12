@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.acdos.comp41690.R;
-
 import androidx.fragment.app.Fragment;
+
+import com.acdos.comp41690.R;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
