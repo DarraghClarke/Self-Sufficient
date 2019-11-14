@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         Fragment solarFragment = new SolarFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_solar, solarFragment);
+        fragmentTransaction.replace(R.id.nav_home, solarFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
         Fragment rainFragment = new RainFragment();
         FragmentManager rainFragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction rainFragmentTransaction = rainFragmentManager.beginTransaction();
-        rainFragmentTransaction.replace(R.id.nav_rain, rainFragment);
+        rainFragmentTransaction.replace(R.id.nav_home, rainFragment);
         rainFragmentTransaction.addToBackStack(null);
         rainFragmentTransaction.commit();
     }
