@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
 import com.acdos.comp41690.data.WaterTrackingDbHelper;
@@ -16,9 +18,10 @@ import com.acdos.comp41690.setup.SetupPagerActivity;
 
 import java.time.Instant;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     SharedPreferences prefs = null;
+    Button elecButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class MainActivity extends Activity {
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+        elecButton = findViewById(R.id.elec_button);
+        elecButton.setOnClickListener(this);
     }
 
     @Override
@@ -68,5 +73,13 @@ public class MainActivity extends Activity {
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
         }
         c.close();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == elecButton) {
+            Intent i = new Intent(this, ElectricityActivity.class);
+            startActivity(i);
+        }
     }
 }
