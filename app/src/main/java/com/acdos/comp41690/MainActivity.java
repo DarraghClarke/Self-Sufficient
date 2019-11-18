@@ -8,12 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.view.Menu;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
 import com.acdos.comp41690.data.WaterTrackingDbHelper;
 import com.acdos.comp41690.setup.SetupPagerActivity;
@@ -25,12 +24,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import java.time.Instant;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
-    private SharedPreferences prefs = null;
+    SharedPreferences prefs = null;
+    Button elecButton;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -40,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+        elecButton = findViewById(R.id.elec_button);
+        elecButton.setOnClickListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -117,5 +118,13 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
         }
         c.close();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == elecButton) {
+            Intent i = new Intent(this, ElectricityActivity.class);
+            startActivity(i);
+        }
     }
 }
