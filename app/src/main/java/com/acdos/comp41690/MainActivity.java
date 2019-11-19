@@ -8,25 +8,28 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
 import com.acdos.comp41690.data.WaterTrackingDbHelper;
 import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
 import java.time.Instant;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences prefs = null;
     Button elecButton;
@@ -39,8 +42,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        elecButton = findViewById(R.id.elec_button);
-        elecButton.setOnClickListener(this);
+
+//        elecButton = findViewById(R.id.elec_button);
+//        elecButton.setOnClickListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
