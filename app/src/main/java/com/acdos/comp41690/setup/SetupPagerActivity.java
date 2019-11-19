@@ -2,10 +2,8 @@ package com.acdos.comp41690.setup;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import com.acdos.comp41690.R;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -13,9 +11,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.acdos.comp41690.Constants;
+import com.acdos.comp41690.R;
+
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
+ * Based off https://developer.android.com/training/animation/screen-slide
  */
 public class SetupPagerActivity extends FragmentActivity {
     /**
@@ -40,7 +41,7 @@ public class SetupPagerActivity extends FragmentActivity {
         setContentView(R.layout.activity_screen_slide);
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
@@ -58,8 +59,11 @@ public class SetupPagerActivity extends FragmentActivity {
     }
 
     public void onContinueButtonClick(View v) {
-        Toast.makeText(this, "Clicked on Button", Toast.LENGTH_LONG).show();
-        mPager.setCurrentItem(1);
+        moveToNextPage();
+    }
+
+    public void moveToNextPage() {
+        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
     }
 
     /**
@@ -67,16 +71,25 @@ public class SetupPagerActivity extends FragmentActivity {
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+        ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new SplashScreenFragment();
+            switch (position) {
+                case 0:
+                    return new SplashScreenFragment();
+                case 1:
+                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
+                case 2:
+                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
+                case 3:
+                    return new SetupWaterFragment();
+                default:
+                    return new SetupPageFragment();
             }
-            return new SetupPageFragment();
         }
 
         @Override

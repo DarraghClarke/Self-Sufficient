@@ -6,47 +6,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/no_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="66dp"
-        android:layout_marginBottom="119dp"
-        android:text="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/yes_button"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="66dp"
         android:layout_marginBottom="119dp"
-        android:text="Yes"
+        android:text="@string/question_no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/yes_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="66dp"
+        android:layout_marginBottom="119dp"
+        android:text="@string/question_yes"
+        android:onClick="onContinueButtonClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
-        android:id="@+id/own_water_tank"
-        android:layout_width="242dp"
-        android:layout_height="52dp"
+        android:id="@+id/question_text"
+        android:layout_width="232dp"
+        android:layout_height="50dp"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="75dp"
         android:layout_marginBottom="200dp"
-        android:text="Do you already own a Water Tank"
+        android:text="@string/roof_area_question"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skipButton"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/skip_button_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
-        android:id="@+id/watertank_image"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:id="@+id/question_image"
+        android:layout_width="324dp"
+        android:layout_height="369dp"
         android:layout_marginStart="142dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="142dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
