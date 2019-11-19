@@ -9,10 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,7 +33,7 @@ import java.time.Instant;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences prefs = null;
+    SharedPreferences prefs = null;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -64,6 +67,32 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //Controller to tell app which Activity to start
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                //Make sure another instance of the same Activity isn't opened on top of itself
+                if(menuItem.isChecked()) {
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    return false;
+                }
+
+                //Start ElectricityActivity
+                if(id == R.id.nav_solar) {
+                    Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
