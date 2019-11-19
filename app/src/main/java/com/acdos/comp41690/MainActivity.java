@@ -12,7 +12,12 @@ import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
 import com.acdos.comp41690.data.WaterTrackingDbHelper;
@@ -20,11 +25,6 @@ import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.time.Instant;
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             // Launch set-up view
             Intent intent = new Intent(this, SetupPagerActivity.class);
 
-            prefs.edit().putBoolean("firstrun", false).apply();
+     //       prefs.edit().putBoolean("firstrun", false).apply();
 
             startActivity(intent);
         }
