@@ -5,7 +5,7 @@
     android:id="@+id/elec_stats"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".electricity_ui.ElecStatsFragment">
+    tools:context=".ui.solar.ElecStatsFragment">
 
     <TextView
         android:id="@+id/textView2"

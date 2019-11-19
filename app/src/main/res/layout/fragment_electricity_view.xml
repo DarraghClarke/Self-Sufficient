@@ -5,7 +5,7 @@
     android:id="@+id/elec_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".electricity_ui.ElecViewFragment">
+    tools:context=".ui.solar.ElecViewFragment">
 
     <Button
         android:id="@+id/button"

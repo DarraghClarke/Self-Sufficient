@@ -1,4 +1,4 @@
-package com.acdos.comp41690.electricity_ui;
+package com.acdos.comp41690.ui.solar;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

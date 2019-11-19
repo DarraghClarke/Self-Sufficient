@@ -9,11 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,10 +31,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.time.Instant;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     SharedPreferences prefs = null;
-    Button elecButton;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -42,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-
-//        elecButton = findViewById(R.id.elec_button);
-//        elecButton.setOnClickListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +67,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //Controller to tell app which Activity to start
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                //Make sure another instance of the same Activity isn't opened on top of itself
+                if(menuItem.isChecked()) {
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    return false;
+                }
+
+                //Start ElectricityActivity
+                if(id == R.id.nav_solar) {
+                    Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -122,13 +146,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
         }
         c.close();
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == elecButton) {
-            Intent i = new Intent(this, ElectricityActivity.class);
-            startActivity(i);
-        }
     }
 }
