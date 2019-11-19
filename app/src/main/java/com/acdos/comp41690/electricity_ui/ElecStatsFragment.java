@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -40,9 +43,18 @@ public class ElecStatsFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_electricity_stats, container, false);
-        return root;
+            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_solar, container, false);
+        GraphView graph = rootView.findViewById(R.id.elec_stats);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+        graph.addSeries(series);
+        return rootView;
     }
 }
