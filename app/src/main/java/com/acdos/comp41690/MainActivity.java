@@ -22,6 +22,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
+import com.acdos.comp41690.data.SolarTrackingContract.SolarTrackingEntry;
+import com.acdos.comp41690.data.SolarTrackingDbHelper;
 import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
 import com.acdos.comp41690.data.WaterTrackingDbHelper;
 import com.acdos.comp41690.setup.SetupPagerActivity;
@@ -139,6 +142,30 @@ public class MainActivity extends AppCompatActivity {
                 WaterTrackingEntry._ID,
                 WaterTrackingEntry.COLUMN_NAME_TIMESTAMP,
                 WaterTrackingEntry.COLUMN_NAME_VOLUME };
+
+        Cursor c = db.query(WaterTrackingEntry.TABLE_NAME, projection, null, null, null, null, null);
+
+        while(c.moveToNext()) {
+            Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
+        }
+        c.close();
+    }
+
+    public void solarDb() {
+  SolarTrackingDbHelper dbHelper = new SolarTrackingDbHelper(this);
+
+        ContentValues values = new ContentValues();
+        values.put(SolarTrackingEntry.COLUMN_NAME_VOLUME, 53302.33);
+        values.put(SolarTrackingEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.insert(SolarTrackingEntry.TABLE_NAME, null, values);
+
+        String[] projection = {
+                SolarTrackingEntry._ID,
+                SolarTrackingEntry.COLUMN_NAME_TIMESTAMP,
+                SolarTrackingEntry.COLUMN_NAME_VOLUME };
 
         Cursor c = db.query(WaterTrackingEntry.TABLE_NAME, projection, null, null, null, null, null);
 
