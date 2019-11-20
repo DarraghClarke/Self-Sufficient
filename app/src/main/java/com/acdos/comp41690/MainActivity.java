@@ -22,8 +22,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
-import com.acdos.comp41690.data.WaterTrackingDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
+import com.acdos.comp41690.data.WaterUsageDbHelper;
 import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -125,22 +125,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testDb() {
-        WaterTrackingDbHelper dbHelper = new WaterTrackingDbHelper(this);
+        WaterUsageDbHelper dbHelper = new WaterUsageDbHelper(this);
 
         ContentValues values = new ContentValues();
-        values.put(WaterTrackingEntry.COLUMN_NAME_VOLUME, 53302.33);
-        values.put(WaterTrackingEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 53302.33);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        db.insert(WaterTrackingEntry.TABLE_NAME, null, values);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
 
         String[] projection = {
-                WaterTrackingEntry._ID,
-                WaterTrackingEntry.COLUMN_NAME_TIMESTAMP,
-                WaterTrackingEntry.COLUMN_NAME_VOLUME };
+                WaterUsageEntry._ID,
+                WaterUsageEntry.COLUMN_NAME_TIMESTAMP,
+                WaterUsageEntry.COLUMN_NAME_VOLUME };
 
-        Cursor c = db.query(WaterTrackingEntry.TABLE_NAME, projection, null, null, null, null, null);
+        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null,
+                null, null, null, null);
 
         while(c.moveToNext()) {
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
