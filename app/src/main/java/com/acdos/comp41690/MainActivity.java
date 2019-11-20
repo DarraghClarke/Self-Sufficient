@@ -81,9 +81,16 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
 
-                //Start ElectricityActivity
                 if(id == R.id.nav_solar) {
                     Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
+                if(id == R.id.nav_rain) {
+                    Intent i = new Intent(getApplicationContext(), RainActivity.class);
                     assert mAppBarConfiguration.getDrawerLayout() != null;
                     mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
                     startActivity(i);

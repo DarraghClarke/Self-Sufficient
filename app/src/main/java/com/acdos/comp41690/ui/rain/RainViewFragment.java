@@ -1,4 +1,4 @@
-package com.acdos.comp41690.ui.solar;
+package com.acdos.comp41690.ui.rain;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,16 +29,16 @@ import static java.lang.Thread.sleep;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ElecViewFragment extends Fragment {
+public class RainViewFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ImageView imageView;
-    private SolarPageViewModel pageViewModel;
-    private int maxKWh = 5500;
-    private int currKWh = 0;
+    private RainPageViewModel pageViewModel;
+    private int maxLitre = 5500;
+    private int currLitre= 5500;
 
-    public static ElecViewFragment newInstance(int index) {
-        ElecViewFragment fragment = new ElecViewFragment();
+    public static RainViewFragment newInstance(int index) {
+        RainViewFragment fragment = new RainViewFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -48,7 +48,7 @@ public class ElecViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = ViewModelProviders.of(this).get(SolarPageViewModel.class);
+        pageViewModel = ViewModelProviders.of(this).get(RainPageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -60,15 +60,15 @@ public class ElecViewFragment extends Fragment {
     public View onCreateView(
             @NonNull final LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_electricity_view, container, false);
-        Button solar_button = view.findViewById(R.id.solar_button);
+        View view = inflater.inflate(R.layout.fragment_rain_view, container, false);
+        Button solar_button = view.findViewById(R.id.rain_button);
         solar_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 final AlertDialog.Builder addData = new AlertDialog.Builder(getActivity());
-                addData.setTitle("Current: " + currKWh + "kWh");
+                addData.setTitle("Current: " + currLitre + "L");
                 final EditText input = new EditText(getActivity());
                 input.setHint("Enter a new value!");
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -81,8 +81,8 @@ public class ElecViewFragment extends Fragment {
                                 String newValue = input.getText().toString();
                                 int newNumber = Integer.parseInt(newValue);
 
-                                if(newNumber > maxKWh) {
-                                    Toast toast = Toast.makeText(getContext(), "Cannot have more than max kWh (" + maxKWh + ")!", Toast.LENGTH_SHORT);
+                                if(newNumber > maxLitre) {
+                                    Toast toast = Toast.makeText(getContext(), "Cannot have more than max, (" + maxLitre + "L)!", Toast.LENGTH_SHORT);
                                     toast.setGravity(Gravity.BOTTOM, 0, 0);
                                     View viewToast = toast.getView();
                                     viewToast.setBackgroundResource(R.color.colorDarkToast);
@@ -110,31 +110,31 @@ public class ElecViewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        imageView = Objects.requireNonNull(getView()).findViewById(R.id.imageView);
+        imageView = Objects.requireNonNull(getView()).findViewById(R.id.imageView8);
         GradientDrawable shapeDrawable = (GradientDrawable) imageView.getDrawable();
-        shapeDrawable.setSize(100, 70);
+        shapeDrawable.setSize(90, 80);
         imageView.setPadding(0, 0 , 0, 0);
-        runUIThread(currKWh);
+        runUIThread(currLitre);
     }
 
     private void runUIThread(int value) {
-        currKWh = value;
+        currLitre = value;
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 GradientDrawable gradientDrawable = (GradientDrawable) imageView.getDrawable();
-                TextView percent = Objects.requireNonNull(getView()).findViewById(R.id.percent_val_solar);
-                TextView versus =  Objects.requireNonNull(getView()).findViewById(R.id.curr_vs_max_solar);
+                TextView percent = Objects.requireNonNull(getView()).findViewById(R.id.percent_val_rain);
+                TextView versus =  Objects.requireNonNull(getView()).findViewById(R.id.curr_vs_max_rain);
 
-                double ratio = 70.0/maxKWh;
-                int newHeight = (int) (ratio*currKWh);
-                gradientDrawable.setSize(100, newHeight);
-                imageView.setPadding(0, (70-newHeight)*10, 0, 0);
+                double ratio = 80.0/maxLitre;
+                int newHeight = (int) (ratio*currLitre);
+                gradientDrawable.setSize(90, newHeight);
+                imageView.setPadding(0, (80-newHeight)*10, 0, 0);
 
-                int percentage = (int) ((newHeight/70.0)*100);
+                int percentage = (int) ((newHeight/80.0)*100);
                 String percentString = percentage + "%";
                 percent.setText(percentString);
-                String versusString = currKWh + "kWh / " + maxKWh + "kWh";
+                String versusString = currLitre + "L / " + maxLitre + "L";
                 versus.setText(versusString);
             }
         });
