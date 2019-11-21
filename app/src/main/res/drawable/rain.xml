@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:id="@+id/shape"
+    android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="80dp" android:width="90dp"/>
+    <gradient
+        android:type="linear"
+        android:startColor="@color/colorWaterButtFillStart"
+        android:endColor="@color/colorWaterButtFillEnd"
+        android:angle="135"/>
+</shape>
