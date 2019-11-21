@@ -30,13 +30,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/solar_panel_output"
-        android:layout_width="184dp"
+        android:id="@+id/harvestable_roof_area"
+        android:layout_width="252dp"
         android:layout_height="45dp"
         android:layout_marginStart="112dp"
         android:layout_marginTop="136dp"
         android:layout_marginEnd="112dp"
-        android:digits="123456789."
+        android:digits="1234567890."
         android:ems="10"
         android:hint="@string/solar_panel_output_hint"
         android:inputType="numberDecimal"
@@ -46,12 +46,12 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/kwh_rate"
-        android:layout_width="184dp"
+        android:layout_width="252dp"
         android:layout_height="45dp"
         android:layout_marginStart="150dp"
         android:layout_marginTop="224dp"
         android:layout_marginEnd="150dp"
-        android:digits="123456789."
+        android:digits="1234567890."
         android:ems="10"
         android:hint="@string/kw_h_rate_hint"
         android:inputType="numberDecimal"
