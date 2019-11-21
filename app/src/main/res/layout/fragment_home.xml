@@ -35,5 +35,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:color/holo_orange_light"
-        tools:srcCompat="@drawable/ic_menu_solar" />
+        tools:srcCompat="@drawable/elec" />
 </androidx.constraintlayout.widget.ConstraintLayout>
