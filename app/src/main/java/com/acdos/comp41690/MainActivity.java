@@ -165,13 +165,9 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, ElectricityActivity.class);
         startActivity(myIntent);
     }
-//    public void rainTransition(){
-//        Fragment rainFragment = new RainFragment();
-//        FragmentManager rainFragmentManager = getSupportFragmentManager();
-//        FragmentTransaction rainFragmentTransaction = rainFragmentManager.beginTransaction();
-//        rainFragmentTransaction.replace(R.id.nav_home, rainFragment);
-//        rainFragmentTransaction.addToBackStack(null);
-//        rainFragmentTransaction.commit();
-//    }
+    public void rainTransition(View view){
+        Intent myIntent = new Intent(this, RainActivity.class);
+        startActivity(myIntent);
+    }
 
 }
