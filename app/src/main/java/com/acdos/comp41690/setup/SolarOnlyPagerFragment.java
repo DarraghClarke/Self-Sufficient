@@ -14,15 +14,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-/**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/training/animation/screen-slide
- */
-public class SetupPagerActivity extends FragmentActivity {
+public class SolarOnlyPagerFragment extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 2;
+    private int NUM_PAGES=1;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -42,7 +38,7 @@ public class SetupPagerActivity extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new SolarOnlyPagerFragment.ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
 
@@ -67,7 +63,7 @@ public class SetupPagerActivity extends FragmentActivity {
     }
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * A simple pager adapter that represents 6 ScreenSlidePageFragment objects, in
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -80,9 +76,7 @@ public class SetupPagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new SplashScreenFragment();
-                case 1:
-                    return new OnboardingTypeSelectionFragment();
+                    return new SetupSolarFragment();
                 default:
                     return new SetupPageFragment();
             }
@@ -92,5 +86,6 @@ public class SetupPagerActivity extends FragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+
     }
 }

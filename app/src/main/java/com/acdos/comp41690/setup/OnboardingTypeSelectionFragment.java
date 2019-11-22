@@ -1,5 +1,6 @@
 package com.acdos.comp41690.setup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,15 +42,17 @@ public class OnboardingTypeSelectionFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (waterSwitch.isChecked() && solarSwitch.isChecked()){
-                    //both
+                    Intent intent = new Intent(getActivity(), FullPagerFragment.class);
+                    startActivity(intent);
                 } else if(waterSwitch.isChecked()){
-                    //go to water screen only
+                    Intent intent = new Intent(getActivity(), WaterOnlyPagerFragment.class);
+                    startActivity(intent);
                 }else if(solarSwitch.isChecked()){
-                    //go to solar only
+                    Intent intent = new Intent(getActivity(), SolarOnlyPagerFragment.class);
+                    startActivity(intent);
                 }else {
-                    //toast popup
                     Toast.makeText(getActivity(),"Please select at least one option", Toast.LENGTH_SHORT).show();
-                }
+                  }
                 }
 
         });
