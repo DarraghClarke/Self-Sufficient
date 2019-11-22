@@ -22,7 +22,7 @@ public class SetupPagerActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 6;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -67,7 +67,7 @@ public class SetupPagerActivity extends FragmentActivity {
     }
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * A simple pager adapter that represents 6 ScreenSlidePageFragment objects, in
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -82,11 +82,15 @@ public class SetupPagerActivity extends FragmentActivity {
                 case 0:
                     return new SplashScreenFragment();
                 case 1:
-                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
+                    return new OnboardingTypeSelectionFragment();
                 case 2:
-                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
+                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
                 case 3:
+                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
+                case 4:
                     return new SetupWaterFragment();
+                case 5:
+                    return new SetupSolarFragment();
                 default:
                     return new SetupPageFragment();
             }
