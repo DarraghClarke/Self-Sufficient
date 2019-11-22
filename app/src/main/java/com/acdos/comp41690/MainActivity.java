@@ -23,10 +23,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
-import com.acdos.comp41690.data.WaterUsageContract;
-import com.acdos.comp41690.data.WaterUsageDbHelper;
-import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -131,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testDb() {
-        WaterUsageDbHelper dbHelper = new WaterUsageDbHelper(this);
+        UserDataDbHelper dbHelper = new UserDataDbHelper(this);
 
         ContentValues values = new ContentValues();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 53302.33);

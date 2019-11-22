@@ -2,7 +2,6 @@ package com.acdos.comp41690.ui.solar;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,13 +21,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
 import com.acdos.comp41690.data.SolarGenerationContract;
-import com.acdos.comp41690.data.SolarGenerationDbHelper;
 import com.acdos.comp41690.data.SolarUsageContract;
-import com.acdos.comp41690.data.SolarUsageDbHelper;
-import com.acdos.comp41690.data.WaterUsageContract;
-import com.acdos.comp41690.data.WaterUsageDbHelper;
+import com.acdos.comp41690.data.UserDataDbHelper;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -138,8 +133,7 @@ public class ElecStatsFragment extends Fragment {
     }
 
     public DataPoint[] data() {
-        SolarUsageDbHelper solarUsageDbHelper = new SolarUsageDbHelper(getActivity());
-        SolarGenerationDbHelper solarGenerationDbHelper = new SolarGenerationDbHelper(getActivity());
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
         ContentValues value = new ContentValues();
         ContentValues value_gen = new ContentValues();
@@ -159,12 +153,12 @@ public class ElecStatsFragment extends Fragment {
         value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+20);
 
 
-        SQLiteDatabase dbUsage = solarUsageDbHelper.getWritableDatabase();
-        SQLiteDatabase dbGen = solarGenerationDbHelper.getWritableDatabase();
+        SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
 
 
-        dbUsage.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
-        dbGen.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
+        userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
+        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
+
         String[] projectionUsage = {
                 SolarUsageContract.SolarUsageEntry._ID,
                 SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,
@@ -179,15 +173,15 @@ public class ElecStatsFragment extends Fragment {
 
         DataPoint[] values = new DataPoint[10];
 
-        Cursor cGen = dbGen.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
-        Cursor cUsage = dbUsage.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+        Cursor cGen = userDb.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
+        Cursor cUsage = userDb.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
 
         int i=0;
         while (cUsage.moveToNext() && cGen.moveToNext()) {
             Log.d("ElecStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
             Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
 
-            DataPoint v = new DataPoint(cUsage.getLong(3), cGen.getLong(3));
+            DataPoint v = new DataPoint(cUsage.getLong(1), cGen.getLong(1));
             values[i] = v;
             i++;
         }
