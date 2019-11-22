@@ -23,10 +23,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
-import com.acdos.comp41690.data.SolarTrackingContract.SolarTrackingEntry;
-import com.acdos.comp41690.data.SolarTrackingDbHelper;
-import com.acdos.comp41690.data.WaterTrackingContract.WaterTrackingEntry;
-import com.acdos.comp41690.data.WaterTrackingDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
+import com.acdos.comp41690.data.WaterUsageContract;
+import com.acdos.comp41690.data.WaterUsageDbHelper;
 import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+       // testDb();
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
@@ -116,34 +116,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (prefs.getBoolean("firstrun", true)) {
-            // Launch set-up view
-            Intent intent = new Intent(this, SetupPagerActivity.class);
-
-            prefs.edit().putBoolean("firstrun", false).apply();
-
-            startActivity(intent);
-        }
+        // todo: pls uncomment this sinead
+        // todo: ty
+        // todo: ~~oisin~~
+//        if (prefs.getBoolean("firstrun", true)) {
+//            // Launch set-up view
+//            Intent intent = new Intent(this, SetupPagerActivity.class);
+//
+//            prefs.edit().putBoolean("firstrun", false).apply();
+//
+//            startActivity(intent);
+//        }
         // Launch dashboard view
     }
 
     private void testDb() {
-        WaterTrackingDbHelper dbHelper = new WaterTrackingDbHelper(this);
+        WaterUsageDbHelper dbHelper = new WaterUsageDbHelper(this);
 
         ContentValues values = new ContentValues();
-        values.put(WaterTrackingEntry.COLUMN_NAME_VOLUME, 53302.33);
-        values.put(WaterTrackingEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 53302.33);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        db.insert(WaterTrackingEntry.TABLE_NAME, null, values);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
 
         String[] projection = {
-                WaterTrackingEntry._ID,
-                WaterTrackingEntry.COLUMN_NAME_TIMESTAMP,
-                WaterTrackingEntry.COLUMN_NAME_VOLUME };
+                WaterUsageEntry._ID,
+                WaterUsageEntry.COLUMN_NAME_TIMESTAMP,
+                WaterUsageEntry.COLUMN_NAME_VOLUME };
 
-        Cursor c = db.query(WaterTrackingEntry.TABLE_NAME, projection, null, null, null, null, null);
+        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null, null, null, null, null);
 
         while(c.moveToNext()) {
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
@@ -151,27 +154,4 @@ public class MainActivity extends AppCompatActivity {
         c.close();
     }
 
-    public void solarDb() {
-  SolarTrackingDbHelper dbHelper = new SolarTrackingDbHelper(this);
-
-        ContentValues values = new ContentValues();
-        values.put(SolarTrackingEntry.COLUMN_NAME_VOLUME, 53302.33);
-        values.put(SolarTrackingEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        db.insert(SolarTrackingEntry.TABLE_NAME, null, values);
-
-        String[] projection = {
-                SolarTrackingEntry._ID,
-                SolarTrackingEntry.COLUMN_NAME_TIMESTAMP,
-                SolarTrackingEntry.COLUMN_NAME_VOLUME };
-
-        Cursor c = db.query(WaterTrackingEntry.TABLE_NAME, projection, null, null, null, null, null);
-
-        while(c.moveToNext()) {
-            Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
-        }
-        c.close();
-    }
 }

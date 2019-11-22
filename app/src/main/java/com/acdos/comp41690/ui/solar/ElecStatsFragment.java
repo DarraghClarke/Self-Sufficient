@@ -1,26 +1,39 @@
 package com.acdos.comp41690.ui.solar;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
-import com.acdos.comp41690.data.SolarTrackingContract;
-import com.acdos.comp41690.data.SolarTrackingDbHelper;
+import com.acdos.comp41690.data.SolarGenerationContract;
+import com.acdos.comp41690.data.SolarGenerationDbHelper;
+import com.acdos.comp41690.data.SolarUsageContract;
+import com.acdos.comp41690.data.SolarUsageDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract;
+import com.acdos.comp41690.data.WaterUsageDbHelper;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.time.Instant;
+import java.util.Random;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -53,42 +66,136 @@ public class ElecStatsFragment extends Fragment {
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_electricity_stats, container, false);
-        GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
-        // styling series
+        //Button
 
+        Button button = rootView.findViewById(R.id.button);
+        final Random r = new Random();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
+                final AlertDialog.Builder addData = new AlertDialog.Builder(getActivity());
+                addData.setTitle("Add Data");
+                final EditText input = new EditText(getActivity());
+                input.setHint("Enter a new value.");
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                addData.setView(input);
+
+                addData.setPositiveButton("Enter",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newValue = input.getText().toString();
+                                Integer.parseInt(newValue);
+
+                            }
+                        });
+                addData.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                addData.show();
+            }
         });
+
+        //Graph
+        GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
+        LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data());
+
+
+        //usage over time
+        // generated over time
+        //generated over usage
+
         lineGraph.setTitle("Random Line Graph");
         lineGraphSeries.setColor(Color.YELLOW);
         lineGraphSeries.setDrawDataPoints(true);
         lineGraphSeries.setDataPointsRadius(10);
         lineGraphSeries.setThickness(8);
-//        lineGraph.getViewport().setScalable(true);
-        
-        GraphView barGraph = (GraphView) rootView.findViewById(R.id.barGraph);
-        BarGraphSeries<DataPoint> barGraphSeries = new BarGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
 
-        barGraphSeries.setColor(Color.YELLOW);
-        barGraphSeries.setSpacing(50);
-        barGraph.setTitle("Random Bar Graph");
-
-
+//
+//        GraphView barGraph = (GraphView) rootView.findViewById(R.id.barGraph);
+//        BarGraphSeries<DataPoint> barGraphSeries = new BarGraphSeries<DataPoint>(new DataPoint[] {
+//                new DataPoint(0, 1),
+//                new DataPoint(1, 5),
+//                new DataPoint(2, 3),
+//                new DataPoint(3, 2),
+//                new DataPoint(4, 6)
+//        });
+//
+//        barGraphSeries.setColor(Color.YELLOW);
+//        barGraphSeries.setSpacing(50);
+//        barGraph.setTitle("Random Bar Graph");
+//
+//
         lineGraph.addSeries(lineGraphSeries);
-        barGraph.addSeries(barGraphSeries);
+//      barGraph.addSeries(barGraphSeries);
         return rootView;
     }
+
+    public DataPoint[] data() {
+        SolarUsageDbHelper solarUsageDbHelper = new SolarUsageDbHelper(getActivity());
+        SolarGenerationDbHelper solarGenerationDbHelper = new SolarGenerationDbHelper(getActivity());
+
+        ContentValues value = new ContentValues();
+        ContentValues value_gen = new ContentValues();
+        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 10);
+        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 20);
+        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+10);
+        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 30);
+        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+20);
+
+
+        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 15);
+        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 25);
+        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+10);
+        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 35);
+        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+20);
+
+
+        SQLiteDatabase dbUsage = solarUsageDbHelper.getWritableDatabase();
+        SQLiteDatabase dbGen = solarGenerationDbHelper.getWritableDatabase();
+
+
+        dbUsage.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
+        dbGen.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
+        String[] projectionUsage = {
+                SolarUsageContract.SolarUsageEntry._ID,
+                SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,
+                SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE};
+
+        String[] projectionGen = {
+                SolarGenerationContract.SolarGenerationEntry._ID,
+                SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,
+                SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY
+        };
+
+
+        DataPoint[] values = new DataPoint[10];
+
+        Cursor cGen = dbGen.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
+        Cursor cUsage = dbUsage.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+
+        int i=0;
+        while (cUsage.moveToNext() && cGen.moveToNext()) {
+            Log.d("ElecStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
+            Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
+
+            DataPoint v = new DataPoint(cUsage.getLong(3), cGen.getLong(3));
+            values[i] = v;
+            i++;
+        }
+
+        cUsage.close();
+        cGen.close();
+        return values;
+    }
+
+
 }
