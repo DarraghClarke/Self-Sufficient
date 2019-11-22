@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-       // testDb();
+        testDb();
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);

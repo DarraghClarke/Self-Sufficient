@@ -17,7 +17,7 @@ import com.acdos.comp41690.ui.solar.ElecStatsFragment;
 public class SolarUsageDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final String DATABASE_NAME = "info.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + SolarUsageEntry.TABLE_NAME + " (" +
