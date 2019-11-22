@@ -1,4 +1,4 @@
-package com.acdos.comp41690.ui.solar;
+package com.acdos.comp41690.ui.rain;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,14 +13,14 @@ import com.acdos.comp41690.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ElecStatsFragment extends Fragment {
+public class RainStatsFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private SolarPageViewModel pageViewModel;
+    private RainPageViewModel pageViewModel;
 
-    public static ElecStatsFragment newInstance(int index) {
-        ElecStatsFragment fragment = new ElecStatsFragment();
+    public static RainStatsFragment newInstance(int index) {
+        RainStatsFragment fragment = new RainStatsFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -30,7 +30,7 @@ public class ElecStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = ViewModelProviders.of(this).get(SolarPageViewModel.class);
+        pageViewModel = ViewModelProviders.of(this).get(RainPageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);

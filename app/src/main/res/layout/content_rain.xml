@@ -5,21 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_solar">
+    tools:showIn="@layout/app_bar_rain">
 
     <fragment
-        android:id="@+id/nav_host_fragment_solar"
+        android:id="@+id/nav_host_fragment_rain"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navGraph="@navigation/mobile_nav_solar"
+        app:navGraph="@navigation/mobile_nav_rain"
         app:defaultNavHost="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager_solar"
+        android:id="@+id/view_pager_rain"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="24dp"
@@ -32,14 +32,14 @@
     </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs_solar"
+        android:id="@+id/tabs_rain"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager_solar"
+        app:layout_constraintTop_toBottomOf="@+id/view_pager_rain"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
