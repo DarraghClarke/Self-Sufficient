@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/harvestable_roof_area"
+        android:id="@+id/solar_panel_output"
         android:layout_width="252dp"
         android:layout_height="45dp"
         android:layout_marginStart="112dp"

@@ -56,7 +56,7 @@ public class SetupWaterFragment extends Fragment {
             }
         }
         );
-        final EditText harvestableRoofArea= rootView.findViewById(R.id.harvestable_roof_area);
+        final EditText harvestableRoofArea= rootView.findViewById(R.id.solar_panel_output);
         harvestableRoofArea.setText(roof_area.toString());
         harvestableRoofArea.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,14 +90,6 @@ public class SetupWaterFragment extends Fragment {
 
                     tankSize.setText( tankSizeCalculator() + " Litres");//5 weeks of water usage
                 }
-            }
-        });
-
-        //clicking this will skip to the next page in flow
-        final Button skipButton = rootView.findViewById(R.id.skipButton);
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
             }
         });
 

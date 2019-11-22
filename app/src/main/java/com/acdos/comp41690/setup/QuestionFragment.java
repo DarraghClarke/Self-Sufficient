@@ -29,7 +29,6 @@ import java.util.Objects;
 public class QuestionFragment extends Fragment {
     private final String questionType;
     private final int ACTIVITY_RETURN_CODE = 1;
-   // final SharedPreferences prefs =  getActivity().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
 
     QuestionFragment(String questionType) {
         this.questionType = questionType;

@@ -16,19 +16,10 @@ import com.acdos.comp41690.R;
 
 public class WaterOnlyPagerFragment extends FragmentActivity {
     /**
-     * The number of pages (wizard steps) to show in this demo.
+     * The number of pages (wizard steps) in the water setup.
      */
     private int NUM_PAGES=3;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
     private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private PagerAdapter pagerAdapter;
 
     @Override
@@ -62,10 +53,6 @@ public class WaterOnlyPagerFragment extends FragmentActivity {
         mPager.setCurrentItem(mPager.getCurrentItem() + 1);
     }
 
-    /**
-     * A simple pager adapter that represents 6 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
