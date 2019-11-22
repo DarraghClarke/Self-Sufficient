@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +28,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
 import com.acdos.comp41690.data.WaterUsageDbHelper;
 import com.acdos.comp41690.setup.SetupPagerActivity;
+import com.acdos.comp41690.ui.rain.RainFragment;
+import com.acdos.comp41690.ui.solar.ElecViewFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -155,4 +160,14 @@ public class MainActivity extends AppCompatActivity {
         }
         c.close();
     }
+
+    public void solarTransition(View view){
+        Intent myIntent = new Intent(this, ElectricityActivity.class);
+        startActivity(myIntent);
+    }
+    public void rainTransition(View view){
+        Intent myIntent = new Intent(this, RainActivity.class);
+        startActivity(myIntent);
+    }
+
 }
