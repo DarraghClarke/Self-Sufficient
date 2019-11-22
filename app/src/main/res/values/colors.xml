@@ -8,5 +8,8 @@
     <color name="colorSolarPanelFillStart">#E2EC07</color>
     <color name="colorSolarPanelFillEnd">#E6E998</color>
     <color name="colorTabIndicator">#555252</color>
+    <color name="colorDarkToast">#252424</color>
+    <color name="colorWaterButtFillStart">#02507A</color>
+    <color name="colorWaterButtFillEnd">#72B9E0</color>
     <color name="buttonGrey">#CACACA</color>
 </resources>
