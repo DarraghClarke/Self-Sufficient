@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/solar_panel_output"
+        android:id="@+id/harvestable_roof_area"
         android:layout_width="252dp"
         android:layout_height="45dp"
         android:layout_marginStart="112dp"

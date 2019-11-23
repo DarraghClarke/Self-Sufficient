@@ -56,7 +56,7 @@ public class SetupWaterFragment extends Fragment {
             }
         }
         );
-        final EditText harvestableRoofArea= rootView.findViewById(R.id.solar_panel_output);
+        final EditText harvestableRoofArea= rootView.findViewById(R.id.harvestable_roof_area);
         harvestableRoofArea.setText(roof_area.toString());
         harvestableRoofArea.addTextChangedListener(new TextWatcher() {
             @Override
