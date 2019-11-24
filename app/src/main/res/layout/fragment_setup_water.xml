@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/harvestable_roof_area"
+        android:layout_width="252dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="112dp"
+        android:digits="1234567890."
+        android:ems="10"
+        android:hint="@string/harvestable_roof_area_hint"
+
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/water_usage"
+        android:layout_width="252dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginEnd="112dp"
+        android:digits="1234567890."
+        android:ems="10"
+        android:hint="@string/water_usage_hint"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tank_Size"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="32dp"
+        android:text="0 Litres"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="240dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="76dp"
+        android:text="@string/submit_button_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/toggle"
+        android:layout_width="272dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginBottom="75dp"
+        android:background="@drawable/toggle_button_background"
+        android:checkedButton="@+id/fiveWeeks"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/tank_Size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/water_usage">
+
+        <RadioButton
+            android:id="@+id/fivePercent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_button_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/water_rainfall_formula_label"
+            android:textColor="#060707"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/fiveWeeks"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_button_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/water_usage_formula_label"
+            android:textColor="#000000" />
+    </RadioGroup>
+    <!--        android:showText="true"-->
+</androidx.constraintlayout.widget.ConstraintLayout>

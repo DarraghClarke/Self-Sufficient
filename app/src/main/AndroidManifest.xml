@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.acdos.comp41690">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,9 +13,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".setup.SetupPagerActivity"
             android:label="ScreenSlidePagerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.WaterOnlyPagerActivity"
+            android:label="WaterOnlyPagerFragment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.SolarOnlyPagerActivity"
+            android:label="SolarOnlyPagerFragment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.FullPagerActivity"
+            android:label="FullPagerFragment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.MapActivity"
+            android:label="MapActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -24,6 +47,7 @@
         </activity>
         <activity android:name=".ElectricityActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".RainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
-
 </manifest>

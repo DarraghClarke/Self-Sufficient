@@ -11,28 +11,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-/**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/training/animation/screen-slide
- */
-public class SetupPagerActivity extends FragmentActivity {
+public class SolarOnlyPagerActivity extends FragmentActivity {
     /**
-     * The number of pages (wizard steps) to show in this demo.
+     * The number of pages (wizard steps) in the solar setup.
      */
-    private static final int NUM_PAGES = 2;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
+    private int NUM_PAGES=1;
     private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private PagerAdapter pagerAdapter;
 
     @Override
@@ -42,7 +28,7 @@ public class SetupPagerActivity extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new SolarOnlyPagerActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
 
@@ -66,10 +52,6 @@ public class SetupPagerActivity extends FragmentActivity {
         mPager.setCurrentItem(mPager.getCurrentItem() + 1);
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -80,9 +62,7 @@ public class SetupPagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new SplashScreenFragment();
-                case 1:
-                    return new OnboardingTypeSelectionFragment();
+                    return new SetupSolarFragment();
                 default:
                     return new SetupPageFragment();
             }
@@ -92,5 +72,6 @@ public class SetupPagerActivity extends FragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+
     }
 }

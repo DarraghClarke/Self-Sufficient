@@ -38,7 +38,7 @@ public class ElecStatsFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private PageViewModel pageViewModel;
+    private SolarPageViewModel pageViewModel;
 
     public static ElecStatsFragment newInstance(int index) {
         ElecStatsFragment fragment = new ElecStatsFragment();
@@ -51,7 +51,7 @@ public class ElecStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
+        pageViewModel = ViewModelProviders.of(this).get(SolarPageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);

@@ -9,17 +9,21 @@ import androidx.fragment.app.Fragment;
 
 import com.acdos.comp41690.R;
 
+;
+
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
  * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
  */
-public class SplashScreenFragment extends Fragment {
+public class SetupSolarFragment extends Fragment {
+
+    SetupSolarFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_setup, container, false);
+                R.layout.fragment_setup_solar, container, false);
         return rootView;
     }
 }

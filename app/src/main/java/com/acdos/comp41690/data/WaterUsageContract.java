@@ -18,3 +18,4 @@ public final class WaterUsageContract {
         public static final String COLUMN_NAME_TIMESTAMP = "timestamp";
     }
 }
+

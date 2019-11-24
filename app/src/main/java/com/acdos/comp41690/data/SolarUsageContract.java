@@ -17,3 +17,4 @@ public final class SolarUsageContract {
         public static final String COLUMN_NAME_TIMESTAMP = "timestamp";
     }
 }
+
