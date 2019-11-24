@@ -8,6 +8,7 @@ public class WeatherStore {
     public Temperature temperature = new Temperature();
     public Wind wind = new Wind();
     public Rain rain = new Rain();
+    public SunTimes sunTimes = new SunTimes();
 
     public byte[] iconData;
 

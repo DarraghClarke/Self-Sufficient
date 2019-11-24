@@ -13,7 +13,7 @@ public class JSONParser {
 
 
         JSONObject sysObj = getObject("sys", jObj);
-        weather.setSunrise(getInt("sunrise", sysObj));
+        weather.sunTimes.setSunrise(getInt("sunrise", sysObj));
         weather.sunTimes.setSunset(getInt("sunset", sysObj));
 
         JSONArray jArr = jObj.getJSONArray("weather");
