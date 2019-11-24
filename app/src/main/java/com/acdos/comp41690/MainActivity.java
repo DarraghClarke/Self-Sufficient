@@ -25,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
+import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -114,18 +115,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // todo: pls uncomment this sinead
-        // todo: ty
-        // todo: ~~oisin~~
-//        if (prefs.getBoolean("firstrun", true)) {
-//            // Launch set-up view
-//            Intent intent = new Intent(this, SetupPagerActivity.class);
-//
-//            prefs.edit().putBoolean("firstrun", false).apply();
-//
-//            startActivity(intent);
-//        }
-        // Launch dashboard view
+
+        if (prefs.getBoolean("firstrun", true)) {
+            // Launch set-up view
+            Intent intent = new Intent(this, SetupPagerActivity.class);
+
+            prefs.edit().putBoolean("firstrun", false).apply();
+
+            startActivity(intent);
+        }
+//         Launch dashboard view
     }
 
     private void testDb() {
