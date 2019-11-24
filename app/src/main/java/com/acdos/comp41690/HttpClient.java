@@ -11,7 +11,7 @@ public class HttpClient {
 
     private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
     private static String IMG_URL = "http://openweathermap.org/img/w/";
-    private static String APPID = "{e0af00f6b30b672fbc3058d39d79c3ee}";
+    private static String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
     public String getWeatherData(String location) {
         HttpURLConnection connection = null ;
         InputStream is = null;
@@ -33,6 +33,7 @@ public class HttpClient {
 
             is.close();
             connection.disconnect();
+            System.out.println(buffer.toString());
             return buffer.toString();
         }
         catch(Throwable t) {

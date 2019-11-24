@@ -18,7 +18,6 @@ public class JSONParser {
 
         JSONArray jArr = jObj.getJSONArray("weather");
 
-        // We use only the first value
         JSONObject JSONWeather = jArr.getJSONObject(0);
         weather.currentCondition.setWeatherId(getInt("id", JSONWeather));
         weather.currentCondition.setDescr(getString("description", JSONWeather));
