@@ -23,6 +23,18 @@
             android:label="ScreenSlidePagerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".setup.WaterOnlyPagerActivity"
+            android:label="WaterOnlyPagerFragment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.SolarOnlyPagerActivity"
+            android:label="SolarOnlyPagerFragment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.FullPagerActivity"
+            android:label="FullPagerFragment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".setup.MapActivity"
             android:label="MapActivity"
             android:theme="@style/AppTheme.NoActionBar" />

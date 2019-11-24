@@ -18,6 +18,7 @@
     <string name="setup_message">Since this is your first time, let\'s get set up!</string>
     <string name="continue_button_label">Continue</string>
     <string name="roof_area_question">Do you know your harvestable roof area?</string>
+    <string name="onboarding_question">Select which features you wish to set up</string>
     <string name="own_water_tank_question">Do you already own a water tank?</string>
     <string name="question_no">No</string>
     <string name="question_yes">Yes</string>
@@ -26,10 +27,14 @@
     <string name="skip_button_label">skip</string>
     <string name="submit_button_label">Submit</string>
     <string name="harvestable_roof_area_hint">Harvestable roof area</string>
-    <string name="garden_area_hint">Garden area</string>
+    <string name="water_usage_hint">Weekly water usage in litres</string>
+    <string name="water_rainfall_formula_label">5% of annual rainfall</string>
+    <string name="water_usage_formula_label">5 weeks water usage</string>
     <string-array name="unit_types">
         <item>Litres</item>
         <item>Cubic metres</item>
         <item>Gallons</item>
     </string-array>
+
+    <string name="roof_area">0</string>
 </resources>
