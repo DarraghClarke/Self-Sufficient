@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -98,71 +99,132 @@ public class ElecStatsFragment extends Fragment {
         });
 
         //Graph
-        GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
-        LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data());
-
 
         //usage over time
-        // generated over time
-        //generated over usage
+        GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
+        DataPoint[] data = usageTimeData();
 
-        lineGraph.setTitle("Random Line Graph");
-        lineGraphSeries.setColor(Color.YELLOW);
+
+        LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
+
+        lineGraph.setTitle("Electricty Usage Over Time");
+        lineGraphSeries.setColor(Color.RED);
         lineGraphSeries.setDrawDataPoints(true);
         lineGraphSeries.setDataPointsRadius(10);
         lineGraphSeries.setThickness(8);
 
+//        // generated over time
+        GraphView lineGraphGenerated = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
+        DataPoint[] dataGenerated = generatedTimeData();
+
+
+        LineGraphSeries<DataPoint> lineGraphSeriesGenerated = new LineGraphSeries<DataPoint>(dataGenerated);
+
+
+        lineGraphGenerated.setTitle("Generated Electricty Usage Over Time");
+        lineGraphSeriesGenerated.setColor(Color.RED);
+        lineGraphSeriesGenerated.setDrawDataPoints(true);
+        lineGraphSeriesGenerated.setDataPointsRadius(10);
+        lineGraphSeriesGenerated.setThickness(8);
+
+
+
+        //generated over usage
+        GraphView lineGraphGenUse = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
+        DataPoint[] dataGenUse = genUseTimeData();
+
+
+        LineGraphSeries<DataPoint> lineGraphSeriesGenUse = new LineGraphSeries<DataPoint>(dataGenUse);
 //
-//        GraphView barGraph = (GraphView) rootView.findViewById(R.id.barGraph);
-//        BarGraphSeries<DataPoint> barGraphSeries = new BarGraphSeries<DataPoint>(new DataPoint[] {
-//                new DataPoint(0, 1),
-//                new DataPoint(1, 5),
-//                new DataPoint(2, 3),
-//                new DataPoint(3, 2),
-//                new DataPoint(4, 6)
-//        });
 //
-//        barGraphSeries.setColor(Color.YELLOW);
-//        barGraphSeries.setSpacing(50);
-//        barGraph.setTitle("Random Bar Graph");
-//
-//
+//        lineGraphGenUse.setTitle("Generated Electricty Usage Over Time");
+//        lineGraphSeriesGenUse.setColor(Color.RED);
+//        lineGraphSeriesGenUse.setDrawDataPoints(true);
+//        lineGraphSeriesGenUse.setDataPointsRadius(10);
+//        lineGraphSeriesGenUse.setThickness(8);
+
+
         lineGraph.addSeries(lineGraphSeries);
-//      barGraph.addSeries(barGraphSeries);
+        lineGraphGenerated.addSeries(lineGraphSeriesGenerated);
+        lineGraphGenUse.addSeries(lineGraphSeriesGenUse);
         return rootView;
     }
 
-    public DataPoint[] data() {
+    public DataPoint[] usageTimeData() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
         ContentValues value = new ContentValues();
-        ContentValues value_gen = new ContentValues();
-        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 10);
-        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
-        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 20);
-        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+10);
-        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 30);
-        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+20);
-
-
-        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 15);
-        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
-        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 25);
-        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+10);
-        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 35);
-        value_gen.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond()+20);
-
-
+//        ContentValues value_gen = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
+        //test data
+        // TODO: change to get data from the user
+//        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 10);
+//        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 10);
+//        userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
+//
+//        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 20);
+//        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 20);
+//        userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
+//
+//        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 30);
+//        value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 30);
+//        userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
+
 
 
         userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
-        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
 
         String[] projectionUsage = {
                 SolarUsageContract.SolarUsageEntry._ID,
                 SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,
                 SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE};
+
+
+        int count = (int) DatabaseUtils.queryNumEntries(userDb, SolarUsageContract.SolarUsageEntry.TABLE_NAME);
+//      System.out.println("Count =" + count);
+        DataPoint[] values = new DataPoint[count];
+
+        Cursor cUsage = userDb.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+
+        int i=0;
+        while (cUsage.moveToNext()) {
+            Log.d("ElecStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
+//            Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
+            DataPoint v = new DataPoint(cUsage.getLong(1), cUsage.getLong(2));
+            values[i] = v;
+            i++;
+        }
+
+
+        cUsage.close();
+        return values;
+    }
+
+
+    public DataPoint[] generatedTimeData() {
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
+
+        ContentValues value = new ContentValues();
+        SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
+
+        //test data
+        // TODO: change to get data from the user
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 15);
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 10);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 25);
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 20);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 35);
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 30);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//
+
+
+        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
 
         String[] projectionGen = {
                 SolarGenerationContract.SolarGenerationEntry._ID,
@@ -170,21 +232,96 @@ public class ElecStatsFragment extends Fragment {
                 SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY
         };
 
+        int count = (int) DatabaseUtils.queryNumEntries(userDb, SolarUsageContract.SolarUsageEntry.TABLE_NAME);
 
-        DataPoint[] values = new DataPoint[10];
+        DataPoint[] values = new DataPoint[count];
 
         Cursor cGen = userDb.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
-        Cursor cUsage = userDb.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
 
         int i=0;
-        while (cUsage.moveToNext() && cGen.moveToNext()) {
-            Log.d("ElecStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
+        while (cGen.moveToNext()) {
             Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
-
-            DataPoint v = new DataPoint(cUsage.getLong(1), cGen.getLong(1));
+            DataPoint v = new DataPoint(cGen.getLong(1), cGen.getLong(2));
             values[i] = v;
             i++;
         }
+
+
+
+        cGen.close();
+        return values;
+    }
+
+    public DataPoint[] genUseTimeData() {
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
+        ContentValues value = new ContentValues();
+        SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
+
+        //test data
+        // TODO: change to get data from the user
+//
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 15);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 25);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//        value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 35);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+
+
+
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
+
+        String[] projectionGen = {
+                SolarGenerationContract.SolarGenerationEntry._ID,
+                SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,
+                SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY
+        };
+
+        UserDataDbHelper userDataDbHelperUsage = new UserDataDbHelper(getActivity());
+
+        ContentValues valueUsage = new ContentValues();
+        SQLiteDatabase userDbUsage = userDataDbHelperUsage.getWritableDatabase();
+
+        Cursor cGen = userDb.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
+
+//        valueUsage.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 10);
+//        userDbUsage.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, valueUsage);
+//
+//        valueUsage.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 20);
+//
+//        userDbUsage.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, valueUsage);
+//
+//        valueUsage.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 30);
+//        userDbUsage.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, valueUsage);
+
+
+
+//        userDbUsage.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, valueUsage);
+//        userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value_gen);
+
+        String[] projectionUsage = {
+                SolarUsageContract.SolarUsageEntry._ID,
+                SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,
+                SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE};
+
+
+
+//      System.out.println("Count =" + count);
+        int count = (int) DatabaseUtils.queryNumEntries(userDb, SolarUsageContract.SolarUsageEntry.TABLE_NAME);
+
+        DataPoint[] values = new DataPoint[count];
+
+        Cursor cUsage = userDb.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+        int i=0;
+        while (cGen.moveToNext() && cUsage.moveToNext()) {
+            DataPoint v = new DataPoint(cUsage.getLong(2), cGen.getLong(2));
+
+            values[i] = v;
+            i++;
+        }
+
+
 
         cUsage.close();
         cGen.close();
