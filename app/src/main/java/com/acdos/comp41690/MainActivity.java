@@ -25,8 +25,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
+
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
+
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
 import com.acdos.comp41690.data.WaterUsageDbHelper;
+
 import com.acdos.comp41690.setup.SetupPagerActivity;
 import com.acdos.comp41690.ui.rain.RainFragment;
 import com.acdos.comp41690.ui.solar.ElecViewFragment;
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        testDb();
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
@@ -125,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+
         if (prefs.getBoolean("firstrun", true)) {
             // Launch set-up view
             Intent intent = new Intent(this, SetupPagerActivity.class);
@@ -133,11 +141,15 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(intent);
         }
-        // Launch dashboard view
+//         Launch dashboard view
     }
 
     private void testDb() {
+
+        UserDataDbHelper dbHelper = new UserDataDbHelper(this);
+
         WaterUsageDbHelper dbHelper = new WaterUsageDbHelper(this);
+
 
         ContentValues values = new ContentValues();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 53302.33);
@@ -152,14 +164,20 @@ public class MainActivity extends AppCompatActivity {
                 WaterUsageEntry.COLUMN_NAME_TIMESTAMP,
                 WaterUsageEntry.COLUMN_NAME_VOLUME };
 
+
+        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null, null, null, null, null);
+
         Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null,
                 null, null, null, null);
+
 
         while(c.moveToNext()) {
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
         }
         c.close();
     }
+
+
 
     public void solarTransition(View view){
         Intent myIntent = new Intent(this, ElectricityActivity.class);
@@ -169,5 +187,6 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, RainActivity.class);
         startActivity(myIntent);
     }
+
 
 }
