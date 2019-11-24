@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
         UserDataDbHelper dbHelper = new UserDataDbHelper(this);
 
-        WaterUsageDbHelper dbHelper = new WaterUsageDbHelper(this);
+
 
 
         ContentValues values = new ContentValues();
@@ -167,8 +167,6 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null, null, null, null, null);
 
-        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null,
-                null, null, null, null);
 
 
         while(c.moveToNext()) {
