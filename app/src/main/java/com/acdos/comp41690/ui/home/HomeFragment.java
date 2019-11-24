@@ -51,16 +51,11 @@ public class HomeFragment extends Fragment {
     private ImageView imgView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        String city = "London,UK";
 
-        JSONWeatherTask task = new JSONWeatherTask();
-        task.execute(new String[]{city});
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -72,6 +67,11 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        String city = "London,UK";
+        temp = root.findViewById(R.id.temp);
+
+        JSONWeatherTask task = new JSONWeatherTask();
+        task.execute(new String[]{city});
         return root;
     }
 
