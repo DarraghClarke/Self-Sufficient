@@ -11,10 +11,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-public class SolarOnlyPagerFragment extends FragmentActivity {
+public class SolarOnlyPagerActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) in the solar setup.
      */
@@ -29,7 +28,7 @@ public class SolarOnlyPagerFragment extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager);
-        pagerAdapter = new SolarOnlyPagerFragment.ScreenSlidePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new SolarOnlyPagerActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
 

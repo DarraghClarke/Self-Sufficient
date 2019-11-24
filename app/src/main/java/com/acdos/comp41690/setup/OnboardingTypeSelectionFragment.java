@@ -42,13 +42,13 @@ public class OnboardingTypeSelectionFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (waterSwitch.isChecked() && solarSwitch.isChecked()){
-                    Intent intent = new Intent(getActivity(), FullPagerFragment.class);
+                    Intent intent = new Intent(getActivity(), FullPagerActivity.class);
                     startActivity(intent);
                 } else if(waterSwitch.isChecked()){
-                    Intent intent = new Intent(getActivity(), WaterOnlyPagerFragment.class);
+                    Intent intent = new Intent(getActivity(), WaterOnlyPagerActivity.class);
                     startActivity(intent);
                 }else if(solarSwitch.isChecked()){
-                    Intent intent = new Intent(getActivity(), SolarOnlyPagerFragment.class);
+                    Intent intent = new Intent(getActivity(), SolarOnlyPagerActivity.class);
                     startActivity(intent);
                 }else {
                     Toast.makeText(getActivity(),"Please select at least one option", Toast.LENGTH_SHORT).show();

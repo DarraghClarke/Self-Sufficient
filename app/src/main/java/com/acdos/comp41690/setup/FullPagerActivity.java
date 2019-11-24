@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-public class FullPagerFragment extends FragmentActivity {
+public class FullPagerActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) in the full setup process.
      */
@@ -29,7 +29,7 @@ public class FullPagerFragment extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager);
-        pagerAdapter = new FullPagerFragment.ScreenSlidePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new FullPagerActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
 

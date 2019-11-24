@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-public class WaterOnlyPagerFragment extends FragmentActivity {
+public class WaterOnlyPagerActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) in the water setup.
      */
@@ -29,7 +29,7 @@ public class WaterOnlyPagerFragment extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager);
-        pagerAdapter = new WaterOnlyPagerFragment.ScreenSlidePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new WaterOnlyPagerActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
 
