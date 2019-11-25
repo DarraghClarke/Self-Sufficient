@@ -152,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
                 WaterUsageEntry.COLUMN_NAME_VOLUME};
 
 
-        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null,
-                null, null, null, null);
 
 
         while (c.moveToNext()) {
