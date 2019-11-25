@@ -37,4 +37,10 @@
     </string-array>
 
     <string name="roof_area">0</string>
+    <string name="dialog_enter_output">Enter Output</string>
+    <string name="dialog_enter_usage">Enter Usage</string>
+    <string name="dialog_input_data">Input</string>
+    <string name="dialog_title">Solar Input</string>
+    <string name="dialog_positive_button">Enter</string>
+    <string name="dialog_negative_button">Cancel</string>
 </resources>
