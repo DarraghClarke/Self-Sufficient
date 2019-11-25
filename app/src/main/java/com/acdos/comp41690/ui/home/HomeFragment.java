@@ -87,22 +87,24 @@ public class HomeFragment extends Fragment {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+APPID,
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+"&APPID="+APPID,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            returnMyString(response.toString());                            // Display the first 500 characters of the response string.
+                            System.out.println("THE CODE WORKS");
+                            returnMyString(response);
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("ERROR");
+                    System.out.println(error);
                 }
             });
 
 
 // Add the request to the RequestQueue.
             queue.add(stringRequest);
+            System.out.println(data);
             return data;
         }
         private void returnMyString(String respond){
