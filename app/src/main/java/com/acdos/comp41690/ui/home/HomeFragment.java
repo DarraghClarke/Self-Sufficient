@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
 
         private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
-        private   String data;
+        public   String data="";
         @Override
         protected WeatherStore doInBackground(String... params) {
             WeatherStore weather = new WeatherStore();
@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            System.out.println("THE CODE WORKS");
+
                             returnMyString(response);
                         }
                     }, new Response.ErrorListener() {
@@ -104,11 +104,13 @@ public class HomeFragment extends Fragment {
 
 // Add the request to the RequestQueue.
             queue.add(stringRequest);
-            System.out.println(data);
+
             return data;
         }
         private void returnMyString(String respond){
+            System.out.println("THE response IS "+respond);
             data = respond;
+            System.out.println("THE DATA IS "+data);
         }
 
         protected void onPostExecute(WeatherStore weather) {
