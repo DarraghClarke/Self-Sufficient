@@ -22,6 +22,13 @@ import android.graphics.BitmapFactory;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
@@ -52,20 +59,23 @@ public class HomeFragment extends Fragment {
 
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city});
+
         return root;
     }
 
     private class JSONWeatherTask extends AsyncTask<String, Void, WeatherStore> {
 
+        private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
+        private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
+        private   String data;
         @Override
         protected WeatherStore doInBackground(String... params) {
             WeatherStore weather = new WeatherStore();
-            String data = ((new HttpClient()).getWeatherData(params[0]));
+            String data = getWeatherData(params[0]);
             try {
                 weather = JSONParser.getWeather(data);
 
                 // Let's retrieve the icon
-                weather.iconData = ((new HttpClient()).getImage(weather.currentCondition.getIcon()));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -73,7 +83,31 @@ public class HomeFragment extends Fragment {
             return weather;
 
         }
+        public String getWeatherData(String location) {
 
+            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+APPID,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            returnMyString(response.toString());                            // Display the first 500 characters of the response string.
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("ERROR");
+                }
+            });
+
+
+// Add the request to the RequestQueue.
+            queue.add(stringRequest);
+            return data;
+        }
+        private void returnMyString(String respond){
+            data = respond;
+        }
 
         protected void onPostExecute(WeatherStore weather) {
             super.onPostExecute(weather);
