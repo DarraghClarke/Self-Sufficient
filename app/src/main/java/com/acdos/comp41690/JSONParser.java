@@ -19,10 +19,8 @@ public class JSONParser {
         JSONArray jArr = jObj.getJSONArray("weather");
 
         JSONObject JSONWeather = jArr.getJSONObject(0);
-        weather.currentCondition.setWeatherId(getInt("id", JSONWeather));
         weather.currentCondition.setDescr(getString("description", JSONWeather));
-        weather.currentCondition.setCondition(getString("main", JSONWeather));
-        weather.currentCondition.setIcon(getString("icon", JSONWeather));
+
 
         JSONObject mainObj = getObject("main", jObj);
         weather.currentCondition.setHumidity(getInt("humidity", mainObj));
@@ -34,7 +32,6 @@ public class JSONParser {
         // Wind
         JSONObject wObj = getObject("wind", jObj);
         weather.wind.setSpeed(getFloat("speed", wObj));
-        weather.wind.setDeg(getFloat("deg", wObj));
 
 
 

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,13 +11,9 @@ import androidx.fragment.app.Fragment;
 import org.json.JSONException;
 
 
-import com.acdos.comp41690.HttpClient;
 import com.acdos.comp41690.JSONParser;
 import com.acdos.comp41690.WeatherStore;
 
-import android.os.AsyncTask;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
@@ -29,19 +24,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Date;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
-    private TextView cityText;
+    private TextView sunrise;
     private TextView condDescr;
     private TextView temp;
     private TextView press;
     private TextView windSpeed;
-    private TextView windDeg;
-
+    private TextView sunset;
+    private TextView minTemp;
+    private TextView maxTemp;
     private TextView hum;
-    private ImageView imgView;
 
     @Override
 
@@ -55,9 +52,20 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         String city = "London,UK";
+        windSpeed = root.findViewById(R.id.wind);
         temp = root.findViewById(R.id.temp);
+        hum = root.findViewById(R.id.humidity);
+        press = root.findViewById(R.id.pressure);
+        sunset = root.findViewById(R.id.sunset);
+        sunrise = root.findViewById(R.id.sunrise);
+        condDescr = root.findViewById(R.id.weather_status);
+        minTemp = root.findViewById(R.id.temp_min);
+        maxTemp = root.findViewById(R.id.temp_max);
 
-       //  JSONWeatherTask test =new JSONWeatherTask();
+
+
+
+        //  JSONWeatherTask test =new JSONWeatherTask();
 
 
         String result = getWeatherData(city);
@@ -129,21 +137,21 @@ public class HomeFragment extends Fragment {
         protected void setWeather(WeatherStore weather) {
 
 
-            if (weather.iconData != null && weather.iconData.length > 0) {
-                Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
-                imgView.setImageBitmap(img);
-            }
 
 
+            Date date = new java.util.Date((long)weather.sunTimes.getSunset()*1000L);
             temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
 
+            sunset.setText(""+date);
+            date = new java.util.Date((long)weather.sunTimes.getSunrise()*1000L);
+            sunrise.setText(""+date);
 
-
-//            windDeg.setText("" + weather.wind.getDeg() + "");
-//            condDescr.setText(weather.currentCondition.getCondition() + "("
-//                    + weather.currentCondition.getDescr() + ")");
-//            hum.setText("" + weather.currentCondition.getHumidity() + "%");
-//            press.setText("" + weather.currentCondition.getPressure() + " hPa");
-//            windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+            minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"C");
+            maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"C");
+            condDescr.setText(weather.currentCondition.getCondition() + "("
+                   + weather.currentCondition.getDescr() + ")");
+            hum.setText("" + weather.currentCondition.getHumidity() + "%");
+            press.setText("" + weather.currentCondition.getPressure() + " hPa");
+           windSpeed.setText("" + weather.wind.getSpeed() + " mps");
         }
     }
