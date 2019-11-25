@@ -25,8 +25,6 @@ xmlns:tools="http://schemas.android.com/tools"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="232dp"
             android:layout_marginBottom="0dp"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false"
             android:onClick="rainTransition"
             app:srcCompat="@drawable/raindrop9" />
 
@@ -34,13 +32,18 @@ xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/imageView3"
             android:layout_width="180dp"
             android:layout_height="280dp"
+            android:layout_alignStart="@+id/imageView2"
+            android:layout_alignTop="@+id/imageView2"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|start"
-            android:layout_marginEnd="-1dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="231dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
             android:onClick="solarTransition"
-            tools:srcCompat="@drawable/elec" />
+            app:srcCompat="@drawable/elec" />
 
         <LinearLayout
             android:id="@+id/topContainer"

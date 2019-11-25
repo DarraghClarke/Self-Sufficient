@@ -57,26 +57,35 @@ public class HomeFragment extends Fragment {
         String city = "London,UK";
         temp = root.findViewById(R.id.temp);
 
-        JSONWeatherTask task = new JSONWeatherTask();
-        task.execute(new String[]{city});
+       //  JSONWeatherTask test =new JSONWeatherTask();
+
+
+        String result = getWeatherData(city);
+
+        System.out.println("anseo"+ result);
+
+
+//        task.execute(new String[]{city});
+
+
 
         return root;
     }
 
-    private class JSONWeatherTask extends AsyncTask<String, Void, WeatherStore> {
+
 
         private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
         public   String data="";
-        @Override
-        protected WeatherStore doInBackground(String... params) {
+
+        protected WeatherStore getWeatherStore(String data) {
             WeatherStore weather = new WeatherStore();
-            String data = getWeatherData(params[0]);
+
             try {
                 weather = JSONParser.getWeather(data);
 
                 // Let's retrieve the icon
-
+                System.out.println();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -91,16 +100,20 @@ public class HomeFragment extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            // Display the first 500 characters of the response string.
+                            System.out.println("Response is: "+ response.substring(0,400));
+                            //returnMyString(response);
+                            WeatherStore a = getWeatherStore(response);
 
-                            returnMyString(response);
+                            setWeather(a);
+
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println(error);
+                    System.out.println("That didn't work!");
                 }
             });
-
 
 // Add the request to the RequestQueue.
             queue.add(stringRequest);
@@ -109,25 +122,28 @@ public class HomeFragment extends Fragment {
         }
         private void returnMyString(String respond){
             System.out.println("THE response IS "+respond);
-            data = respond;
+            //data = respond;
             System.out.println("THE DATA IS "+data);
         }
 
-        protected void onPostExecute(WeatherStore weather) {
-            super.onPostExecute(weather);
+        protected void setWeather(WeatherStore weather) {
+
 
             if (weather.iconData != null && weather.iconData.length > 0) {
                 Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
                 imgView.setImageBitmap(img);
             }
 
-            condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-            temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");
-            hum.setText("" + weather.currentCondition.getHumidity() + "%");
-            press.setText("" + weather.currentCondition.getPressure() + " hPa");
-            windSpeed.setText("" + weather.wind.getSpeed() + " mps");
-            windDeg.setText("" + weather.wind.getDeg() + "�");
 
+            temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
+
+
+
+//            windDeg.setText("" + weather.wind.getDeg() + "");
+//            condDescr.setText(weather.currentCondition.getCondition() + "("
+//                    + weather.currentCondition.getDescr() + ")");
+//            hum.setText("" + weather.currentCondition.getHumidity() + "%");
+//            press.setText("" + weather.currentCondition.getPressure() + " hPa");
+//            windSpeed.setText("" + weather.wind.getSpeed() + " mps");
         }
     }
-}
