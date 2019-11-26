@@ -9,14 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
-import com.acdos.comp41690.ui.rain.RainFragment;
-import com.acdos.comp41690.ui.solar.ElecViewFragment;
 
 public class HomeFragment extends Fragment {
 

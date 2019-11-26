@@ -74,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
                     startActivity(i);
                     return true;
                 }
+
                 if(id == R.id.nav_solar) {
                     Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
                     assert mAppBarConfiguration.getDrawerLayout() != null;
