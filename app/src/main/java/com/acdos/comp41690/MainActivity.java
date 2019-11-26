@@ -17,25 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-
-
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
-
-import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
-import com.acdos.comp41690.data.WaterUsageDbHelper;
-
 import com.acdos.comp41690.setup.SetupPagerActivity;
-import com.acdos.comp41690.ui.rain.RainFragment;
-import com.acdos.comp41690.ui.solar.ElecViewFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -103,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if(id == R.id.nav_rain) {
                     Intent i = new Intent(getApplicationContext(), RainActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
+                if(id == R.id.nav_settings) {
+                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
                     assert mAppBarConfiguration.getDrawerLayout() != null;
                     mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
                     startActivity(i);
