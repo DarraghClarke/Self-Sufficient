@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     private TextView minTemp;
     private TextView maxTemp;
     private TextView hum;
+    private TextView alerts;
 
     @Override
 
@@ -51,7 +52,6 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        String city = "London,UK";
         windSpeed = root.findViewById(R.id.wind);
         temp = root.findViewById(R.id.temp);
         hum = root.findViewById(R.id.humidity);
@@ -60,9 +60,9 @@ public class HomeFragment extends Fragment {
         sunrise = root.findViewById(R.id.sunrise);
         condDescr = root.findViewById(R.id.weather_status);
         minTemp = root.findViewById(R.id.temp_min);
+        alerts = root.findViewById(R.id.alert);
+
         maxTemp = root.findViewById(R.id.temp_max);
-        String result = getWeatherData(city);
-        String ting = getAlertData(city);
 
         return root;
     }
@@ -72,17 +72,15 @@ public class HomeFragment extends Fragment {
         private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
         public   String data="";
-
+        private WeatherStore weather = new WeatherStore();
         private String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts&app_id=SCLblvFIwikj6SHdpwab&app_code=TvzcBTnBKM-Sh_wH-pqX3w";
 
         private WeatherStore getWeatherStore(String data) {
-            WeatherStore weather = new WeatherStore();
+
 
             try {
                 weather = WeatherJSONParser.getWeather(data);
 
-                // Let's retrieve the icon
-                System.out.println();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -102,10 +100,13 @@ public class HomeFragment extends Fragment {
                             try {
                                 JSONObject jObj = new JSONObject(response);
                                 JSONArray alerts = jObj.getJSONObject("alerts").getJSONArray("alerts");
+                                JSONObject ob =alerts.getJSONObject(0);
 
+                                weather.alerts.setAlerts(ob.getString("description"));
                                 if(alerts == null || alerts.length() == 0){
                                     return;
                                 }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -133,9 +134,6 @@ public class HomeFragment extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            // Display the first 500 characters of the response string.
-                            System.out.println("Response is: "+ response.substring(0,400));
-                            //returnMyString(response);
                             WeatherStore a = getWeatherStore(response);
 
                             setWeather(a);

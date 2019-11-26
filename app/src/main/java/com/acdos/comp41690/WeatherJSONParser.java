@@ -35,16 +35,6 @@ public class WeatherJSONParser {
         return weather;
     }
 
-//    public static WeatherStore getWeather(String data) throws JSONException {
-//        WeatherStore weather = new WeatherStore();
-//
-//        JSONObject jObj = new JSONObject(data);
-//
-//
-//        JSONObject sysObj = getObject("alerts", jObj);
-//        weather.alerts.setAlerts(get);
-//    }
-
     private static JSONObject getObject(String tagName, JSONObject jObj)  throws JSONException {
         JSONObject subObj = jObj.getJSONObject(tagName);
         return subObj;
