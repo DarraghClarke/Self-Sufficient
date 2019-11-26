@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
+import com.acdos.comp41690.MainActivity;
 import com.acdos.comp41690.R;
 
 public class SetupConfirmFragment extends Fragment {
@@ -33,7 +34,7 @@ public class SetupConfirmFragment extends Fragment {
 
                 //launch app proper
                 prefs.edit().putBoolean("firstrun", false).apply();
-                Intent intent = new Intent(getContext(), InitialSetupActivity.class);
+                Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }
         });

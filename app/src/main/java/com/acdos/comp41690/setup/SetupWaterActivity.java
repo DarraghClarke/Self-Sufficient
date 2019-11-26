@@ -14,13 +14,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import com.acdos.comp41690.R;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
  * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
  */
-public class SetupWaterFragment extends Fragment {
+public class SetupWaterActivity extends FragmentActivity {
     final double drainageCoeffient=0.8;
     final double filterEfficiency=0.95;
     RadioButton fivePercentButton;
@@ -28,25 +32,27 @@ public class SetupWaterFragment extends Fragment {
     RadioGroup formulaSelector;
     float roofArea;
     float usage;
-    SetupWaterFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_setup_water, container, false);
-        fivePercentButton = rootView.findViewById(R.id.fivePercent);
-        fiveWeeksButton = rootView.findViewById(R.id.fiveWeeks);
-
-        formulaSelector = rootView.findViewById(R.id.toggle);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_setup_water);
 
 
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+
+        fivePercentButton = findViewById(R.id.fivePercent);
+        fiveWeeksButton = findViewById(R.id.fiveWeeks);
+
+        formulaSelector = findViewById(R.id.toggle);
+
+
+
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         final Float roof_area = prefs.getFloat("Roof_Area", 0);
 
-        final EditText waterUsage= rootView.findViewById(R.id.water_usage);
-        final TextView tankSize= rootView.findViewById(R.id.tank_Size);
+        final EditText waterUsage= findViewById(R.id.water_usage);
+        final TextView tankSize= findViewById(R.id.tank_Size);
 
         formulaSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -56,7 +62,7 @@ public class SetupWaterFragment extends Fragment {
             }
         }
         );
-        final EditText harvestableRoofArea= rootView.findViewById(R.id.harvestable_roof_area);
+        final EditText harvestableRoofArea= findViewById(R.id.harvestable_roof_area);
         harvestableRoofArea.setText(roof_area.toString());
         harvestableRoofArea.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,14 +100,14 @@ public class SetupWaterFragment extends Fragment {
         });
 
         //this will submit the users input
-        final Button submitButton = rootView.findViewById(R.id.submitButton);
+        final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
             }
         });
 
-        return rootView;
+
     }
     public int tankSizeCalculator() {
         int averageRainFall=800;

@@ -70,9 +70,8 @@ public class QuestionFragment extends Fragment {
                         startActivityForResult(intent, ACTIVITY_RETURN_CODE);
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
-                        Intent calcTank = new Intent(getContext(), SetupWaterFragment.class);
-                        startActivityForResult(calcTank, ACTIVITY_RETURN_CODE);
-                        ((SetupPagerActivity) getActivity()).moveToNextPage();
+                        Intent water = new Intent(getContext(), SetupWaterActivity.class);
+                        startActivityForResult(water, ACTIVITY_RETURN_CODE);
                 }
             }
         });
