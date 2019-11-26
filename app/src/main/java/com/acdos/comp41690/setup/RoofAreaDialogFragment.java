@@ -24,7 +24,7 @@ public class RoofAreaDialogFragment extends DialogFragment {
 
         alertDialog.setContentView(R.layout.dialog);
         final EditText roof_area = alertDialog.findViewById(R.id.size_dialog);
-        roof_area.setText(R.string.roof_area_input);
+        roof_area.setHint(R.string.roof_area_input);
         final Button submitButton = alertDialog.findViewById(R.id.submitButtonDialog);
 
         final Button cancelButton = alertDialog.findViewById(R.id.cancelButtonDialog);

@@ -1,9 +1,14 @@
 package com.acdos.comp41690.setup;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,8 +27,31 @@ public class SetupSolarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
+        ViewGroup view = (ViewGroup) inflater.inflate(
                 R.layout.fragment_setup_solar, container, false);
-        return rootView;
+
+
+        final SharedPreferences prefs = getActivity().getSharedPreferences(
+                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+
+
+
+        Button confirm = view.findViewById(R.id.submitButton);
+
+        final EditText solar_panel_output = view.findViewById(R.id.solar_panel_output);
+        final EditText kwh_rate = view.findViewById(R.id.kwh_rate);
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = prefs.edit();
+                if (solar_panel_output.getText().length()!=0 && kwh_rate.getText().length()!=0) {
+                    editor.putFloat("Solar_Panel_Output",Integer.getInteger(solar_panel_output.getText().toString()));
+                    editor.putFloat("kwh_rate",Integer.getInteger(kwh_rate.getText().toString()));
+                }
+            }
+        });
+
+        return view;
     }
 }
