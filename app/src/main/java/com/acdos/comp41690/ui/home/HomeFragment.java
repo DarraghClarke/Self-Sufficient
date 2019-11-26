@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            WeatherStore a = getWeatherStore(response);
+                            weather = getWeatherStore(response);
 
                             setWeather(a);
 
