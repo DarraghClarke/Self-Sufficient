@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
                                 JSONObject ob =alerts.getJSONObject(0);
 
                                 weather.alerts.setAlerts(ob.getString("description"));
+                                setWeather(weather);
                                 if(alerts == null || alerts.length() == 0){
                                     return;
                                 }
@@ -133,7 +134,7 @@ public class HomeFragment extends Fragment {
                         public void onResponse(String response) {
                             weather = getWeatherStore(response);
 
-                            setWeather(a);
+
 
                         }
                     }, new Response.ErrorListener() {
