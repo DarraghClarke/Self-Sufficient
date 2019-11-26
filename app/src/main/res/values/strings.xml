@@ -46,4 +46,5 @@
     <string name="volume_litres">Volume (litres)</string>
     <string name="tank_size_calculator">Tank Size Calculator</string>
     <string name="roof_area_input">Roof Area in metres squared</string>
+    <string name="water_usage_input_dialog">Enter Water Usage in Litres</string>
 </resources>
