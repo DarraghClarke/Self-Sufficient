@@ -160,7 +160,9 @@ public class HomeFragment extends Fragment {
             sunset.setText(""+date);
             date = new java.util.Date((long)weather.sunTimes.getSunrise()*1000L);
             sunrise.setText(""+date);
-
+            if(weather.alerts.getAlerts()!=null){
+                alerts.setText(weather.alerts.getAlerts());
+            }
             minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"C");
             maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"C");
             condDescr.setText(weather.currentCondition.getDescr() + ")");
