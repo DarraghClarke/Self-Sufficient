@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
         private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
         public   String data="";
-        private WeatherStore weather = new WeatherStore();
+        public WeatherStore weather = new WeatherStore();
         private String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
 
         private WeatherStore getWeatherStore(String data) {

@@ -51,7 +51,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/temp_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Min Temp: 08:00 AM" />
+                    android:text="18 C" />
 
                 <Space
                     android:layout_width="50dp"
@@ -61,7 +61,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/temp_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Max Temp: 16:00 PM" />
+                    android:text="18 C" />
             </LinearLayout>
 
         </LinearLayout>
