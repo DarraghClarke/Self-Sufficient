@@ -12,7 +12,7 @@ public class WeatherJSONParser {
         JSONObject jObj = new JSONObject(data);
 
 
-        JSONObject sysObj = getObject("sys", jObj);
+
 
         JSONArray jArr = jObj.getJSONArray("weather");
 

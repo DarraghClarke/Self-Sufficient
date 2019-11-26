@@ -59,7 +59,8 @@ public class HomeFragment extends Fragment {
         alerts = root.findViewById(R.id.alert);
 
         maxTemp = root.findViewById(R.id.temp_max);
-
+        getWeatherData("London,UK");
+        getAlertData("Paris");
         return root;
     }
 
