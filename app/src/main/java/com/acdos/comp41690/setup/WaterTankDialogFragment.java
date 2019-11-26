@@ -2,9 +2,16 @@ package com.acdos.comp41690.setup;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -14,30 +21,46 @@ import com.acdos.comp41690.R;
  * Created by Oisin Quinn (@oisin1001) on 2019-11-15.
  */
 public class WaterTankDialogFragment extends DialogFragment {
-
+    SharedPreferences prefs = null;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        final Dialog alertDialog=new Dialog(getActivity());
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dialog, null))
-                // Add action buttons
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        alertDialog.setContentView(R.layout.dialog);
+        final EditText tank_size = alertDialog.findViewById(R.id.tank_Size_dialog);
+        final Button submitButton = alertDialog.findViewById(R.id.submitButtonDialog);
+
+        final Button cancelButton = alertDialog.findViewById(R.id.cancelButtonDialog);
+        submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
+                    public void onClick(View view) {
+                        prefs = getActivity().getSharedPreferences(
+                                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+                        if (tank_size.getText().toString().length() != 0 ){
+                            SharedPreferences.Editor editor = prefs.edit();
+                            try {
+                                editor.putFloat("Water_Tank_Size",Float.valueOf(tank_size.getText().toString()));
+                                editor.apply();
+                            } catch (Exception ex){
+                                Toast.makeText(getContext(), "Please enter a valid value", Toast.LENGTH_SHORT).show();
+                            }
+                        } else{
+                            Toast.makeText(getContext(), "Please enter a value in Litres", Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(getContext(), "Value successfully entered", Toast.LENGTH_SHORT).show();
+
+                        alertDialog.cancel();
                     }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                         getDialog().cancel();
                         ((SetupPagerActivity) getActivity()).moveToNextPage();
                     }
                 });
-        return builder.create();
-    }
 
+        return alertDialog;
+    }
 }

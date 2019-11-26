@@ -1,11 +1,9 @@
 package com.acdos.comp41690.setup;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
@@ -14,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-public class FullPagerActivity extends FragmentActivity {
+public class FullPagerActivity extends SetupPagerActivity {
     /**
      * The number of pages (wizard steps) in the full setup process.
      */
@@ -31,31 +29,13 @@ public class FullPagerActivity extends FragmentActivity {
         mPager = findViewById(R.id.pager);
         pagerAdapter = new FullPagerActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
-    }
 
-    @Override
-    public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-        }
-    }
-
-    public void onContinueButtonClick(View v) {
-        moveToNextPage();
-    }
-
-    public void moveToNextPage() {
-        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+        setViewPager(mPager);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         @NonNull
@@ -63,9 +43,9 @@ public class FullPagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
-                case 1:
                     return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
+                case 1:
+                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
                 case 2:
                     return new SetupWaterFragment();
                  case 3:

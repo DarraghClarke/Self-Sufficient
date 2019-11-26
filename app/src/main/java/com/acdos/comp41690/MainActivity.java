@@ -17,25 +17,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
-
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
 
-import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
-import com.acdos.comp41690.data.WaterUsageDbHelper;
-
 import com.acdos.comp41690.setup.SetupPagerActivity;
-import com.acdos.comp41690.ui.rain.RainFragment;
-import com.acdos.comp41690.ui.solar.ElecViewFragment;
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
+import com.acdos.comp41690.setup.InitialSetupActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        testDb();
+        //testDb();
 
         prefs = getSharedPreferences(
                 getString(R.string.shared_preferences), Context.MODE_PRIVATE);
@@ -87,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 //Make sure another instance of the same Activity isn't opened on top of itself
-                if(menuItem.isChecked()) {
+                if (menuItem.isChecked()) {
                     assert mAppBarConfiguration.getDrawerLayout() != null;
                     mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
                     return false;
                 }
 
-                if(id == R.id.nav_solar) {
+                if (id == R.id.nav_solar) {
                     Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
                     assert mAppBarConfiguration.getDrawerLayout() != null;
                     mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
@@ -101,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
 
-                if(id == R.id.nav_rain) {
+                if (id == R.id.nav_rain) {
                     Intent i = new Intent(getApplicationContext(), RainActivity.class);
                     assert mAppBarConfiguration.getDrawerLayout() != null;
                     mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
@@ -135,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (prefs.getBoolean("firstrun", true)) {
             // Launch set-up view
-            Intent intent = new Intent(this, SetupPagerActivity.class);
+            Intent intent = new Intent(this, InitialSetupActivity.class);
 
-            prefs.edit().putBoolean("firstrun", false).apply();
+       //     prefs.edit().putBoolean("firstrun", false).apply();
 
             startActivity(intent);
         }
@@ -145,11 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testDb() {
-
         UserDataDbHelper dbHelper = new UserDataDbHelper(this);
-
-
-
 
         ContentValues values = new ContentValues();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 53302.33);
@@ -162,26 +152,24 @@ public class MainActivity extends AppCompatActivity {
         String[] projection = {
                 WaterUsageEntry._ID,
                 WaterUsageEntry.COLUMN_NAME_TIMESTAMP,
-                WaterUsageEntry.COLUMN_NAME_VOLUME };
+                WaterUsageEntry.COLUMN_NAME_VOLUME};
 
+        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null,
+                null, null, null, null);
 
-        Cursor c = db.query(WaterUsageEntry.TABLE_NAME, projection, null, null, null, null, null);
-
-
-
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             Log.d("MainActivity", c.getLong(0) + ", " + c.getLong(1) + ", " + c.getDouble(2));
         }
         c.close();
     }
 
 
-
-    public void solarTransition(View view){
+    public void solarTransition(View view) {
         Intent myIntent = new Intent(this, ElectricityActivity.class);
         startActivity(myIntent);
     }
-    public void rainTransition(View view){
+
+    public void rainTransition(View view) {
         Intent myIntent = new Intent(this, RainActivity.class);
         startActivity(myIntent);
     }
