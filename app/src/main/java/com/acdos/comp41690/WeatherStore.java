@@ -9,33 +9,12 @@ public class WeatherStore {
     public Wind wind = new Wind();
     public Rain rain = new Rain();
     public SunTimes sunTimes = new SunTimes();
-
-    public byte[] iconData;
+    public Alerts alerts = new Alerts();
 
     public class CurrentCondition {
-        private int weatherId;
-        private String condition;
-        private String descr;
-        private String icon;
 
         private float pressure;
         private float humidity;
-
-        public int getWeatherId() {
-            return weatherId;
-        }
-
-        public void setWeatherId(int weatherId) {
-            this.weatherId = weatherId;
-        }
-
-        public String getCondition() {
-            return condition;
-        }
-
-        public void setCondition(String condition) {
-            this.condition = condition;
-        }
 
         public String getDescr() {
             return descr;
@@ -43,14 +22,6 @@ public class WeatherStore {
 
         public void setDescr(String descr) {
             this.descr = descr;
-        }
-
-        public String getIcon() {
-            return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
         }
 
         public float getPressure() {
@@ -135,14 +106,6 @@ public class WeatherStore {
 
         public void setSpeed(float speed) {
             this.speed = speed;
-        }
-
-        public float getDeg() {
-            return deg;
-        }
-
-        public void setDeg(float deg) {
-            this.deg = deg;
         }
 
 
