@@ -5,13 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import org.json.JSONException;
 
-
-import com.acdos.comp41690.JSONParser;
+import com.acdos.comp41690.WeatherJSONParser;
 import com.acdos.comp41690.WeatherStore;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -61,21 +60,7 @@ public class HomeFragment extends Fragment {
         condDescr = root.findViewById(R.id.weather_status);
         minTemp = root.findViewById(R.id.temp_min);
         maxTemp = root.findViewById(R.id.temp_max);
-
-
-
-
-        //  JSONWeatherTask test =new JSONWeatherTask();
-
-
         String result = getWeatherData(city);
-
-        System.out.println("anseo"+ result);
-
-
-//        task.execute(new String[]{city});
-
-
 
         return root;
     }
@@ -86,11 +71,11 @@ public class HomeFragment extends Fragment {
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
         public   String data="";
 
-        protected WeatherStore getWeatherStore(String data) {
+        private WeatherStore getWeatherStore(String data) {
             WeatherStore weather = new WeatherStore();
 
             try {
-                weather = JSONParser.getWeather(data);
+                weather = WeatherJSONParser.getWeather(data);
 
                 // Let's retrieve the icon
                 System.out.println();
@@ -100,7 +85,40 @@ public class HomeFragment extends Fragment {
             return weather;
 
         }
-        public String getWeatherData(String location) {
+        private String getAlertData(String location) {
+            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+"&APPID="+APPID,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jObj = new JSONObject(response);
+                                JSONObject sysObj = getObject("alerts", jObj);
+
+                                if(sysObj.getJSONArray("alerts")==null){
+                                    return;
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("That didn't work!");
+                }
+            });
+
+// Add the request to the RequestQueue.
+            queue.add(stringRequest);
+
+            return data;
+        }
+
+        private String getWeatherData(String location) {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -128,17 +146,9 @@ public class HomeFragment extends Fragment {
 
             return data;
         }
-        private void returnMyString(String respond){
-            System.out.println("THE response IS "+respond);
-            //data = respond;
-            System.out.println("THE DATA IS "+data);
-        }
-
-        protected void setWeather(WeatherStore weather) {
 
 
-
-
+        private void setWeather(WeatherStore weather) {
             Date date = new java.util.Date((long)weather.sunTimes.getSunset()*1000L);
             temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
 

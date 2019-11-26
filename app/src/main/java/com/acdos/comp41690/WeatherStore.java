@@ -170,4 +170,14 @@ public class WeatherStore {
 
 
     }
+    public class Alerts{
+        private String[] alerts;
+        public String[] getAlerts() {
+            return alerts;
+        }
+
+        public void setAlerts(String[] alerts) {
+            this.alerts = alerts;
+        }
+    }
 }
