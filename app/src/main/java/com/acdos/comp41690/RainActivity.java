@@ -75,13 +75,13 @@ public class RainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final Dialog addDataAlert = new Dialog(RainActivity.this);
-                addDataAlert.setTitle("Current: " + "kWh");
 
                 addDataAlert.setContentView(R.layout.input_data_dialog);
                 RadioGroup radioGroup = addDataAlert.findViewById(R.id.radioGroup);
                 radioGroup.setVisibility(View.INVISIBLE);
 
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
+                inputField.setText(R.string.water_usage_input_dialog);
                 TextView Title = addDataAlert.findViewById(R.id.Title);
                 Title.setText("Water Input");
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
@@ -166,10 +166,8 @@ public class RainActivity extends AppCompatActivity {
         ContentValues value = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
 
-        //if (dataType == true) {
         value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input);
         value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
         userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
-        //}
     }
 }

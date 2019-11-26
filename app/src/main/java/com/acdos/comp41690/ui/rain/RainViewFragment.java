@@ -61,48 +61,6 @@ public class RainViewFragment extends Fragment {
             @NonNull final LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rain_view, container, false);
-//        Button solar_button = view.findViewById(R.id.rain_button);
-//        solar_button.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                final AlertDialog.Builder addData = new AlertDialog.Builder(getActivity());
-//                addData.setTitle("Current: " + currLitre + "L");
-//                final EditText input = new EditText(getActivity());
-//                input.setHint("Enter a new value!");
-//                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-//                addData.setView(input);
-//
-//                addData.setPositiveButton("Enter",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                String newValue = input.getText().toString();
-//                                int newNumber = Integer.parseInt(newValue);
-//
-//                                if(newNumber > maxLitre) {
-//                                    Toast toast = Toast.makeText(getContext(), "Cannot have more than max, (" + maxLitre + "L)!", Toast.LENGTH_SHORT);
-//                                    toast.setGravity(Gravity.BOTTOM, 0, 0);
-//                                    View viewToast = toast.getView();
-//                                    viewToast.setBackgroundResource(R.color.colorDarkToast);
-//                                    toast.show();
-//                                }
-//                                else {
-//                                    runUIThread(newNumber);
-//                                }
-//                            }
-//                        });
-//                addData.setNegativeButton("Cancel",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                            }
-//                        });
-//                addData.show();
-//            }
-//        });
 
         return view;
     }

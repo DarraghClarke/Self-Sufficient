@@ -77,8 +77,6 @@ public class ElectricityActivity extends AppCompatActivity {
                 final Dialog addDataAlert = new Dialog(ElectricityActivity.this);
                 addDataAlert.setTitle("Current: " + "kWh");
 
-
-
                 addDataAlert.setContentView(R.layout.input_data_dialog);
                 final RadioButton usageButton = addDataAlert.findViewById(R.id.usageButton);
                 final RadioButton outputButton = addDataAlert.findViewById(R.id.outputButton);
