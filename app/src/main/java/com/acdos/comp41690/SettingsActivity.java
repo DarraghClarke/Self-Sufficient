@@ -31,11 +31,11 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         //Add Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar_solar);
+        Toolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_solar);
-        NavigationView navigationView = findViewById(R.id.nav_view_solar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_settings);
+        NavigationView navigationView = findViewById(R.id.nav_view_settings);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_solar);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_settings);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -69,6 +69,13 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if(id == R.id.nav_rain) {
                     Intent i = new Intent(getApplicationContext(), RainActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+                if(id == R.id.nav_solar) {
+                    Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
                     assert mAppBarConfiguration.getDrawerLayout() != null;
                     mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
                     startActivity(i);
