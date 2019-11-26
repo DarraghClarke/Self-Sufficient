@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
         temp = root.findViewById(R.id.temp);
         hum = root.findViewById(R.id.humidity);
         press = root.findViewById(R.id.pressure);
-        rainFall= root.findViewById(R.id.rainTemp);
+        rainFall= root.findViewById(R.id.rainFall);
         condDescr = root.findViewById(R.id.weather_status);
         minTemp = root.findViewById(R.id.temp_min);
         alerts = root.findViewById(R.id.alert);
