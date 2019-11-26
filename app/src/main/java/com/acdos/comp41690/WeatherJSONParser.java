@@ -13,8 +13,6 @@ public class WeatherJSONParser {
 
 
         JSONObject sysObj = getObject("sys", jObj);
-        weather.sunTimes.setSunrise(getInt("sunrise", sysObj));
-        weather.sunTimes.setSunset(getInt("sunset", sysObj));
 
         JSONArray jArr = jObj.getJSONArray("weather");
 
@@ -32,6 +30,8 @@ public class WeatherJSONParser {
         // Wind
         JSONObject wObj = getObject("wind", jObj);
         weather.wind.setSpeed(getFloat("speed", wObj));
+        JSONObject rObj = getObject("rain", jObj);
+        weather.rain.setAmount(getFloat("amount",rObj));
         return weather;
     }
 

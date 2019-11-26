@@ -80,38 +80,7 @@ xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#3CF1EBF1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/sunrise"
-                        android:tint="#FFFFFF" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sunrise"
-                        android:textSize="12dp" />
-
-                    <TextView
-                        android:id="@+id/sunrise"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
-                </LinearLayout>
 
                 <Space
                     android:layout_width="10dp"
@@ -129,7 +98,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/sunset"
+                        android:src="@drawable/humidity"
                         android:tint="#FFFFFF" />
 
                     <Space
@@ -139,14 +108,14 @@ xmlns:tools="http://schemas.android.com/tools"
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sunset"
+                        android:text="Rainfall"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/sunset"
+                        android:id="@+id/rainFall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
+                        android:text="100ml"
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -273,38 +242,41 @@ xmlns:tools="http://schemas.android.com/tools"
 
         <TextView
             android:id="@+id/alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="1750dp"
+            android:layout_height="60dp"
             android:layout_below="@+id/bottomContainer"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="178dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="9dp"
-            android:layout_marginEnd="175dp"
+            android:layout_marginEnd="80dp"
             android:gravity="center"
             android:text="No alerts"
             android:textSize="28sp" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:layout_width="141dp"
+            android:layout_height="242dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="-12dp"
             android:adjustViewBounds="true"
             android:onClick="rainTransition"
             app:srcCompat="@drawable/raindrop9" />
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:layout_width="149dp"
+            android:layout_height="247dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginRight="-2dp"
+            android:layout_marginBottom="-14dp"
             android:adjustViewBounds="true"
             android:onClick="solarTransition"
-            app:srcCompat="@android:color/holo_orange_light"
-            tools:srcCompat="@drawable/elec" />
+            app:srcCompat="@drawable/elec" />
     </RelativeLayout>
 
 

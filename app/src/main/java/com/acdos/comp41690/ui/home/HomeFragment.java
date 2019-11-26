@@ -24,18 +24,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
-    private TextView sunrise;
+    private TextView rainFall;
     private TextView condDescr;
     private TextView temp;
     private TextView press;
     private TextView windSpeed;
-    private TextView sunset;
     private TextView minTemp;
     private TextView maxTemp;
     private TextView hum;
@@ -56,8 +53,7 @@ public class HomeFragment extends Fragment {
         temp = root.findViewById(R.id.temp);
         hum = root.findViewById(R.id.humidity);
         press = root.findViewById(R.id.pressure);
-        sunset = root.findViewById(R.id.sunset);
-        sunrise = root.findViewById(R.id.sunrise);
+        rainFall= root.findViewById(R.id.rainTemp);
         condDescr = root.findViewById(R.id.weather_status);
         minTemp = root.findViewById(R.id.temp_min);
         alerts = root.findViewById(R.id.alert);
@@ -154,12 +150,10 @@ public class HomeFragment extends Fragment {
 
 
         private void setWeather(WeatherStore weather) {
-            Date date = new java.util.Date((long)weather.sunTimes.getSunset()*1000L);
+
             temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
 
-            sunset.setText(""+date);
-            date = new java.util.Date((long)weather.sunTimes.getSunrise()*1000L);
-            sunrise.setText(""+date);
+            rainFall.setText(""+weather.rain.getAmount());
             if(weather.alerts.getAlerts()!=null){
                 alerts.setText(weather.alerts.getAlerts());
             }

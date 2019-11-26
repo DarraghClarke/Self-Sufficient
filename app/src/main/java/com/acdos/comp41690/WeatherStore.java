@@ -8,7 +8,6 @@ public class WeatherStore {
     public Temperature temperature = new Temperature();
     public Wind wind = new Wind();
     public Rain rain = new Rain();
-    public SunTimes sunTimes = new SunTimes();
     public Alerts alerts = new Alerts();
 
     public class CurrentCondition {
@@ -44,26 +43,6 @@ public class WeatherStore {
 
     }
 
-    public class SunTimes{
-        private int sunrise;
-        private int sunset;
-
-        public float getSunrise() {
-            return sunrise;
-        }
-
-        public void setSunrise(int sunrise) {
-            this.sunrise = sunrise;
-        }
-
-        public float getSunset() {
-            return sunset;
-        }
-
-        public void setSunset(int sunset) {
-            this.sunset = sunset;
-        }
-    }
 
 
     public class Temperature {
@@ -99,7 +78,6 @@ public class WeatherStore {
 
     public class Wind {
         private float speed;
-        private float deg;
 
         public float getSpeed() {
             return speed;
