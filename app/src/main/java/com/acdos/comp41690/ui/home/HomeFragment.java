@@ -5,23 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.acdos.comp41690.WeatherJSONParser;
-import com.acdos.comp41690.WeatherStore;
-
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
+import com.acdos.comp41690.WeatherJSONParser;
+import com.acdos.comp41690.WeatherStore;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment {
         minTemp = root.findViewById(R.id.temp_min);
         maxTemp = root.findViewById(R.id.temp_max);
         String result = getWeatherData(city);
+        String ting = getAlertData(city);
 
         return root;
     }
@@ -70,6 +72,8 @@ public class HomeFragment extends Fragment {
         private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
         public   String data="";
+
+        private String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts&app_id=SCLblvFIwikj6SHdpwab&app_code=TvzcBTnBKM-Sh_wH-pqX3w";
 
         private WeatherStore getWeatherStore(String data) {
             WeatherStore weather = new WeatherStore();
@@ -88,15 +92,18 @@ public class HomeFragment extends Fragment {
         private String getAlertData(String location) {
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+"&APPID="+APPID,
+            double longitude = 2.364286;
+            double latitude = 48.891784;
+
+            StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
                                 JSONObject jObj = new JSONObject(response);
-                                JSONObject sysObj = getObject("alerts", jObj);
+                                JSONArray alerts = jObj.getJSONObject("alerts").getJSONArray("alerts");
 
-                                if(sysObj.getJSONArray("alerts")==null){
+                                if(alerts == null || alerts.length() == 0){
                                     return;
                                 }
                             } catch (JSONException e) {
@@ -112,8 +119,8 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-// Add the request to the RequestQueue.
-            queue.add(stringRequest);
+            // Add the request to the RequestQueue.
+            queue.add(alertRequest);
 
             return data;
         }

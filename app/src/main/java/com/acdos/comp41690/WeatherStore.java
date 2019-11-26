@@ -15,6 +15,7 @@ public class WeatherStore {
 
         private float pressure;
         private float humidity;
+        private String descr;
 
         public String getDescr() {
             return descr;
