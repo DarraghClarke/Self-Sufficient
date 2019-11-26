@@ -67,36 +67,6 @@ public class ElecStatsFragment extends Fragment {
 
         Button button = rootView.findViewById(R.id.button);
         final Random r = new Random();
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final AlertDialog.Builder addData = new AlertDialog.Builder(getActivity());
-                addData.setTitle("Add Data");
-                final EditText input = new EditText(getActivity());
-                input.setHint("Enter a new value.");
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                addData.setView(input);
-
-                addData.setPositiveButton("Enter",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String newValue = input.getText().toString();
-                                Integer.parseInt(newValue);
-
-                            }
-                        });
-                addData.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                addData.show();
-            }
-        });
 
         //Graph
 

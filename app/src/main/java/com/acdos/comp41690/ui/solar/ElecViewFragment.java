@@ -64,47 +64,6 @@ public class ElecViewFragment extends Fragment {
             Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_electricity_view, container, false);
 
-        final FloatingActionButton addData = view.findViewById(R.id.addData);
-        addData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final Dialog addDataAlert = new Dialog(getActivity());
-                addDataAlert.setTitle("Current: " + currKWh + "kWh");
-
-                addDataAlert.setContentView(R.layout.input_data_dialog);
-                final RadioButton usageButton = addDataAlert.findViewById(R.id.usageButton);
-                final RadioButton outputButton = addDataAlert.findViewById(R.id.outputButton);
-                final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
-
-                final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
-
-                final Button cancelButton = addDataAlert.findViewById(R.id.cancelButton);
-
-                submitButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (inputField.getText().length() == 0) {
-                            Toast.makeText(getActivity(), "Input can not be empty", Toast.LENGTH_SHORT).show();
-                        } else if (usageButton.isChecked()) {
-
-                            addToDatabase(true, Integer.valueOf(inputField.getText().toString()));
-                        } else {
-                            addToDatabase(false, Integer.valueOf(inputField.getText().toString()));
-                        }
-                        addDataAlert.cancel();
-                    }
-                });
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addDataAlert.cancel();
-                    }
-                });
-
-                addDataAlert.show();
-            }
-        });
         return view;
     }
 
@@ -142,22 +101,4 @@ public class ElecViewFragment extends Fragment {
     }
 
 
-    /**
-     * @param dataType if true then solar usage should be used, if false then solar generation contract should be used
-     */
-    private void addToDatabase(boolean dataType, int input) {
-        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
-        ContentValues value = new ContentValues();
-        SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-
-        if (dataType == true) {
-            value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, input);
-            value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
-            userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
-        } else {
-            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, input);
-            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
-            userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
-        }
-    }
 }
