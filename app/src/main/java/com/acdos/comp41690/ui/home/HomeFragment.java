@@ -66,11 +66,11 @@ public class HomeFragment extends Fragment {
 
 
 
-        private  String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
-        private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
-        public   String data="";
+        private  final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
+        private  final String APPID = "&APPID=e0af00f6b30b672fbc3058d39d79c3ee";
         public WeatherStore weather = new WeatherStore();
-        private String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
+        private final String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
+        private final String HERE_BASE_ID = "&app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg&fbclid=IwAR0QnPjfz9j76FMmSqjaqIwdwL2POFFx-m7cEe8H6ng0Th66v359XH3HbsE";
 
         private WeatherStore getWeatherStore(String data) {
 
@@ -84,13 +84,13 @@ public class HomeFragment extends Fragment {
             return weather;
 
         }
-        private String getAlertData(String location) {
+        private void getAlertData(String location) {
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
             double longitude = 2.364286;
             double latitude = 48.891784;
 
-            StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude +"&app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg&fbclid=IwAR0QnPjfz9j76FMmSqjaqIwdwL2POFFx-m7cEe8H6ng0Th66v359XH3HbsE",
+            StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude +HERE_BASE_ID,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -120,15 +120,13 @@ public class HomeFragment extends Fragment {
 
             // Add the request to the RequestQueue.
             queue.add(alertRequest);
-
-            return data;
         }
 
-        private String getWeatherData(String location) {
+        private void getWeatherData(String location) {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+"&APPID="+APPID,
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+""+APPID,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -143,11 +141,7 @@ public class HomeFragment extends Fragment {
                     System.out.println("That didn't work!");
                 }
             });
-
-// Add the request to the RequestQueue.
             queue.add(stringRequest);
-
-            return data;
         }
 
 
@@ -164,6 +158,6 @@ public class HomeFragment extends Fragment {
             condDescr.setText(weather.currentCondition.getDescr());
             hum.setText("" + weather.currentCondition.getHumidity() + "%");
             press.setText("" + weather.currentCondition.getPressure() + " hPa");
-           windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+            windSpeed.setText("" + weather.wind.getSpeed() + " mps");
         }
     }

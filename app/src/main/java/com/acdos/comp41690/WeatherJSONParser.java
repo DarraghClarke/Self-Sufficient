@@ -10,10 +10,6 @@ public class WeatherJSONParser {
         WeatherStore weather = new WeatherStore();
 
         JSONObject jObj = new JSONObject(data);
-
-
-
-
         JSONArray jArr = jObj.getJSONArray("weather");
 
         JSONObject JSONWeather = jArr.getJSONObject(0);
