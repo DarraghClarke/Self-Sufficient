@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acdos.comp41690.data.UserDataDbHelper;
@@ -76,10 +78,12 @@ public class RainActivity extends AppCompatActivity {
                 addDataAlert.setTitle("Current: " + "kWh");
 
                 addDataAlert.setContentView(R.layout.input_data_dialog);
-                final RadioButton usageButton = addDataAlert.findViewById(R.id.usageButton);
-                final RadioButton outputButton = addDataAlert.findViewById(R.id.outputButton);
-                final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
+                RadioGroup radioGroup = addDataAlert.findViewById(R.id.radioGroup);
+                radioGroup.setVisibility(View.INVISIBLE);
 
+                final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
+                TextView Title = addDataAlert.findViewById(R.id.Title);
+                Title.setText("Water Input");
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
 
                 final Button cancelButton = addDataAlert.findViewById(R.id.cancelButton);
@@ -89,11 +93,8 @@ public class RainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (inputField.getText().length() == 0) {
                             Toast.makeText(RainActivity.this, "Input can not be empty", Toast.LENGTH_SHORT).show();
-                        } else if (usageButton.isChecked()) {
-
-                            addToDatabase(true, Integer.valueOf(inputField.getText().toString()));
-                        } else {
-                            addToDatabase(false, Integer.valueOf(inputField.getText().toString()));
+                        }  else {
+                            addToDatabase( Integer.valueOf(inputField.getText().toString()));
                         }
                         addDataAlert.cancel();
                         finish();
@@ -159,10 +160,8 @@ public class RainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    /**
-     * @param dataType if true then solar usage should be used, if false then solar generation contract should be used
-     */
-    private void addToDatabase(boolean dataType, int input) {
+
+    private void addToDatabase(int input) {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(RainActivity.this);
         ContentValues value = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
