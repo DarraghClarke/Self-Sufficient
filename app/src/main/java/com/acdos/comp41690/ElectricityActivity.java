@@ -98,6 +98,10 @@ public class ElectricityActivity extends AppCompatActivity {
                             addToDatabase(false, Integer.valueOf(inputField.getText().toString()));
                         }
                         addDataAlert.cancel();
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
                     }
                 });
                 cancelButton.setOnClickListener(new View.OnClickListener() {
