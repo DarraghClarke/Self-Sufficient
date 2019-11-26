@@ -78,16 +78,11 @@ xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="0">
 
-
-
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
@@ -124,7 +119,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
@@ -152,7 +147,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
+                        android:text="0"
                         android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -168,7 +163,7 @@ xmlns:tools="http://schemas.android.com/tools"
                 android:weightSum="0">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
@@ -196,7 +191,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
+                        android:text="0"
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -205,7 +200,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
@@ -233,7 +228,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
+                        android:text="0"
                         android:textSize="14dp" />
                 </LinearLayout>
 
