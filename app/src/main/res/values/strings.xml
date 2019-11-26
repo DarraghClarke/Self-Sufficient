@@ -43,4 +43,6 @@
     <string name="dialog_title">Solar Input</string>
     <string name="dialog_positive_button">Enter</string>
     <string name="dialog_negative_button">Cancel</string>
+    <string name="volume_litres">Volume (litres)</string>
+    <string name="tank_size_calculator">Tank Size Calculator</string>
 </resources>

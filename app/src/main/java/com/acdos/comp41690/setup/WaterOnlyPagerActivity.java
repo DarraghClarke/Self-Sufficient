@@ -43,9 +43,9 @@ public class WaterOnlyPagerActivity extends SetupPagerActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
-                case 1:
                     return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
+                case 1:
+                    return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
                 case 2:
                     return new SetupWaterFragment();
                 default:
