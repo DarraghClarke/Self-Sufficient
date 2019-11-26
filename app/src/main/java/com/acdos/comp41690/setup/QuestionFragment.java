@@ -82,12 +82,13 @@ public class QuestionFragment extends Fragment {
             public void onClick(View view) {
                 switch (questionType) {
                     case Constants.QuestionType.ROOF_AREA_QUESTION:
-                        ((SetupPagerActivity) getActivity()).moveToNextPage();
+                        DialogFragment roofFragment = new RoofAreaDialogFragment();
+                        roofFragment.show(getFragmentManager(), "roof_area");
+                        //((SetupPagerActivity) getActivity()).moveToNextPage();
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
                         DialogFragment newFragment = new WaterTankDialogFragment();
                         newFragment.show(getFragmentManager(), "water_tank");
-
                 }
             }
         });
