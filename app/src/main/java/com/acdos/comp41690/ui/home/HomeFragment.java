@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
         private  String APPID = "e0af00f6b30b672fbc3058d39d79c3ee";
         public   String data="";
         private WeatherStore weather = new WeatherStore();
-        private String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts&app_id=SCLblvFIwikj6SHdpwab&app_code=TvzcBTnBKM-Sh_wH-pqX3w";
+        private String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
 
         private WeatherStore getWeatherStore(String data) {
 
@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
             double longitude = 2.364286;
             double latitude = 48.891784;
 
-            StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude,
+            StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude +"&app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg&fbclid=IwAR0QnPjfz9j76FMmSqjaqIwdwL2POFFx-m7cEe8H6ng0Th66v359XH3HbsE",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
