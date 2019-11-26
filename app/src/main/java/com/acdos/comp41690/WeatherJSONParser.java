@@ -31,7 +31,7 @@ public class WeatherJSONParser {
         JSONObject wObj = getObject("wind", jObj);
         weather.wind.setSpeed(getFloat("speed", wObj));
         JSONObject rObj = getObject("rain", jObj);
-        weather.rain.setAmount(getFloat("amount",rObj));
+        weather.rain.setAmount(getFloat("3h",rObj));
         return weather;
     }
 

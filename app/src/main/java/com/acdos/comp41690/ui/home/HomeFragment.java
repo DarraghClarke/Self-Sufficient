@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment {
             }
             minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"C");
             maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"C");
-            condDescr.setText(weather.currentCondition.getDescr() + ")");
+            condDescr.setText(weather.currentCondition.getDescr());
             hum.setText("" + weather.currentCondition.getHumidity() + "%");
             press.setText("" + weather.currentCondition.getPressure() + " hPa");
            windSpeed.setText("" + weather.wind.getSpeed() + " mps");
