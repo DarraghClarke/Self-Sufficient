@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--This page uses code referenced for a open weather api tutorial
+    https://www.androdocs.com/java/creating-an-android-weather-app-using-java.html-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +29,7 @@ xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Drought"
+                android:text=""
                 android:textSize="18dp" />
 
             <TextView
@@ -38,8 +38,9 @@ xmlns:tools="http://schemas.android.com/tools"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-thin"
-                android:text="50°C"
-                android:textSize="90dp" />
+                android:textStyle="bold"
+                android:text="No Internet Connection"
+                android:textSize="25dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,7 +52,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/temp_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18 C" />
+                    android:text="" />
 
                 <Space
                     android:layout_width="50dp"
@@ -61,7 +62,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/temp_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18 C" />
+                    android:text="" />
             </LinearLayout>
 
         </LinearLayout>
@@ -110,7 +111,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/rainFall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100ml"
+                        android:text=""
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -147,7 +148,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text=""
                         android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -191,7 +192,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text=""
                         android:textSize="14dp" />
                 </LinearLayout>
 
@@ -228,7 +229,7 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text=""
                         android:textSize="14dp" />
                 </LinearLayout>
 
