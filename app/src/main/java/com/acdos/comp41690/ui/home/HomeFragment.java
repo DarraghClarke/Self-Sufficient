@@ -1,5 +1,8 @@
 package com.acdos.comp41690.ui.home;
-
+/* This file uses code referenced from the open weather api recommended tutorial
+"https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90"
+and the android request/volley tutorial
+https://developer.android.com/training/volley/simple?fbclid=IwAR26_405eNCLPrpiodtiqnuuA_LnrLijsw_dDLNy_CqvMmQ2kdL_lAlNdn4*/
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +73,7 @@ public class HomeFragment extends Fragment {
         private  final String APPID = "&APPID=e0af00f6b30b672fbc3058d39d79c3ee";
         public WeatherStore weather = new WeatherStore();
         private final String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
-        private final String HERE_BASE_ID = "&app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg&fbclid=IwAR0QnPjfz9j76FMmSqjaqIwdwL2POFFx-m7cEe8H6ng0Th66v359XH3HbsE";
+        private final String HERE_BASE_ID = "&app_id=xYX2yWhAAkYGAZmrxWqG";
 
         private WeatherStore getWeatherStore(String data) {
 
@@ -96,14 +99,18 @@ public class HomeFragment extends Fragment {
                         public void onResponse(String response) {
                             try {
                                 JSONObject jObj = new JSONObject(response);
-                                JSONArray alerts = jObj.getJSONObject("alerts").getJSONArray("alerts");
-                                JSONObject ob =alerts.getJSONObject(0);
 
-                                weather.alerts.setAlerts(ob.getString("description"));
-                                setWeather(weather);
-                                if(alerts == null || alerts.length() == 0){
-                                    return;
+                                JSONArray alerts = jObj.getJSONObject("alerts").getJSONArray("alerts");
+                                if(alerts.length()>0){
+                                    JSONObject ob =alerts.getJSONObject(0);
+
+                                    weather.alerts.setAlerts(ob.getString("description"));
+                                    if(alerts == null || alerts.length() == 0){
+                                        return;
+                                    }
+                                    setAlerts(weather);
                                 }
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -131,9 +138,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(String response) {
                             weather = getWeatherStore(response);
-
-
-
+                            setWeather(weather);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -150,9 +155,6 @@ public class HomeFragment extends Fragment {
             temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
 
             rainFall.setText(""+weather.rain.getAmount());
-            if(weather.alerts.getAlerts()!=null){
-                alerts.setText(weather.alerts.getAlerts());
-            }
             minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"C");
             maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"C");
             condDescr.setText(weather.currentCondition.getDescr());
@@ -160,4 +162,11 @@ public class HomeFragment extends Fragment {
             press.setText("" + weather.currentCondition.getPressure() + " hPa");
             windSpeed.setText("" + weather.wind.getSpeed() + " mps");
         }
+
+        private void setAlerts(WeatherStore weather){
+            if(weather.alerts.getAlerts()!=null){
+                alerts.setText(weather.alerts.getAlerts());
+            }
+        }
+
     }
