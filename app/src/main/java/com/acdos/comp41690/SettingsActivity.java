@@ -2,9 +2,7 @@ package com.acdos.comp41690;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -95,15 +93,15 @@ public class SettingsActivity extends AppCompatActivity {
             EditTextPreference roofArea = findPreference(Constants.SharedPrefKeys.ROOF_AREA);
 
             if (roofArea != null) {
-                float value = getPreferenceManager().getSharedPreferences().getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0.0f);
-                roofArea.setText(String.valueOf(value));
-                roofArea.setOnBindEditTextListener(
-                        new EditTextPreference.OnBindEditTextListener() {
-                            @Override
-                            public void onBindEditText(@NonNull EditText editText) {
-                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                            }
-                        });
+//                float value = getPreferenceManager().getSharedPreferences().getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0.0f);
+//                roofArea.setText(String.valueOf(value));
+//                roofArea.setOnBindEditTextListener(
+//                        new EditTextPreference.OnBindEditTextListener() {
+//                            @Override
+//                            public void onBindEditText(@NonNull EditText editText) {
+//                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+//                            }
+//                        });
             }
 
         }

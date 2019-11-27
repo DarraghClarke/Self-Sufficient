@@ -103,7 +103,7 @@ public class SetupWaterActivity extends FragmentActivity {
 //            //To save
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupWaterActivity.this);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt(Constants.SharedPrefKeys.WATER_TANK_SIZE, result);
+                editor.putString(Constants.SharedPrefKeys.WATER_TANK_SIZE, String.valueOf(result));
                 editor.apply();
 
                 Toast.makeText(getBaseContext(), "Area is: " + result, Toast.LENGTH_SHORT).show();

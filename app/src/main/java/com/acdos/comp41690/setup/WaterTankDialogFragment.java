@@ -37,7 +37,7 @@ public class WaterTankDialogFragment extends DialogFragment {
                         if (tank_size.getText().toString().length() != 0){
                             SharedPreferences.Editor editor = prefs.edit();
                             try {
-                                editor.putFloat(Constants.SharedPrefKeys.WATER_TANK_SIZE,Float.valueOf(tank_size.getText().toString()));
+                                editor.putString(Constants.SharedPrefKeys.WATER_TANK_SIZE, tank_size.getText().toString());
                                 editor.apply();
                                 ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){

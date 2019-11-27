@@ -127,7 +127,8 @@ public class RainViewFragment extends Fragment {
 
     private int getMaxLitre() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int tankSize = (int) prefs.getFloat(Constants.SharedPrefKeys.WATER_TANK_SIZE, 0f);
+        String tankSizeStr = prefs.getString(Constants.SharedPrefKeys.WATER_TANK_SIZE, "0");
+        int tankSize = Integer.parseInt(tankSizeStr);
 
         if(tankSize == 0) {
             currLitre = defaultLitre;

@@ -36,7 +36,7 @@ public class RoofAreaDialogFragment extends DialogFragment {
                         if (roof_area.getText().toString().length() != 0 ){
                             SharedPreferences.Editor editor = prefs.edit();
                             try {
-                                editor.putFloat(Constants.SharedPrefKeys.ROOF_AREA,Float.valueOf(roof_area.getText().toString()));
+                                editor.putString(Constants.SharedPrefKeys.ROOF_AREA,roof_area.getText().toString());
                                 editor.apply();
                                 ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){
