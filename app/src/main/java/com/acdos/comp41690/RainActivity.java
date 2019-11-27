@@ -81,7 +81,7 @@ public class RainActivity extends AppCompatActivity {
                 radioGroup.setVisibility(View.INVISIBLE);
 
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
-                inputField.setText(R.string.water_usage_input_dialog);
+                inputField.setHint(R.string.water_usage_input_dialog);
                 TextView Title = addDataAlert.findViewById(R.id.Title);
                 Title.setText("Water Input");
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);

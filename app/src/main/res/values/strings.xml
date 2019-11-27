@@ -45,5 +45,5 @@
     <string name="dialog_negative_button">Cancel</string>
     <string name="volume_litres">Volume (litres)</string>
     <string name="tank_size_calculator">Tank Size Calculator</string>
-    <string name="water_usage_input_dialog">Enter Water Usage in Litres</string>
+    <string name="water_usage_input_dialog">Enter Water Usage</string>
 </resources>

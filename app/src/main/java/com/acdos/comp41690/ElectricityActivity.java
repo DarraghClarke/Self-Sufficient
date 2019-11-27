@@ -105,7 +105,8 @@ public class ElectricityActivity extends AppCompatActivity {
                         addDataAlert.cancel();
                         finish();
                         overridePendingTransition(0, 0);
-                        startActivity(getIntent());
+                        //startActivity(getIntent());
+                        startActivity(new Intent(getApplicationContext(), ElectricityActivity.class));
                         overridePendingTransition(0, 0);
                     }
                 });
