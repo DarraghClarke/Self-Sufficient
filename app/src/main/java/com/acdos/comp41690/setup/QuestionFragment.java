@@ -67,7 +67,7 @@ public class QuestionFragment extends Fragment {
                 switch (questionType) {
                     case Constants.QuestionType.ROOF_AREA_QUESTION:
                         Intent intent = new Intent(getContext(), MapActivity.class);
-                        startActivityForResult(intent, ACTIVITY_RETURN_CODE);
+                        startActivityForResult(intent, 1);
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
                         Intent water = new Intent(getContext(), SetupWaterActivity.class);
@@ -96,9 +96,8 @@ public class QuestionFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == ACTIVITY_RETURN_CODE) {//1 for roof_area
+        if (requestCode == 1 && resultCode == 1) {//1 for roof_area
             double result = data.getDoubleExtra("area", -1.0f);
-//            //To save
             final SharedPreferences prefs =  Objects.requireNonNull(getActivity()).getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
 
             SharedPreferences.Editor editor = prefs.edit();
