@@ -1,20 +1,17 @@
 package com.acdos.comp41690.setup;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 /**
@@ -34,12 +31,13 @@ public class WaterTankDialogFragment extends DialogFragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        prefs = getActivity().getSharedPreferences(
-                                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-                        if (tank_size.getText().toString().length() != 0 ){
+
+                        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                        if (tank_size.getText().toString().length() != 0){
                             SharedPreferences.Editor editor = prefs.edit();
                             try {
-                                editor.putFloat("Water_Tank_Size",Float.valueOf(tank_size.getText().toString()));
+                                editor.putString(Constants.SharedPrefKeys.WATER_TANK_SIZE, tank_size.getText().toString());
                                 editor.apply();
                                 ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){

@@ -1,6 +1,5 @@
 package com.acdos.comp41690.setup;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -100,7 +99,7 @@ public class QuestionFragment extends Fragment {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putFloat(Constants.SharedPrefKeys.ROOF_AREA, (float) result);
+            editor.putString(Constants.SharedPrefKeys.ROOF_AREA, String.valueOf(result));
             editor.apply();
 
 

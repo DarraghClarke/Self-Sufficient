@@ -79,7 +79,6 @@ public class HomeFragment extends Fragment {
 
             try {
                 weather = WeatherJSONParser.getWeather(data);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -99,7 +98,6 @@ public class HomeFragment extends Fragment {
                             try {
                                 JSONObject jObj = new JSONObject(response);
 
-                                JSONArray alerts = jObj.getJSONObject("alerts").getJSONArray("alerts");
                                 if(alerts.length()>0){
                                     JSONObject ob =alerts.getJSONObject(0);
 
