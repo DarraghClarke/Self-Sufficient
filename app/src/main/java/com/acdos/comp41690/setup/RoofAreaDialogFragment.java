@@ -38,7 +38,7 @@ public class RoofAreaDialogFragment extends DialogFragment {
                             try {
                                 editor.putFloat("Roof_Area",Float.valueOf(roof_area.getText().toString()));
                                 editor.apply();
-
+                                ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){
                                 Toast.makeText(getContext(), "Please enter a valid value", Toast.LENGTH_SHORT).show();
                             }

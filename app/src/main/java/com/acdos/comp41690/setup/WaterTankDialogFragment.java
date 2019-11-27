@@ -41,6 +41,7 @@ public class WaterTankDialogFragment extends DialogFragment {
                             try {
                                 editor.putFloat("Water_Tank_Size",Float.valueOf(tank_size.getText().toString()));
                                 editor.apply();
+                                ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){
                                 Toast.makeText(getContext(), "Please enter a valid value", Toast.LENGTH_SHORT).show();
                             }

@@ -85,8 +85,6 @@ public class QuestionFragment extends Fragment {
                     case Constants.QuestionType.ROOF_AREA_QUESTION:
                         DialogFragment roofFragment = new RoofAreaDialogFragment();
                         roofFragment.show(getFragmentManager(), "roof_area");
-
-                        ((SetupPagerActivity) getActivity()).moveToNextPage();
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
                         DialogFragment newFragment = new WaterTankDialogFragment();
@@ -110,7 +108,7 @@ public class QuestionFragment extends Fragment {
 
             Toast.makeText(getActivity(), "Area is: " + result, Toast.LENGTH_SHORT).show();
             ((SetupPagerActivity) getActivity()).moveToNextPage();
-        } else if(requestCode == 2 && resultCode == ACTIVITY_RETURN_CODE){// 2 for next page
+        } else if(requestCode == 2 && resultCode == 2){// 2 for next page
             ((SetupPagerActivity) getActivity()).moveToNextPage();
         }
     }
