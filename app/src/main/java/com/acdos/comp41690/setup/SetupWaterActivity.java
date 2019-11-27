@@ -1,14 +1,11 @@
 package com.acdos.comp41690.setup;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -16,12 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.acdos.comp41690.R;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.Objects;
 

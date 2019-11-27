@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.acdos.comp41690.R;
 import com.acdos.comp41690.WeatherJSONParser;
 import com.acdos.comp41690.WeatherStore;
