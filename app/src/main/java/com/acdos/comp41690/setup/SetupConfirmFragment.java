@@ -1,6 +1,5 @@
 package com.acdos.comp41690.setup;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import androidx.fragment.app.Fragment;
 
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.MainActivity;
 import com.acdos.comp41690.R;
 
@@ -23,8 +25,8 @@ public class SetupConfirmFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(
                 R.layout.setup_confirmation_fragment, container, false);
-        final SharedPreferences prefs = getActivity().getSharedPreferences(
-                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         Button confirm = view.findViewById(R.id.Confirm);
 
@@ -33,7 +35,7 @@ public class SetupConfirmFragment extends Fragment {
             public void onClick(View view) {
 
                 //launch app proper
-                prefs.edit().putBoolean("firstrun", false).apply();
+                prefs.edit().putBoolean(Constants.SharedPrefKeys.FIRST_RUN, false).apply();
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }

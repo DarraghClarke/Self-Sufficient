@@ -1,21 +1,13 @@
 package com.acdos.comp41690.ui.rain;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,14 +15,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract;
 
 import java.util.Objects;
-
-import static java.lang.Thread.sleep;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -134,8 +126,8 @@ public class RainViewFragment extends Fragment {
     }
 
     private int getMaxLitre() {
-        prefs = Objects.requireNonNull(getActivity()).getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        int tankSize = (int) prefs.getFloat("Water_Tank_Size", 0f);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int tankSize = (int) prefs.getFloat(Constants.SharedPrefKeys.WATER_TANK_SIZE, 0f);
 
         if(tankSize == 0) {
             currLitre = defaultLitre;

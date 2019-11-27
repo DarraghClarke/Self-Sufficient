@@ -1,7 +1,6 @@
 package com.acdos.comp41690.setup;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 /**
@@ -31,12 +32,11 @@ public class RoofAreaDialogFragment extends DialogFragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        prefs = getActivity().getSharedPreferences(
-                                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+                        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         if (roof_area.getText().toString().length() != 0 ){
                             SharedPreferences.Editor editor = prefs.edit();
                             try {
-                                editor.putFloat("Roof_Area",Float.valueOf(roof_area.getText().toString()));
+                                editor.putFloat(Constants.SharedPrefKeys.ROOF_AREA,Float.valueOf(roof_area.getText().toString()));
                                 editor.apply();
                                 ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){

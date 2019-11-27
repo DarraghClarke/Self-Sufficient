@@ -1,6 +1,5 @@
 package com.acdos.comp41690.setup;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,10 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
-
-import java.util.Objects;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
@@ -41,8 +40,9 @@ public class SetupWaterActivity extends FragmentActivity {
         fiveWeeksButton = findViewById(R.id.fiveWeeks);
         formulaSelector = findViewById(R.id.toggle);
 
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        final Float roof_area = prefs.getFloat("Roof_Area", 0);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        final Float roof_area = prefs.getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0);
 
         final EditText waterUsage = findViewById(R.id.water_usage);
         final TextView tankSize = findViewById(R.id.tank_Size);
@@ -101,10 +101,9 @@ public class SetupWaterActivity extends FragmentActivity {
             public void onClick(View v) {
                 int result = tankSizeInteger;
 //            //To save
-                final SharedPreferences prefs = Objects.requireNonNull(getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE));
-
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupWaterActivity.this);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("Water_Tank_Size", result);
+                editor.putInt(Constants.SharedPrefKeys.WATER_TANK_SIZE, result);
                 editor.apply();
 
                 Toast.makeText(getBaseContext(), "Area is: " + result, Toast.LENGTH_SHORT).show();
