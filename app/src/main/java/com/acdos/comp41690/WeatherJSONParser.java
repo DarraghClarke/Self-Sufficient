@@ -1,5 +1,6 @@
 package com.acdos.comp41690;
-
+/* This file uses code referenced from the open weather api recommended tutorial
+"https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90"*/
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +30,6 @@ public class WeatherJSONParser {
         JSONObject rObj = getObject("rain", jObj);
 
         double rainAmount = rObj.optDouble("1h", rObj.optDouble("3h"));
-
         weather.rain.setAmount((float) rainAmount);
 
         return weather;
