@@ -15,9 +15,12 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 import java.util.Objects;
+
+import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
@@ -31,7 +34,7 @@ public class SetupWaterActivity extends FragmentActivity {
     RadioGroup formulaSelector;
     float roofArea;
     float usage;
-    int tankSizeInteger;
+    float tankSizeInteger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class SetupWaterActivity extends FragmentActivity {
         formulaSelector = findViewById(R.id.toggle);
 
         SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        final Float roof_area = prefs.getFloat("Roof_Area", 0);
+        final Float roof_area = prefs.getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0);
 
         final EditText waterUsage = findViewById(R.id.water_usage);
         final TextView tankSize = findViewById(R.id.tank_Size);
@@ -99,12 +102,12 @@ public class SetupWaterActivity extends FragmentActivity {
         final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int result = tankSizeInteger;
+                float result = tankSizeInteger;
 //            //To save
                 final SharedPreferences prefs = Objects.requireNonNull(getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE));
 
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("Water_Tank_Size", result);
+                editor.putFloat(WATER_TANK_SIZE, result);
                 editor.apply();
 
                 Toast.makeText(getBaseContext(), "Area is: " + result, Toast.LENGTH_SHORT).show();
@@ -121,7 +124,6 @@ public class SetupWaterActivity extends FragmentActivity {
         int averageRainFall = 800;
         int weeklyBased = (int) Math.round((roofArea * drainageCoeffient * filterEfficiency * averageRainFall));
         int usageBased = (int) Math.round((usage * 5));
-
 
         if (fiveWeeksButton.isChecked()) {
             tankSizeInteger = weeklyBased;

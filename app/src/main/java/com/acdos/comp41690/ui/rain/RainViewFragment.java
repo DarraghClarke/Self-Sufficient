@@ -30,6 +30,7 @@ import com.acdos.comp41690.data.WaterUsageContract;
 
 import java.util.Objects;
 
+import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 import static java.lang.Thread.sleep;
 
 /**
@@ -135,7 +136,7 @@ public class RainViewFragment extends Fragment {
 
     private int getMaxLitre() {
         prefs = Objects.requireNonNull(getActivity()).getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        int tankSize = (int) prefs.getFloat("Water_Tank_Size", 0f);
+        int tankSize = (int) prefs.getFloat(WATER_TANK_SIZE, 0f);
 
         if(tankSize == 0) {
             currLitre = defaultLitre;

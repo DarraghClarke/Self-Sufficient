@@ -1,21 +1,19 @@
 package com.acdos.comp41690.setup;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import com.acdos.comp41690.R;
+
+import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-15.
@@ -39,7 +37,7 @@ public class WaterTankDialogFragment extends DialogFragment {
                         if (tank_size.getText().toString().length() != 0 ){
                             SharedPreferences.Editor editor = prefs.edit();
                             try {
-                                editor.putFloat("Water_Tank_Size",Float.valueOf(tank_size.getText().toString()));
+                                editor.putFloat(WATER_TANK_SIZE,Float.valueOf(tank_size.getText().toString()));
                                 editor.apply();
                                 ((SetupPagerActivity) getActivity()).moveToNextPage();
                             } catch (Exception ex){
