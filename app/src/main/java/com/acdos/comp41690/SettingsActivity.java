@@ -92,10 +92,12 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.settings_main, rootKey);
 
-            EditTextPreference numberPreference = findPreference(getString(R.string.settings_num_articles_key));
+            EditTextPreference roofArea = findPreference(Constants.SharedPrefKeys.ROOF_AREA);
 
-            if (numberPreference != null) {
-                numberPreference.setOnBindEditTextListener(
+            if (roofArea != null) {
+                float value = getPreferenceManager().getSharedPreferences().getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0.0f);
+                roofArea.setText(String.valueOf(value));
+                roofArea.setOnBindEditTextListener(
                         new EditTextPreference.OnBindEditTextListener() {
                             @Override
                             public void onBindEditText(@NonNull EditText editText) {
