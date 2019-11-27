@@ -7,10 +7,12 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/tank_Size_dialog"
+        android:id="@+id/size_dialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         android:digits="1234567890."
         android:hint="@string/volume_litres"
         android:inputType="numberDecimal"
@@ -20,26 +22,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/submitButtonDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/dialog_positive_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cancelButtonDialog"
-        app:layout_constraintTop_toBottomOf="@+id/tank_Size_dialog" />
+        app:layout_constraintTop_toBottomOf="@+id/size_dialog" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelButtonDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/dialog_negative_button"
         app:layout_constraintEnd_toStartOf="@+id/submitButtonDialog"
+        app:layout_constraintHorizontal_bias="0.76"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tank_Size_dialog" />
+        app:layout_constraintTop_toBottomOf="@+id/size_dialog" />
 </androidx.constraintlayout.widget.ConstraintLayout>

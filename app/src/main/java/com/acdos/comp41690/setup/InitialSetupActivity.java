@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.acdos.comp41690.R;
 
@@ -27,7 +26,7 @@ public class InitialSetupActivity extends FragmentActivity {
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    private CustomPager mPager;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.

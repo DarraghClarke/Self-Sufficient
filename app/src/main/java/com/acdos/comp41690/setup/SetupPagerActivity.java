@@ -15,9 +15,9 @@ public class SetupPagerActivity extends FragmentActivity {
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    private CustomPager mPager;
 
-    protected void setViewPager(ViewPager viewPager) {
+    protected void setViewPager(CustomPager viewPager) {
         this.mPager = viewPager;
     }
 
@@ -38,6 +38,6 @@ public class SetupPagerActivity extends FragmentActivity {
     }
 
     public void moveToNextPage() {
-        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+        mPager.setCurrentItem(mPager.getCurrentItem()+1);
     }
 }

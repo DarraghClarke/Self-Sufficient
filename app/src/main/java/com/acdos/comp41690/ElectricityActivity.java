@@ -13,15 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.acdos.comp41690.data.SolarGenerationContract;
-import com.acdos.comp41690.data.SolarUsageContract;
-import com.acdos.comp41690.data.UserDataDbHelper;
-import com.acdos.comp41690.ui.solar.SolarSectionsPagerAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,7 +23,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.acdos.comp41690.data.SolarGenerationContract;
+import com.acdos.comp41690.data.SolarUsageContract;
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.ui.solar.SolarSectionsPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -102,7 +102,8 @@ public class ElectricityActivity extends AppCompatActivity {
                         addDataAlert.cancel();
                         finish();
                         overridePendingTransition(0, 0);
-                        startActivity(getIntent());
+                        //startActivity(getIntent());
+                        startActivity(new Intent(getApplicationContext(), ElectricityActivity.class));
                         overridePendingTransition(0, 0);
                     }
                 });
