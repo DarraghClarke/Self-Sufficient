@@ -44,6 +44,10 @@
             android:name=".setup.MapActivity"
             android:label="MapActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.SetupWaterActivity"
+            android:label="SetupWaterFragmemt"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             >

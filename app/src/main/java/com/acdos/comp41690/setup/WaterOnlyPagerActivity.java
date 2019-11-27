@@ -17,7 +17,7 @@ public class WaterOnlyPagerActivity extends SetupPagerActivity {
      * The number of pages (wizard steps) in the water setup.
      */
     private int NUM_PAGES=3;
-    private ViewPager mPager;
+    private CustomPager mPager;
     private PagerAdapter pagerAdapter;
 
     @Override
@@ -43,11 +43,11 @@ public class WaterOnlyPagerActivity extends SetupPagerActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
-                case 1:
                     return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
+                case 1:
+                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
                 case 2:
-                    return new SetupWaterFragment();
+                    return new SetupConfirmFragment();
                 default:
                     return new SetupPageFragment();
             }

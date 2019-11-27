@@ -17,7 +17,7 @@ public class FullPagerActivity extends SetupPagerActivity {
      * The number of pages (wizard steps) in the full setup process.
      */
     private int NUM_PAGES=4;
-    private ViewPager mPager;
+    private CustomPager mPager;
     private PagerAdapter pagerAdapter;
 
     @Override
@@ -43,13 +43,13 @@ public class FullPagerActivity extends SetupPagerActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
-                case 1:
                     return new QuestionFragment(Constants.QuestionType.ROOF_AREA_QUESTION);
+                case 1:
+                    return new QuestionFragment(Constants.QuestionType.WATER_TANK_QUESTION);
                 case 2:
-                    return new SetupWaterFragment();
-                 case 3:
                     return new SetupSolarFragment();
+                 case 3:
+                    return new SetupConfirmFragment();
                 default:
                     return new SetupPageFragment();
             }
