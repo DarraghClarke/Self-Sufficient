@@ -28,8 +28,10 @@ public class WeatherJSONParser {
         JSONObject wObj = getObject("wind", jObj);
         weather.wind.setSpeed(getFloat("speed", wObj));
         JSONObject rObj = getObject("rain", jObj);
+
         double rainAmount = rObj.optDouble("1h", rObj.optDouble("3h"));
-        weather.rain.setAmount((float)rainAmount);
+        weather.rain.setAmount((float) rainAmount);
+
         return weather;
     }
 
