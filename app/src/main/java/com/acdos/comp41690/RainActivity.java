@@ -33,6 +33,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 public class RainActivity extends AppCompatActivity {
@@ -81,7 +83,7 @@ public class RainActivity extends AppCompatActivity {
                 radioGroup.setVisibility(View.INVISIBLE);
 
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
-                inputField.setText(R.string.water_usage_input_dialog);
+                inputField.setText(R.string.water_usage_formula_label);
                 TextView Title = addDataAlert.findViewById(R.id.Title);
                 Title.setText("Water Input");
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
@@ -165,9 +167,19 @@ public class RainActivity extends AppCompatActivity {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(RainActivity.this);
         ContentValues value = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
+        Timestamp timestamp = getTime();
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
         value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input);
-        value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+        value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, sdf.format(timestamp) );
         userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
+    }
+
+    public static Timestamp getTime(){
+
+        Timestamp timestamp = new Timestamp((System.currentTimeMillis()));
+
+
+        return timestamp;
     }
 }

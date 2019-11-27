@@ -1,14 +1,33 @@
 package com.acdos.comp41690.ui.rain;
 
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acdos.comp41690.R;
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,7 +61,86 @@ public class RainStatsFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_electricity_stats, container, false);
+        View root = inflater.inflate(R.layout.fragement_rain_stats, container, false);
+
+        Button button = root.findViewById(R.id.button);
+        final Random r = new Random();
+
+        //Graph
+        createGraph(root);
         return root;
     }
+
+    private void createGraph(View root) {
+        GraphView lineGraph = (GraphView) root.findViewById(R.id.lineGraph);
+        DataPoint[] data = waterUsage();
+
+        if(!data.equals(null)) {
+            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
+
+            lineGraph.setTitle("Electricty Usage Over Time");
+            lineGraphSeries.setColor(Color.RED);
+            lineGraphSeries.setDrawDataPoints(true);
+            lineGraphSeries.setDataPointsRadius(10);
+            lineGraphSeries.setThickness(8);
+
+
+            ArrayList<Long> xAxis = new ArrayList<>();
+            for(DataPoint dataPoint:data){
+                xAxis.add((long) dataPoint.getX());
+            }
+            int minIndex = xAxis.indexOf(Collections.min(xAxis));
+            int min = Math.toIntExact(xAxis.get(minIndex));
+            int maxIndex = xAxis.indexOf(Collections.max(xAxis));
+            int max = Math.toIntExact(xAxis.get(maxIndex));
+            if(xAxis.size() >0) {
+
+                lineGraph.getViewport().setMinX(min);
+                if (min == max) {
+                    lineGraph.getViewport().setMaxX(max+4);
+                } else {
+                    lineGraph.getViewport().setMaxX(max);
+                }
+
+
+                lineGraph.getViewport().setXAxisBoundsManual(true);
+            }
+
+            lineGraph.addSeries(lineGraphSeries);
+        }
+
+
+    }
+
+    private DataPoint[] waterUsage() {
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
+
+
+        SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
+
+
+        String[] projectionUsage = {
+                WaterUsageContract.WaterUsageEntry._ID,
+                WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP,
+                WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME};
+
+
+        int count = (int) DatabaseUtils.queryNumEntries(userDb, WaterUsageContract.WaterUsageEntry.TABLE_NAME);
+        DataPoint[] values = new DataPoint[count];
+
+        Cursor cUsage = userDb.query(WaterUsageContract.WaterUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+
+        int i=0;
+        while (cUsage.moveToNext()) {
+            Log.d("RainStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
+            DataPoint v = new DataPoint(cUsage.getLong(1), cUsage.getLong(2));
+            values[i] = v;
+            i++;
+        }
+
+
+        cUsage.close();
+        return values;
+    }
+
 }

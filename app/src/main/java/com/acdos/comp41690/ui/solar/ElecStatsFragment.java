@@ -29,7 +29,9 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -75,25 +77,48 @@ public class ElecStatsFragment extends Fragment {
 
         return rootView;
     }
-    public void createGraph(View rootView){
+
+    public void createGraph(View rootView) {
         GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
         DataPoint[] data = usageTimeData();
 
-        if(!data.equals(null)) {
-            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
 
-            lineGraph.setTitle("Electricty Usage Over Time");
-            lineGraphSeries.setColor(Color.RED);
-            lineGraphSeries.setDrawDataPoints(true);
-            lineGraphSeries.setDataPointsRadius(10);
-            lineGraphSeries.setThickness(8);
-            lineGraph.addSeries(lineGraphSeries);
+            if (!data.equals(null)) {
+                LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
+
+
+                lineGraph.setTitle("Electricty Usage Over Time");
+                lineGraphSeries.setColor(Color.RED);
+                lineGraphSeries.setDrawDataPoints(true);
+                lineGraphSeries.setDataPointsRadius(10);
+                lineGraphSeries.setThickness(8);
+
+                ArrayList<Long> xAxis = new ArrayList<>();
+                for (DataPoint dataPoint : data) {
+                    xAxis.add((long) dataPoint.getX());
+                }
+                int minIndex = xAxis.indexOf(Collections.min(xAxis));
+                int min = Math.toIntExact(xAxis.get(minIndex));
+                int maxIndex = xAxis.indexOf(Collections.max(xAxis));
+                int max = Math.toIntExact(xAxis.get(maxIndex));
+                if (data.length > 0) {
+
+                    lineGraph.getViewport().setMinX(min);
+                    if (min == max) {
+                        lineGraph.getViewport().setMaxX(max+4);
+                    } else {
+                        lineGraph.getViewport().setMaxX(max);
+                    }
+                    lineGraph.getViewport().setXAxisBoundsManual(true);
+        }
+                lineGraph.addSeries(lineGraphSeries);
         }
         // generated over time
         GraphView lineGraphGenerated = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
         DataPoint[] dataGenerated = generatedTimeData();
 
-        if(!dataGenerated.equals(null)) {
+
+        if (!dataGenerated.equals(null)) {
             LineGraphSeries<DataPoint> lineGraphSeriesGenerated = new LineGraphSeries<DataPoint>(dataGenerated);
 
 
@@ -102,28 +127,37 @@ public class ElecStatsFragment extends Fragment {
             lineGraphSeriesGenerated.setDrawDataPoints(true);
             lineGraphSeriesGenerated.setDataPointsRadius(10);
             lineGraphSeriesGenerated.setThickness(8);
+
+            ArrayList<Long> xAxis2 = new ArrayList<>();
+            for(DataPoint dataPoint:dataGenerated){
+                xAxis2.add((long) dataPoint.getX());
+            }
+            int minIndex2 = xAxis2.indexOf(Collections.min(xAxis2));
+            int min2 = Math.toIntExact(xAxis2.get(minIndex2));
+
+            int maxIndex2 = xAxis2.indexOf(Collections.max(xAxis2));
+            int max2 = Math.toIntExact(xAxis2.get(maxIndex2));
+
+            if(data.length >0) {
+
+                lineGraphGenerated.getViewport().setMinX(min2);
+                if (min2 == max2) {
+                    lineGraphGenerated.getViewport().setMaxX(max2+4);
+                } else {
+                    lineGraphGenerated.getViewport().setMaxX(max2);
+                }
+
+
+                lineGraphGenerated.getViewport().setXAxisBoundsManual(true);
+            }
             lineGraphGenerated.addSeries(lineGraphSeriesGenerated);
         }
 
-        //generated over usage
-//        GraphView lineGraphGenUse = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
-//        DataPoint[] dataGenUse = genUseTimeData();
-//
-//        if(!dataGenUse.equals(null)) {
-//            LineGraphSeries<DataPoint> lineGraphSeriesGenUse = new LineGraphSeries<DataPoint>(dataGenUse);
-//
-//
-//        lineGraphGenUse.setTitle("Generated Electricty Usage Over Time");
-//        lineGraphSeriesGenUse.setColor(Color.RED);
-//        lineGraphSeriesGenUse.setDrawDataPoints(true);
-//        lineGraphSeriesGenUse.setDataPointsRadius(10);
-//        lineGraphSeriesGenUse.setThickness(8);
-//        lineGraphGenUse.addSeries(lineGraphSeriesGenUse);
-//        }
-
-
 
     }
+
+
+
     public DataPoint[] usageTimeData() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
@@ -149,6 +183,7 @@ public class ElecStatsFragment extends Fragment {
             values[i] = v;
             i++;
         }
+
 
 
         cUsage.close();

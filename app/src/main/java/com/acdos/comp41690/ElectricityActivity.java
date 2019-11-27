@@ -34,10 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
 
-import static java.lang.System.currentTimeMillis;
 
 public class ElectricityActivity extends AppCompatActivity {
 
