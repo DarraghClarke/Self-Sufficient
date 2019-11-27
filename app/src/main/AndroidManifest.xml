@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.acdos.comp41690">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:usesCleartextTraffic="true">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,7 +26,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.SetupPagerActivity"
-            android:label="ScreenSlidePagerActivity"
+            android:label="SetupPagerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.InitialSetupActivity"
+            android:label="InitialSetupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.WaterOnlyPagerActivity"
@@ -42,13 +48,19 @@
             android:name=".setup.MapActivity"
             android:label="MapActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.SetupWaterActivity"
+            android:label="SetupWaterFragmemt"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ElectricityActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".RainActivity"

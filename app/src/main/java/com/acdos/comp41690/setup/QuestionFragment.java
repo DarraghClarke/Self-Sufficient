@@ -68,7 +68,8 @@ public class QuestionFragment extends Fragment {
                         startActivityForResult(intent, ACTIVITY_RETURN_CODE);
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
-                        ((SetupPagerActivity) getActivity()).moveToNextPage();
+                        Intent water = new Intent(getContext(), SetupWaterActivity.class);
+                        startActivityForResult(water, 2);
                 }
             }
         });
@@ -80,12 +81,12 @@ public class QuestionFragment extends Fragment {
             public void onClick(View view) {
                 switch (questionType) {
                     case Constants.QuestionType.ROOF_AREA_QUESTION:
-                        ((SetupPagerActivity) getActivity()).moveToNextPage();
+                        DialogFragment roofFragment = new RoofAreaDialogFragment();
+                        roofFragment.show(getFragmentManager(), "roof_area");
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
                         DialogFragment newFragment = new WaterTankDialogFragment();
                         newFragment.show(getFragmentManager(), "water_tank");
-
                 }
             }
         });
@@ -93,7 +94,7 @@ public class QuestionFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1 && resultCode == ACTIVITY_RETURN_CODE) {//1 for roof_area
             double result = data.getDoubleExtra("area", -1.0f);
 //            //To save
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -104,6 +105,8 @@ public class QuestionFragment extends Fragment {
 
 
             Toast.makeText(getActivity(), "Area is: " + result, Toast.LENGTH_SHORT).show();
+            ((SetupPagerActivity) getActivity()).moveToNextPage();
+        } else if(requestCode == 2 && resultCode == 2){// 2 for next page
             ((SetupPagerActivity) getActivity()).moveToNextPage();
         }
     }

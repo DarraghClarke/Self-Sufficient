@@ -43,8 +43,6 @@ public class SetupWaterFragment extends Fragment {
 
         formulaSelector = rootView.findViewById(R.id.toggle);
 
-
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final Float roof_area = prefs.getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0);
 

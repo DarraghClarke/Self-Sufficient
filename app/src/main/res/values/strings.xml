@@ -37,6 +37,7 @@
     </string-array>
 
     <string name="roof_area">0</string>
+<<<<<<< HEAD
 
     <string name="empty">No articles available, try again later.</string>
     <string name="no_connection">You have no internet connection.</string>
@@ -71,4 +72,17 @@
         <item>@string/settings_order_by_oldest_value</item>
         <item>@string/settings_order_by_relevance_value</item>
     </string-array>
+=======
+    <string name="dialog_enter_output">Enter Output</string>
+    <string name="dialog_enter_usage">Enter Usage</string>
+    <string name="dialog_input_data">Input</string>
+    <string name="dialog_title">Solar Input</string>
+    <string name="dialog_positive_button">Enter</string>
+    <string name="dialog_negative_button">Cancel</string>
+    <string name="volume_litres">Volume (litres)</string>
+    <string name="tank_size_calculator">Tank Size Calculator</string>
+    <string name="roof_area_input">Roof Area in metres squared</string>
+    <string name="water_usage_input_dialog">Enter Water Usage in Litres</string>
+    <string name="setup_end_text">Thanks for filling out the setup forms, the full experience is just a click away!</string>
+>>>>>>> master
 </resources>
