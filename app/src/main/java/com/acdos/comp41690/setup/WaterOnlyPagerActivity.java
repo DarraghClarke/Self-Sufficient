@@ -17,7 +17,7 @@ public class WaterOnlyPagerActivity extends SetupPagerActivity {
      * The number of pages (wizard steps) in the water setup.
      */
     private int NUM_PAGES=3;
-    private ViewPager mPager;
+    private CustomPager mPager;
     private PagerAdapter pagerAdapter;
 
     @Override

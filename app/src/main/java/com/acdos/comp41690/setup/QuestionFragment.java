@@ -71,7 +71,7 @@ public class QuestionFragment extends Fragment {
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
                         Intent water = new Intent(getContext(), SetupWaterActivity.class);
-                        startActivityForResult(water, ACTIVITY_RETURN_CODE);
+                        startActivityForResult(water, 2);
                 }
             }
         });
@@ -85,7 +85,8 @@ public class QuestionFragment extends Fragment {
                     case Constants.QuestionType.ROOF_AREA_QUESTION:
                         DialogFragment roofFragment = new RoofAreaDialogFragment();
                         roofFragment.show(getFragmentManager(), "roof_area");
-                        //((SetupPagerActivity) getActivity()).moveToNextPage();
+
+                        ((SetupPagerActivity) getActivity()).moveToNextPage();
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:
                         DialogFragment newFragment = new WaterTankDialogFragment();
@@ -97,7 +98,7 @@ public class QuestionFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1 && resultCode == ACTIVITY_RETURN_CODE) {//1 for roof_area
             double result = data.getDoubleExtra("area", -1.0f);
 //            //To save
             final SharedPreferences prefs =  Objects.requireNonNull(getActivity()).getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
@@ -108,6 +109,8 @@ public class QuestionFragment extends Fragment {
 
 
             Toast.makeText(getActivity(), "Area is: " + result, Toast.LENGTH_SHORT).show();
+            ((SetupPagerActivity) getActivity()).moveToNextPage();
+        } else if(requestCode == 2 && resultCode == ACTIVITY_RETURN_CODE){// 2 for next page
             ((SetupPagerActivity) getActivity()).moveToNextPage();
         }
     }

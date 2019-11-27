@@ -17,7 +17,7 @@ public class FullPagerActivity extends SetupPagerActivity {
      * The number of pages (wizard steps) in the full setup process.
      */
     private int NUM_PAGES=4;
-    private ViewPager mPager;
+    private CustomPager mPager;
     private PagerAdapter pagerAdapter;
 
     @Override

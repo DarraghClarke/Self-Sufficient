@@ -16,7 +16,7 @@ public class SolarOnlyPagerActivity extends SetupPagerActivity {
      * The number of pages (wizard steps) in the solar setup.
      */
     private int NUM_PAGES = 2;
-    private ViewPager mPager;
+    private CustomPager mPager;
     private PagerAdapter pagerAdapter;
 
 

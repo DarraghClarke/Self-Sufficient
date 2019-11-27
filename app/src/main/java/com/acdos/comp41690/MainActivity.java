@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             // Launch set-up view
             Intent intent = new Intent(this, InitialSetupActivity.class);
 
-            prefs.edit().putBoolean("firstrun", false).apply();
+            //prefs.edit().putBoolean("firstrun", false).apply();
 
             startActivity(intent);
         }

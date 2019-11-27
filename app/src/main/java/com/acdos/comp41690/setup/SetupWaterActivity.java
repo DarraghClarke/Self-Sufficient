@@ -1,5 +1,6 @@
 package com.acdos.comp41690.setup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,12 +14,16 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.acdos.comp41690.R;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import java.util.Objects;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
@@ -32,6 +37,7 @@ public class SetupWaterActivity extends FragmentActivity {
     RadioGroup formulaSelector;
     float roofArea;
     float usage;
+    int tankSizeInteger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +109,18 @@ public class SetupWaterActivity extends FragmentActivity {
         final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                int result = tankSizeInteger;
+//            //To save
+                final SharedPreferences prefs =  Objects.requireNonNull(getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE));
 
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("Water_Tank_Size",result);
+                editor.apply();
+
+                Toast.makeText(getBaseContext(), "Area is: " + result, Toast.LENGTH_SHORT).show();
+
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         });
 
@@ -116,10 +133,10 @@ public class SetupWaterActivity extends FragmentActivity {
 
 
         if ( fiveWeeksButton.isChecked() ) {
-            System.out.println("used");
+            tankSizeInteger=weeklyBased;
             return weeklyBased;
         } else {
-            System.out.println("tried" + usageBased);
+            tankSizeInteger=usageBased;
             return usageBased;
         }
     }
