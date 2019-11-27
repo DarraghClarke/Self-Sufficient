@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment {
         private void setWeather(WeatherStore weather) {
 
             temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
-
+            temp.setTextSize(90);
             rainFall.setText(""+weather.rain.getAmount());
             minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"C");
             maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"C");
