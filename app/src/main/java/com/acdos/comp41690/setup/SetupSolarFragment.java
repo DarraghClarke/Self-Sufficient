@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -46,9 +47,12 @@ public class SetupSolarFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences.Editor editor = prefs.edit();
                 if (solar_panel_output.getText().length()!=0 && kwh_rate.getText().length()!=0) {
-                    editor.putFloat("Solar_Panel_Output",Integer.getInteger(solar_panel_output.getText().toString()));
-                    editor.putFloat("kwh_rate",Integer.getInteger(kwh_rate.getText().toString()));
+                    editor.putFloat("Solar_Panel_Output",Float.valueOf(solar_panel_output.getText().toString()));
+                    editor.putFloat("kwh_rate",Float.valueOf(kwh_rate.getText().toString()));
                 }
+                Toast.makeText(getContext(),"Solar output "+Float.valueOf(solar_panel_output.getText().toString())
+                        +" and kwh rate of "+ Float.valueOf(kwh_rate.getText().toString()),Toast.LENGTH_SHORT).show();
+                ((SetupPagerActivity) getActivity()).moveToNextPage();
             }
         });
 
