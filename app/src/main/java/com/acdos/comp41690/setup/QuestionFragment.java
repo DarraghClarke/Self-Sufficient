@@ -1,7 +1,6 @@
 package com.acdos.comp41690.setup;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,11 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
-
-import java.util.Objects;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
@@ -98,10 +96,10 @@ public class QuestionFragment extends Fragment {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             double result = data.getDoubleExtra("area", -1.0f);
 //            //To save
-            final SharedPreferences prefs =  Objects.requireNonNull(getActivity()).getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putFloat("Roof_Area",(float) result);
+            editor.putFloat(Constants.SharedPrefKeys.ROOF_AREA, (float) result);
             editor.apply();
 
 

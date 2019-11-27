@@ -1,13 +1,10 @@
 package com.acdos.comp41690;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -88,41 +87,69 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    public static class AppPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
-
+    public static class AppPreferenceFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settings_main);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.settings_main, rootKey);
 
-            Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
-            bindPreferenceSummaryToValue(orderBy);
+            EditTextPreference numberPreference = findPreference(getString(R.string.settings_num_articles_key));
 
-            Preference numArticles = findPreference(getString(R.string.settings_num_articles_key));
-            bindPreferenceSummaryToValue(numArticles);
-        }
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-            if (preference instanceof ListPreference) {
-                ListPreference listPreference = (ListPreference) preference;
-                int prefIndex = listPreference.findIndexOfValue(stringValue);
-                if (prefIndex >= 0) {
-                    CharSequence[] labels = listPreference.getEntries();
-                    preference.setSummary(labels[prefIndex]);
-                }
-            } else {
-                preference.setSummary(stringValue);
+            if (numberPreference != null) {
+                numberPreference.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                            }
+                        });
             }
-            return true;
+
         }
 
-        private void bindPreferenceSummaryToValue(Preference preference) {
-            preference.setOnPreferenceChangeListener(this);
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
-            String preferenceString = preferences.getString(preference.getKey(), "");
-            onPreferenceChange(preference, preferenceString);
-        }
+//        @Override
+//        public void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            addPreferencesFromResource(R.xml.settings_main);
+//
+//            Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
+//            bindPreferenceSummaryToValue(orderBy);
+//
+//            Preference pref = findPreference("edit");
+//            prefEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+//            prefEditText.setSingleLine(true);
+//
+//            Preference numArticles = findPreference(getString(R.string.settings_num_articles_key));
+//            bindPreferenceSummaryToValue(numArticles);
+//        }
+//
+//        @Override
+//        public boolean onPreferenceChange(Preference preference, Object value) {
+//            String stringValue = value.toString();
+//            if (preference instanceof ListPreference) {
+//                ListPreference listPreference = (ListPreference) preference;
+//                int prefIndex = listPreference.findIndexOfValue(stringValue);
+//                if (prefIndex >= 0) {
+//                    CharSequence[] labels = listPreference.getEntries();
+//                    preference.setSummary(labels[prefIndex]);
+//                }
+//            } else {
+//                preference.setSummary(stringValue);
+//            }
+//            return true;
+//        }
+//
+//        private void bindPreferenceSummaryToValue(Preference preference) {
+//            preference.setOnPreferenceChangeListener(this);
+//            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
+//            String preferenceString = preferences.getString(preference.getKey(), "");
+//            onPreferenceChange(preference, preferenceString);
+//        }
     }
 }
+
+//    Float("Roof_Area",
+//          Float("Water_Tank_Size" //should maybe become int imo
+//
+//                  Float("Solar_Panel_Output",
+//          Float("kwh_rate",
+//          Boolean firstrun

@@ -1,7 +1,6 @@
 package com.acdos.comp41690;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -21,6 +20,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         testDb();
 
-        prefs = getSharedPreferences(
-                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -130,11 +129,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
 
-        if (prefs.getBoolean("firstrun", true)) {
+        if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
             // Launch set-up view
             Intent intent = new Intent(this, SetupPagerActivity.class);
 
-            prefs.edit().putBoolean("firstrun", false).apply();
+            prefs.edit().putBoolean(Constants.SharedPrefKeys.FIRST_RUN, false).apply();
 
             startActivity(intent);
         }

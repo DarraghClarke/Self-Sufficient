@@ -1,6 +1,5 @@
 package com.acdos.comp41690.setup;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,7 +12,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 /**
@@ -42,8 +45,8 @@ public class SetupWaterFragment extends Fragment {
 
 
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        final Float roof_area = prefs.getFloat("Roof_Area", 0);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final Float roof_area = prefs.getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0);
 
         final EditText waterUsage= rootView.findViewById(R.id.water_usage);
         final TextView tankSize= rootView.findViewById(R.id.tank_Size);
