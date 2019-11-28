@@ -20,13 +20,19 @@ import com.acdos.comp41690.R;
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -67,54 +73,51 @@ public class RainStatsFragment extends Fragment {
         final Random r = new Random();
 
         //Graph
-        createGraph(root);
+        try {
+            createGraph(root);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
-    private void createGraph(View root) {
+    private void createGraph(View root) throws ParseException {
         GraphView lineGraph = (GraphView) root.findViewById(R.id.lineGraph);
+
         DataPoint[] data = waterUsage();
 
         if(!data.equals(null)) {
             LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
 
-            lineGraph.setTitle("Electricty Usage Over Time");
+            lineGraph.setTitle("Water Usage Over Time");
             lineGraphSeries.setColor(Color.RED);
             lineGraphSeries.setDrawDataPoints(true);
             lineGraphSeries.setDataPointsRadius(10);
             lineGraphSeries.setThickness(8);
+            GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
+//          lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4)
+            gridLabel.setHorizontalAxisTitle("Time (in days)");
+            gridLabel.setVerticalAxisTitle("Water Input (liters)");
 
-
-            ArrayList<Long> xAxis = new ArrayList<>();
-            for(DataPoint dataPoint:data){
-                xAxis.add((long) dataPoint.getX());
-            }
-            int minIndex = xAxis.indexOf(Collections.min(xAxis));
-            int min = Math.toIntExact(xAxis.get(minIndex));
-            int maxIndex = xAxis.indexOf(Collections.max(xAxis));
-            int max = Math.toIntExact(xAxis.get(maxIndex));
-            if(xAxis.size() >0) {
-
-                lineGraph.getViewport().setMinX(min);
-                if (min == max) {
-                    lineGraph.getViewport().setMaxX(max+4);
-                } else {
-                    lineGraph.getViewport().setMaxX(max);
+            lineGraphSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
                 }
-
-
-                lineGraph.getViewport().setXAxisBoundsManual(true);
-            }
-
+            });
             lineGraph.addSeries(lineGraphSeries);
         }
 
 
+
     }
 
-    private DataPoint[] waterUsage() {
-        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
+
+
+    private DataPoint[] waterUsage() throws ParseException {
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
+        final SimpleDateFormat sdf = new SimpleDateFormat("ddMM");
 
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
 
@@ -132,8 +135,9 @@ public class RainStatsFragment extends Fragment {
 
         int i=0;
         while (cUsage.moveToNext()) {
+
             Log.d("RainStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
-            DataPoint v = new DataPoint(cUsage.getLong(1), cUsage.getLong(2));
+            DataPoint v = new DataPoint(((cUsage.getLong(1))), cUsage.getLong(2));
             values[i] = v;
             i++;
         }

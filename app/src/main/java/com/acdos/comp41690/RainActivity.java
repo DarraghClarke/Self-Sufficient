@@ -33,6 +33,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -171,17 +172,17 @@ public class RainActivity extends AppCompatActivity {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(RainActivity.this);
         ContentValues value = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-        Timestamp timestamp = getTime();
-        final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        Date timestamp = getTime();
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
 
         value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input);
         value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, sdf.format(timestamp) );
         userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
     }
 
-    public static Timestamp getTime(){
+    public static Date getTime(){
 
-        Timestamp timestamp = new Timestamp((System.currentTimeMillis()));
+        Date timestamp = new Date((System.currentTimeMillis()));
 
 
         return timestamp;

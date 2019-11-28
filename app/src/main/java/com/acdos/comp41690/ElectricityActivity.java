@@ -179,7 +179,7 @@ public class ElectricityActivity extends AppCompatActivity {
             userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
         } else {
             value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, input);
-            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,sdf.format(timestamp)  );
+            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,sdf.format(timestamp) );
             userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
         }
     }
