@@ -72,6 +72,7 @@ public class RainViewFragment extends Fragment {
         GradientDrawable shapeDrawable = (GradientDrawable) imageView.getDrawable();
         shapeDrawable.setSize(90, 80);
         imageView.setPadding(0, 0 , 0, 0);
+        System.out.println("YES");
         maxLitre = getMaxLitre();
         currLitre = getCurrLitre();
         runUIThread(currLitre);
@@ -116,11 +117,14 @@ public class RainViewFragment extends Fragment {
             val = defaultLitre;
         }
 
+        System.out.println(val + " >" + maxLitre+"? " + (val > maxLitre));
         if(val > maxLitre) {
             Toast.makeText(getContext(), "DB_ERROR: Current volume must be smaller than max volume.", Toast.LENGTH_SHORT).show();
             val = defaultLitre;
             currLitre = defaultLitre;
         }
+
+        System.out.println(val);
         cursor.close();
         return val;
     }
@@ -130,6 +134,8 @@ public class RainViewFragment extends Fragment {
         String tankSizeStr = prefs.getString(Constants.SharedPrefKeys.WATER_TANK_SIZE, "0");
         int tankSize = (int)Float.parseFloat(tankSizeStr);
 
+        System.out.println(tankSize);
+        System.out.println(currLitre);
         if(tankSize == 0) {
             currLitre = defaultLitre;
         }
