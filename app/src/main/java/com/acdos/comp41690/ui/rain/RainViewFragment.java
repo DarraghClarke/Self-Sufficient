@@ -1,17 +1,13 @@
 package com.acdos.comp41690.ui.rain;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +15,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract;
 
 import java.util.Objects;
 
+import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 import static java.lang.Thread.sleep;
 
 /**
@@ -36,6 +37,8 @@ public class RainViewFragment extends Fragment {
     private RainPageViewModel pageViewModel;
     private int maxLitre = 5500;
     private int currLitre= 5500;
+    private int defaultLitre = 0;
+    SharedPreferences prefs = null;
 
     public static RainViewFragment newInstance(int index) {
         RainViewFragment fragment = new RainViewFragment();
@@ -72,6 +75,8 @@ public class RainViewFragment extends Fragment {
         GradientDrawable shapeDrawable = (GradientDrawable) imageView.getDrawable();
         shapeDrawable.setSize(90, 80);
         imageView.setPadding(0, 0 , 0, 0);
+        maxLitre = getMaxLitre();
+        currLitre = getCurrLitre();
         runUIThread(currLitre);
     }
 
@@ -96,5 +101,46 @@ public class RainViewFragment extends Fragment {
                 versus.setText(versusString);
             }
         });
+    }
+
+    private int getCurrLitre() {
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
+        SQLiteDatabase userDb = userDataDbHelper.getReadableDatabase();
+
+        String[] projectionUsage = { WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME };
+
+        Cursor cursor = userDb.query(WaterUsageContract.WaterUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+        int val;
+        if(cursor.moveToLast()) {
+            val = cursor.getInt(0);
+        }
+        else {
+            Toast.makeText(getContext(), "DB_ERROR: Using default value.", Toast.LENGTH_SHORT).show();
+            val = defaultLitre;
+        }
+
+        if(val > maxLitre) {
+            Toast.makeText(getContext(), "DB_ERROR: Current volume must be smaller than max volume.", Toast.LENGTH_SHORT).show();
+            val = defaultLitre;
+            currLitre = defaultLitre;
+        }
+        cursor.close();
+        return val;
+    }
+
+    private int getMaxLitre() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String tankSizeStr = prefs.getString(Constants.SharedPrefKeys.WATER_TANK_SIZE, "0");
+        int tankSize = Integer.parseInt(tankSizeStr);
+
+        if(tankSize == 0) {
+            currLitre = defaultLitre;
+        }
+        if(tankSize < currLitre) {
+            Toast.makeText(getContext(), "DB_ERROR: Max volume must be smaller than current volume.", Toast.LENGTH_SHORT).show();
+            tankSize = defaultLitre;
+            currLitre = defaultLitre;
+        }
+        return tankSize;
     }
 }

@@ -13,15 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.acdos.comp41690.data.SolarGenerationContract;
-import com.acdos.comp41690.data.SolarUsageContract;
-import com.acdos.comp41690.data.UserDataDbHelper;
-import com.acdos.comp41690.ui.solar.SolarSectionsPagerAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,9 +23,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
-import java.time.Instant;
+import com.acdos.comp41690.data.SolarGenerationContract;
+import com.acdos.comp41690.data.SolarUsageContract;
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.ui.solar.SolarSectionsPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class ElectricityActivity extends AppCompatActivity {
 
@@ -69,7 +70,7 @@ public class ElectricityActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-        final FloatingActionButton addData = findViewById(R.id.addData2);
+        final FloatingActionButton addData = findViewById(R.id.addDataSolar);
         addData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +101,8 @@ public class ElectricityActivity extends AppCompatActivity {
                         addDataAlert.cancel();
                         finish();
                         overridePendingTransition(0, 0);
-                        startActivity(getIntent());
+                        //startActivity(getIntent());
+                        startActivity(new Intent(getApplicationContext(), ElectricityActivity.class));
                         overridePendingTransition(0, 0);
                     }
                 });
@@ -168,15 +170,23 @@ public class ElectricityActivity extends AppCompatActivity {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(ElectricityActivity.this);
         ContentValues value = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-
+        Timestamp timestamp = getTime();
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         if (dataType == true) {
             value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, input);
-            value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+            value.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,sdf.format(timestamp) );
             userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
         } else {
             value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, input);
-            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, Instant.now().getEpochSecond());
+            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,sdf.format(timestamp)  );
             userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
         }
+    }
+    public static Timestamp getTime(){
+
+        Timestamp timestamp = new Timestamp((System.currentTimeMillis()));
+
+        
+        return timestamp;
     }
 }

@@ -3,6 +3,7 @@ package com.acdos.comp41690;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,19 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.acdos.comp41690.data.UserDataDbHelper;
-import com.acdos.comp41690.data.WaterUsageContract;
-import com.acdos.comp41690.ui.rain.RainSectionsPagerAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,8 +24,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract;
+import com.acdos.comp41690.ui.rain.RainSectionsPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.time.Instant;
 
@@ -81,7 +82,7 @@ public class RainActivity extends AppCompatActivity {
                 radioGroup.setVisibility(View.INVISIBLE);
 
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
-                inputField.setText(R.string.water_usage_input_dialog);
+                inputField.setHint(R.string.water_usage_input_dialog);
                 TextView Title = addDataAlert.findViewById(R.id.Title);
                 Title.setText("Water Input");
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
@@ -144,6 +145,11 @@ public class RainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String solar_panel_output = prefs.getString(Constants.SharedPrefKeys.SOLAR_PANEL_OUTPUT, "");
+        Toast.makeText(this,"yes, Solar output "+ solar_panel_output,Toast.LENGTH_SHORT).show();
     }
 
     @Override

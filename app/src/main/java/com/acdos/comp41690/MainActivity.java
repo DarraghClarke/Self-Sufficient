@@ -1,7 +1,6 @@
 package com.acdos.comp41690;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -21,18 +20,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-
-import com.acdos.comp41690.data.UserDataDbHelper;
-import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
-
-import com.acdos.comp41690.setup.SetupPagerActivity;
+import androidx.preference.PreferenceManager;
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
 import com.acdos.comp41690.setup.InitialSetupActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.time.Instant;
 
@@ -47,19 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         //testDb();
 
-        prefs = getSharedPreferences(
-                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -103,6 +87,14 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if(id == R.id.nav_settings) {
+                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
                 return false;
             }
         });
@@ -127,12 +119,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
 
-        if (prefs.getBoolean("firstrun", true)) {
+        if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
             // Launch set-up view
             Intent intent = new Intent(this, InitialSetupActivity.class);
-
-            //prefs.edit().putBoolean("firstrun", false).apply();
-
             startActivity(intent);
         }
 //         Launch dashboard view
