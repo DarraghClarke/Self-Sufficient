@@ -18,10 +18,6 @@ import androidx.preference.PreferenceManager;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
-import java.util.Objects;
-
-import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
-
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
  * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
@@ -34,7 +30,7 @@ public class SetupWaterActivity extends FragmentActivity {
     RadioGroup formulaSelector;
     float roofArea;
     float usage;
-    float tankSizeInteger;
+    float tankSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +98,7 @@ public class SetupWaterActivity extends FragmentActivity {
         final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                float result = tankSizeInteger;
+                float result = SetupWaterActivity.this.tankSize;
 //            //To save
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupWaterActivity.this);
                 SharedPreferences.Editor editor = prefs.edit();
@@ -125,10 +121,10 @@ public class SetupWaterActivity extends FragmentActivity {
         int usageBased = (int) Math.round((usage * 5));
 
         if (fiveWeeksButton.isChecked()) {
-            tankSizeInteger = weeklyBased;
+            tankSize = weeklyBased;
             return weeklyBased;
         } else {
-            tankSizeInteger = usageBased;
+            tankSize = usageBased;
             return usageBased;
         }
     }

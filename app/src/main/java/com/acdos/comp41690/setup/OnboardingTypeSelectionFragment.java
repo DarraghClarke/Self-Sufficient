@@ -41,8 +41,6 @@ public class OnboardingTypeSelectionFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 if (waterSwitch.isChecked() && solarSwitch.isChecked()){
                     Intent intent = new Intent(getActivity(), FullPagerActivity.class);
                     startActivity(intent);
