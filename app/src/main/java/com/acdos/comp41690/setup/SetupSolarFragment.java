@@ -1,7 +1,5 @@
 package com.acdos.comp41690.setup;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 ;
@@ -32,10 +31,6 @@ public class SetupSolarFragment extends Fragment {
                 R.layout.fragment_setup_solar, container, false);
 
 
-        final SharedPreferences prefs = getActivity().getSharedPreferences(
-                getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-
-
 
         Button confirm = view.findViewById(R.id.submitButton);
 
@@ -45,13 +40,15 @@ public class SetupSolarFragment extends Fragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = prefs.edit();
+
                 if (solar_panel_output.getText().length()!=0 && kwh_rate.getText().length()!=0) {
-                    editor.putFloat("Solar_Panel_Output",Float.valueOf(solar_panel_output.getText().toString()));
-                    editor.putFloat("kwh_rate",Float.valueOf(kwh_rate.getText().toString()));
+                    editor.putString(Constants.SharedPrefKeys.SOLAR_PANEL_OUTPUT, solar_panel_output.getText().toString());
+                    editor.putString(Constants.SharedPrefKeys.KWH_RATE, kwh_rate.getText().toString());
+                    editor.apply();
                 }
-                Toast.makeText(getContext(),"Solar output "+Float.valueOf(solar_panel_output.getText().toString())
-                        +" and kwh rate of "+ Float.valueOf(kwh_rate.getText().toString()),Toast.LENGTH_SHORT).show();
+
                 ((SetupPagerActivity) getActivity()).moveToNextPage();
             }
         });

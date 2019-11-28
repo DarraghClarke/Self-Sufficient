@@ -15,6 +15,8 @@ public class Constants {
         public final static String WATER_TANK_SIZE = "Water_Tank_Size";
         public final static String USING_WATER = "using_water";
         public final static String USING_SOLAR = "using_solar";
-
+        public final static String SOLAR_PANEL_OUTPUT = "solar_panel_output";
+        public final static String KWH_RATE = "kwh_rate";
+        public final static String WATER_TANK_SIZE = "water_tank_size";
     }
 }

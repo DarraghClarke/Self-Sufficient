@@ -44,7 +44,7 @@ public class SetupWaterFragment extends Fragment {
         formulaSelector = rootView.findViewById(R.id.toggle);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final Float roof_area = prefs.getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0);
+        final String roof_area = prefs.getString(Constants.SharedPrefKeys.ROOF_AREA, "0.0");
 
         final EditText waterUsage= rootView.findViewById(R.id.water_usage);
         final TextView tankSize= rootView.findViewById(R.id.tank_Size);
@@ -58,7 +58,7 @@ public class SetupWaterFragment extends Fragment {
         }
         );
         final EditText harvestableRoofArea= rootView.findViewById(R.id.harvestable_roof_area);
-        harvestableRoofArea.setText(roof_area.toString());
+        harvestableRoofArea.setText(roof_area);
         harvestableRoofArea.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
