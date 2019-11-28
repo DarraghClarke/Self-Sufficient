@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
         private  final String APPID = "&APPID=e0af00f6b30b672fbc3058d39d79c3ee";
         public WeatherStore weather = new WeatherStore();
         private final String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
-        private final String HERE_BASE_ID = "&app_id=xYX2yWhAAkYGAZmrxWqG";
+        private final String HERE_BASE_ID = "app_id=SCLblvFIwikj6SHdpwab&app_code=TvzcBTnBKM-Sh_wH-pqX3w";
 
         private WeatherStore getWeatherStore(String data) {
 
@@ -129,11 +129,12 @@ public class HomeFragment extends Fragment {
                         public void onResponse(String response) {
                             try {
                                 JSONObject jObj = new JSONObject(response);
+                                JSONArray alerts = jObj.getJSONArray("alerts");
 
-                                if(alerts.length()>0){
+                                if(alerts.length()>0) {
                                     JSONObject ob =alerts.getJSONObject(0);
-
                                     weather.alerts.setAlerts(ob.getString("description"));
+
                                     if(alerts == null || alerts.length() == 0){
                                         return;
                                     }

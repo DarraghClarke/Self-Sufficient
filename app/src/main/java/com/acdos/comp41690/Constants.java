@@ -12,7 +12,6 @@ public class Constants {
     public static class SharedPrefKeys {
         public final static String FIRST_RUN = "first_run";
         public final static String ROOF_AREA = "roof_area";
-        public final static String WATER_TANK_SIZE = "Water_Tank_Size";
         public final static String USING_WATER = "using_water";
         public final static String USING_SOLAR = "using_solar";
         public final static String SOLAR_PANEL_OUTPUT = "solar_panel_output";
