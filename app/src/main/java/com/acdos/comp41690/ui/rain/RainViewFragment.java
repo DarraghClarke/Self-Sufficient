@@ -24,6 +24,9 @@ import com.acdos.comp41690.data.WaterUsageContract;
 
 import java.util.Objects;
 
+import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
+import static java.lang.Thread.sleep;
+
 /**
  * A placeholder fragment containing a simple view.
  */

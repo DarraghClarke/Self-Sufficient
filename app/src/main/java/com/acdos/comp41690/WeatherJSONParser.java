@@ -14,42 +14,31 @@ public class WeatherJSONParser {
         JSONArray jArr = jObj.getJSONArray("weather");
 
         JSONObject JSONWeather = jArr.getJSONObject(0);
-        weather.currentCondition.setDescr(getString("description", JSONWeather));
+        weather.currentCondition.setDescr(JSONWeather.getString("description"));
+
+        JSONObject mainObj = jObj.optJSONObject("main");
 
 
-        JSONObject mainObj = getObject("main", jObj);
-        weather.currentCondition.setHumidity(getInt("humidity", mainObj));
-        weather.currentCondition.setPressure(getInt("pressure", mainObj));
-        weather.temperature.setMaxTemp(getFloat("temp_max", mainObj));
-        weather.temperature.setMinTemp(getFloat("temp_min", mainObj));
-        weather.temperature.setTemp(getFloat("temp", mainObj));
+        weather.currentCondition.setHumidity(mainObj.getInt("humidity"));
+        weather.currentCondition.setPressure(mainObj.getInt("pressure"));
+        weather.temperature.setMaxTemp((float) mainObj.getDouble("temp_max"));
+        weather.temperature.setMinTemp((float) mainObj.getDouble("temp_min"));
+        weather.temperature.setTemp((float) mainObj.getDouble("temp"));
 
         // Wind
-        JSONObject wObj = getObject("wind", jObj);
-        weather.wind.setSpeed(getFloat("speed", wObj));
-        JSONObject rObj = getObject("rain", jObj);
+        JSONObject wObj = jObj.optJSONObject("wind");
+        if (wObj != null) {
 
-        double rainAmount = rObj.optDouble("1h", rObj.optDouble("3h"));
-        weather.rain.setAmount((float) rainAmount);
+            weather.wind.setSpeed((float) wObj.getDouble("speed"));
+        }
+
+        JSONObject rObj = jObj.optJSONObject("rain");
+
+        if (rObj != null) {
+            double rainAmount = rObj.optDouble("1h", rObj.optDouble("3h"));
+            weather.rain.setAmount((float) rainAmount);
+        }
 
         return weather;
     }
-
-    private static JSONObject getObject(String tagName, JSONObject jObj)  throws JSONException {
-        JSONObject subObj = jObj.getJSONObject(tagName);
-        return subObj;
-    }
-
-    private static String getString(String tagName, JSONObject jObj) throws JSONException {
-        return jObj.getString(tagName);
-    }
-
-    private static float  getFloat(String tagName, JSONObject jObj) throws JSONException {
-        return (float) jObj.getDouble(tagName);
-    }
-
-    private static int  getInt(String tagName, JSONObject jObj) throws JSONException {
-        return jObj.getInt(tagName);
-    }
-
 }

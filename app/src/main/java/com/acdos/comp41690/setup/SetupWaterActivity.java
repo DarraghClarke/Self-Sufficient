@@ -30,7 +30,7 @@ public class SetupWaterActivity extends FragmentActivity {
     RadioGroup formulaSelector;
     float roofArea;
     float usage;
-    int tankSizeInteger;
+    float tankSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,8 @@ public class SetupWaterActivity extends FragmentActivity {
         fivePercentButton = findViewById(R.id.fivePercent);
         fiveWeeksButton = findViewById(R.id.fiveWeeks);
         formulaSelector = findViewById(R.id.toggle);
-
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+      
         final Float roof_area = prefs.getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0);
 
         final EditText waterUsage = findViewById(R.id.water_usage);
@@ -99,7 +98,7 @@ public class SetupWaterActivity extends FragmentActivity {
         final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int result = tankSizeInteger;
+                float result = SetupWaterActivity.this.tankSize;
 //            //To save
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupWaterActivity.this);
                 SharedPreferences.Editor editor = prefs.edit();
@@ -121,12 +120,11 @@ public class SetupWaterActivity extends FragmentActivity {
         int weeklyBased = (int) Math.round((roofArea * drainageCoeffient * filterEfficiency * averageRainFall));
         int usageBased = (int) Math.round((usage * 5));
 
-
         if (fiveWeeksButton.isChecked()) {
-            tankSizeInteger = weeklyBased;
+            tankSize = weeklyBased;
             return weeklyBased;
         } else {
-            tankSizeInteger = usageBased;
+            tankSize = usageBased;
             return usageBased;
         }
     }

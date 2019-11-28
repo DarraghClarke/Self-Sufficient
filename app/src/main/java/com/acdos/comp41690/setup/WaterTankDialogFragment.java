@@ -1,6 +1,7 @@
 package com.acdos.comp41690.setup;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
+
+import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-15.

@@ -33,6 +33,25 @@ public class SetupConfirmFragment extends Fragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = prefs.edit();
+
+                String activityClassName = getActivity().getLocalClassName();
+
+                switch (activityClassName) {
+                    case "setup.SolarOnlyPagerActivity":
+                        editor.putBoolean(Constants.SharedPrefKeys.USING_SOLAR, true);
+                        break;
+                    case "setup.WaterOnlyPagerActivity":
+                        editor.putBoolean(Constants.SharedPrefKeys.USING_WATER, true);
+                        break;
+                    case "setup.FullPagerActivity":
+                        editor.putBoolean(Constants.SharedPrefKeys.USING_WATER, true);
+                        editor.putBoolean(Constants.SharedPrefKeys.USING_SOLAR, true);
+                        break;
+                }
+
+                editor.apply();
 
                 //launch app proper
                 prefs.edit().putBoolean(Constants.SharedPrefKeys.FIRST_RUN, false).apply();

@@ -3,15 +3,20 @@ package com.acdos.comp41690.ui.home;
 "https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90"
 and the android request/volley tutorial
 https://developer.android.com/training/volley/simple?fbclid=IwAR26_405eNCLPrpiodtiqnuuA_LnrLijsw_dDLNy_CqvMmQ2kdL_lAlNdn4*/
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
+
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 import com.acdos.comp41690.WeatherJSONParser;
 import com.acdos.comp41690.WeatherStore;
@@ -39,14 +44,13 @@ public class HomeFragment extends Fragment {
     private TextView maxTemp;
     private TextView hum;
     private TextView alerts;
-
+    private ImageView solar;
+    private ImageView water;
     @Override
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -60,6 +64,34 @@ public class HomeFragment extends Fragment {
         minTemp = root.findViewById(R.id.temp_min);
         alerts = root.findViewById(R.id.alert);
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        final boolean using_solar = prefs.getBoolean(Constants.SharedPrefKeys.USING_SOLAR, false);
+        final boolean using_water = prefs.getBoolean(Constants.SharedPrefKeys.USING_WATER, false);
+
+        if (!using_solar) {
+            solar = root.findViewById(R.id.solar_image);
+            solar.setImageAlpha(50);
+            solar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivationDialogFragment dialogFragment = new ActivationDialogFragment("solar");
+                    dialogFragment.show(getFragmentManager(), "solar_activation");
+                }
+            });
+        }
+        if(!using_water) {
+            water = root.findViewById(R.id.water_image);
+            water.setImageAlpha(50);
+            water.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivationDialogFragment dialogFragment = new ActivationDialogFragment("water");
+                    dialogFragment.show(getFragmentManager(), "water_activation");
+                }
+            });
+        }
+
         maxTemp = root.findViewById(R.id.temp_max);
         getWeatherData("London,UK");
         getAlertData("Paris");
@@ -72,7 +104,7 @@ public class HomeFragment extends Fragment {
         private  final String APPID = "&APPID=e0af00f6b30b672fbc3058d39d79c3ee";
         public WeatherStore weather = new WeatherStore();
         private final String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
-        private final String HERE_BASE_ID = "&app_id=xYX2yWhAAkYGAZmrxWqG";
+        private final String HERE_BASE_ID = "app_id=SCLblvFIwikj6SHdpwab&app_code=TvzcBTnBKM-Sh_wH-pqX3w";
 
         private WeatherStore getWeatherStore(String data) {
 
@@ -97,11 +129,12 @@ public class HomeFragment extends Fragment {
                         public void onResponse(String response) {
                             try {
                                 JSONObject jObj = new JSONObject(response);
+                                JSONArray alerts = jObj.getJSONArray("alerts");
 
-                                if(alerts.length()>0){
+                                if(alerts.length()>0) {
                                     JSONObject ob =alerts.getJSONObject(0);
-
                                     weather.alerts.setAlerts(ob.getString("description"));
+
                                     if(alerts == null || alerts.length() == 0){
                                         return;
                                     }
