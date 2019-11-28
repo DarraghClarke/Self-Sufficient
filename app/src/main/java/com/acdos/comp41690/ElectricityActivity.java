@@ -144,6 +144,14 @@ public class ElectricityActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if(id == R.id.nav_settings) {
+                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
                 return false;
             }
         });

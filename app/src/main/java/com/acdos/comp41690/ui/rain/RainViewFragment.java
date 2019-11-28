@@ -27,17 +27,14 @@ import java.util.Objects;
 import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 import static java.lang.Thread.sleep;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class RainViewFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ImageView imageView;
     private RainPageViewModel pageViewModel;
-    private int maxLitre = 5500;
-    private int currLitre= 5500;
+    private int maxLitre = 1;
     private int defaultLitre = 0;
+    private int currLitre= defaultLitre;
     SharedPreferences prefs = null;
 
     public static RainViewFragment newInstance(int index) {
@@ -131,7 +128,7 @@ public class RainViewFragment extends Fragment {
     private int getMaxLitre() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String tankSizeStr = prefs.getString(Constants.SharedPrefKeys.WATER_TANK_SIZE, "0");
-        int tankSize = Integer.parseInt(tankSizeStr);
+        int tankSize = (int)Float.parseFloat(tankSizeStr);
 
         if(tankSize == 0) {
             currLitre = defaultLitre;

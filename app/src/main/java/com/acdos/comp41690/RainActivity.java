@@ -3,7 +3,6 @@ package com.acdos.comp41690;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -142,14 +141,17 @@ public class RainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if(id == R.id.nav_settings) {
+                    Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+                    assert mAppBarConfiguration.getDrawerLayout() != null;
+                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                    startActivity(i);
+                    return true;
+                }
+
                 return false;
             }
         });
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        String solar_panel_output = prefs.getString(Constants.SharedPrefKeys.SOLAR_PANEL_OUTPUT, "");
-        Toast.makeText(this,"yes, Solar output "+ solar_panel_output,Toast.LENGTH_SHORT).show();
     }
 
     @Override
