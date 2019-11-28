@@ -3,7 +3,6 @@ package com.acdos.comp41690.ui.home;
 "https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90"
 and the android request/volley tutorial
 https://developer.android.com/training/volley/simple?fbclid=IwAR26_405eNCLPrpiodtiqnuuA_LnrLijsw_dDLNy_CqvMmQ2kdL_lAlNdn4*/
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
@@ -30,8 +30,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -53,9 +51,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        final SharedPreferences prefs = Objects.requireNonNull(getActivity().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE));
-
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -69,16 +64,32 @@ public class HomeFragment extends Fragment {
         minTemp = root.findViewById(R.id.temp_min);
         alerts = root.findViewById(R.id.alert);
 
-        final boolean Using_solar = prefs.getBoolean(Constants.SharedPrefKeys.USING_SOLAR, false);
-        final boolean Using_water = prefs.getBoolean(Constants.SharedPrefKeys.USING_WATER, false);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        if (!Using_solar) {
-            solar = root.findViewById(R.id.imageView3);
-            solar.setVisibility(View.GONE);
+        final boolean using_solar = prefs.getBoolean(Constants.SharedPrefKeys.USING_SOLAR, false);
+        final boolean using_water = prefs.getBoolean(Constants.SharedPrefKeys.USING_WATER, false);
+
+        if (!using_solar) {
+            solar = root.findViewById(R.id.solar_image);
+            solar.setImageAlpha(50);
+            solar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivationDialogFragment dialogFragment = new ActivationDialogFragment("solar");
+                    dialogFragment.show(getFragmentManager(), "solar_activation");
+                }
+            });
         }
-        if(!Using_water) {
-            water = root.findViewById(R.id.imageView2);
-            solar.setVisibility(View.GONE);
+        if(!using_water) {
+            water = root.findViewById(R.id.water_image);
+            water.setImageAlpha(50);
+            water.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivationDialogFragment dialogFragment = new ActivationDialogFragment("water");
+                    dialogFragment.show(getFragmentManager(), "water_activation");
+                }
+            });
         }
 
         maxTemp = root.findViewById(R.id.temp_max);

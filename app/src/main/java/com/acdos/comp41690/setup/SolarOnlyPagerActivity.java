@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.acdos.comp41690.R;
 
@@ -31,7 +30,6 @@ public class SolarOnlyPagerActivity extends SetupPagerActivity {
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
-
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
