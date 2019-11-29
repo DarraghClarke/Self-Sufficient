@@ -1,13 +1,16 @@
 package com.acdos.comp41690.setup;
 
 /**
+ * Created by Oisin Quinn (@oisin1001) on 2019-11-29.
+ */
+
+/**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-14.
  * Based off https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
  */
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,22 +32,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.maps.android.SphericalUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class SetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     private GoogleMap mMap;
-    Polygon polygon;
-    private List<Marker> markers = new ArrayList<>();
+    private Marker placedMarker = null;
     private boolean mLocationPermissionGranted = false;
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -146,11 +142,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                if (placedMarker != null) {
+                    placedMarker.setVisible(false);
+                    mMap.clear();
+                }
+
                 MarkerOptions createdMarker = new MarkerOptions().position(latLng).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-                markers.add(mMap.addMarker(createdMarker));
-
-                drawArea();
+                placedMarker = mMap.addMarker(createdMarker);
             }
         });
 
@@ -158,64 +156,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             int index = -1;
 
             @Override
-            public void onMarkerDragStart(Marker marker) {
-                index = markers.indexOf(marker);
-            }
+            public void onMarkerDragStart(Marker marker) {}
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-                markers.add(index, marker);
-                drawArea();
+                placedMarker = marker;
             }
 
             @Override
-            public void onMarkerDrag(Marker marker) {
-                markers.add(index, marker);
-                drawArea();
-
-            }
+            public void onMarkerDrag(Marker marker) {}
         });
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                markers.remove(marker);
                 marker.remove();
+                placedMarker = null;
 
-                if (markers.size() != 0) {
-                    drawArea();
-                }
                 return true;
             }
         });
     }
 
-    private void drawArea() {
-        if (polygon != null) {
-            polygon.setVisible(false);
-        }
-
-        List<LatLng> locations = new ArrayList<>();
-
-        for (Marker marker : markers) {
-            locations.add(marker.getPosition());
-        }
-
-        polygon = mMap.addPolygon(new PolygonOptions()
-                .clickable(true)
-                .fillColor(Color.argb(128, 0, 0, 128))
-                .addAll(locations));
-    }
 
     public void resetSelection(View view) {
+        placedMarker = null;
         mMap.clear();
-        markers.clear();
     }
 
     public void submitSelection(View view) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("area", SphericalUtil.computeArea(polygon.getPoints()));
-        setResult(1,returnIntent);
+        returnIntent.putExtra("longitude", placedMarker.getPosition().longitude);
+        returnIntent.putExtra("latitude", placedMarker.getPosition().latitude);
+        setResult(3, returnIntent);
         finish();
     }
 }
