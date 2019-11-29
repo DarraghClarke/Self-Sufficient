@@ -7,6 +7,7 @@ public class Constants {
     public static class QuestionType {
         public final static String WATER_TANK_QUESTION = "WATER_TANK_QUESTION";
         public final static String ROOF_AREA_QUESTION = "ROOF_AREA_QUESTION";
+        public final static String REQUEST_LOCATION_QUESTION = "REQUEST_LOCATION_QUESTION";
     }
 
     public static class SharedPrefKeys {

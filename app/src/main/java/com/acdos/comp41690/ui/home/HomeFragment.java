@@ -93,14 +93,18 @@ public class HomeFragment extends Fragment {
         }
 
         maxTemp = root.findViewById(R.id.temp_max);
-        getWeatherData("London,UK");
-        getAlertData("Paris");
+
+        double longitude = prefs.getFloat("longitude", 0.0f);
+        double latitude = prefs.getFloat("latitude", 0.0f);
+
+        getWeatherData(longitude, latitude);
+        getAlertData(longitude, latitude);
         return root;
     }
 
 
 
-        private  final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
+        private  final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
         private  final String APPID = "&APPID=e0af00f6b30b672fbc3058d39d79c3ee";
         public WeatherStore weather = new WeatherStore();
         private final String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
@@ -117,11 +121,10 @@ public class HomeFragment extends Fragment {
             return weather;
 
         }
-        private void getAlertData(String location) {
+        private void getAlertData(double longitude, double latitude) {
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
-            double longitude = 2.364286;
-            double latitude = 48.891784;
+//            double longitude = 2.364286;
+//            double latitude = 48.891784;
 
             StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude +HERE_BASE_ID,
                     new Response.Listener<String>() {
@@ -159,11 +162,11 @@ public class HomeFragment extends Fragment {
             queue.add(alertRequest);
         }
 
-        private void getWeatherData(String location) {
+        private void getWeatherData(double longitude, double latitude) {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + location+""+APPID,
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL + "&lon=" + longitude + "&lat=" + latitude + APPID,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
