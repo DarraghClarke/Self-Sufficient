@@ -85,16 +85,23 @@ public class SetupConfirmFragment extends Fragment {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 5);
-        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 26);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 2);
         db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 12);
-        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 27);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 3);
         db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 15);
-        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 28);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 4);
         db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 10);
-        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 29);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 5);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.clear();
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 10);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 6);
         db.insert(WaterUsageEntry.TABLE_NAME, null, values);
     }
 
@@ -105,30 +112,46 @@ public class SetupConfirmFragment extends Fragment {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 15);
-        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 26);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 2);
         db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 20);
-        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 27);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 3);
         db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 12);
-        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 28);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 4);
         db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 34);
-        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 29);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 5);
         db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.clear();
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 36);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 6);
+        db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.clear();
 
         values = new ContentValues();
         values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 30);
-        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 26);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 2);
         db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 10);
-        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 27);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 3);
         db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 40);
-        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 28);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 4);
         db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+        values.clear();
         values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 60);
-        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 29);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 5);
+        db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+
+        values.clear();
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 50);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 6);
         db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
     }
 }

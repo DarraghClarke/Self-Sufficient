@@ -68,6 +68,7 @@ public class RainStatsFragment extends Fragment {
     private void createGraph(View root) {
         GraphView lineGraph = root.findViewById(R.id.lineGraph);
         GridLabelRenderer glr = lineGraph.getGridLabelRenderer();
+
         // Ensures all of the graph is displayed
         glr.setPadding(50);
 
