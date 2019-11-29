@@ -26,10 +26,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.text.SimpleDateFormat;
-
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment for displaying stats for the rain section of the app
  */
 public class RainStatsFragment extends Fragment {
 
@@ -61,15 +59,16 @@ public class RainStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragement_rain_stats, container, false);
 
-        //Graph
         createGraph(root);
 
         return root;
     }
 
+    // Creates and populates the graph
     private void createGraph(View root) {
         GraphView lineGraph = root.findViewById(R.id.lineGraph);
         GridLabelRenderer glr = lineGraph.getGridLabelRenderer();
+        // Ensures all of the graph is displayed
         glr.setPadding(50);
 
         DataPoint[] data = waterUsage();
@@ -84,7 +83,6 @@ public class RainStatsFragment extends Fragment {
             lineGraphSeries.setThickness(8);
             GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
 
-            //lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
             gridLabel.setHorizontalAxisTitle("Time (in days)");
             gridLabel.setVerticalAxisTitle("Water Input (liters)");
 
@@ -101,7 +99,6 @@ public class RainStatsFragment extends Fragment {
 
     private DataPoint[] waterUsage() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
-        final SimpleDateFormat sdf = new SimpleDateFormat("ddMM");
 
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
 

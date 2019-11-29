@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,13 +27,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Random;
-
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment for displaying stats for the electricity section of the app
  */
 public class ElecStatsFragment extends Fragment {
 
@@ -62,63 +56,53 @@ public class ElecStatsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_electricity_stats, container, false);
-        //Button
 
-        Button button = rootView.findViewById(R.id.button);
-        final Random r = new Random();
-
-        //Graph
-        try {
-            createGraph(rootView);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //usage over time
+        // Creates the graphs
+        createGraph(rootView);
 
         return rootView;
     }
 
-    public void createGraph(View rootView) throws ParseException {
+    // Populates and creates the graph
+    private void createGraph(View rootView) {
         GraphView lineGraph = rootView.findViewById(R.id.lineGraph);
         GridLabelRenderer glr = lineGraph.getGridLabelRenderer();
         glr.setPadding(50);
-        DataPoint[] data = usageTimeData();
+        final DataPoint[] data = usageTimeData();
+
+        // If there is usage data, we display it
+        if (data != null) {
+            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
 
 
-            if (!data.equals(null)) {
-                LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
+            lineGraph.setTitle("Electricity Usage Over Time");
+            lineGraphSeries.setColor(Color.RED);
+            lineGraphSeries.setDrawDataPoints(true);
+            lineGraphSeries.setDataPointsRadius(10);
+            lineGraphSeries.setThickness(8);
 
-
-                lineGraph.setTitle("Electricty Usage Over Time");
-                lineGraphSeries.setColor(Color.RED);
-                lineGraphSeries.setDrawDataPoints(true);
-                lineGraphSeries.setDataPointsRadius(10);
-                lineGraphSeries.setThickness(8);
-
-              GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
+            GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
             gridLabel.setHorizontalAxisTitle("Time (in days)");
             gridLabel.setVerticalAxisTitle("Electricity Usage");
-                lineGraphSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
-                    @Override
-                    public void onTap(Series series, DataPointInterface dataPoint) {
-                        Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                lineGraph.addSeries(lineGraphSeries);
-
-
+            lineGraphSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getActivity(), " Electricity usage: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            lineGraph.addSeries(lineGraphSeries);
         }
+
         GraphView lineGraphGenerated = rootView.findViewById(R.id.lineGraphGenerated);
         GridLabelRenderer renderer = lineGraphGenerated.getGridLabelRenderer();
         renderer.setPadding(50);
         DataPoint[] dataGenerated = generatedTimeData();
 
 
-        if (!data.equals(null)) {
-            LineGraphSeries<DataPoint> lineGraphSeriesGenerated = new LineGraphSeries<DataPoint>(dataGenerated);
+        if (data != null) {
+            LineGraphSeries<DataPoint> lineGraphSeriesGenerated = new LineGraphSeries<>(dataGenerated);
 
 
             lineGraphGenerated.setTitle("Generated Electricity Usage Over Time");
@@ -128,26 +112,22 @@ public class ElecStatsFragment extends Fragment {
             lineGraphSeriesGenerated.setThickness(8);
             GridLabelRenderer gridLabel = lineGraphGenerated.getGridLabelRenderer();
             gridLabel.setVerticalAxisTitle("Electricity Generated");
-//          lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
             gridLabel.setHorizontalAxisTitle("Time (in days)");
 
 
             lineGraphSeriesGenerated.setOnDataPointTapListener(new OnDataPointTapListener() {
                 @Override
                 public void onTap(Series series, DataPointInterface dataPoint) {
-                    Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Electricity generated: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
                 }
             });
             lineGraphGenerated.addSeries(lineGraphSeriesGenerated);
         }
-//
-
 
     }
 
-
-
-    public DataPoint[] usageTimeData() {
+    // Queries the database for usage and time info
+    private DataPoint[] usageTimeData() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
 
@@ -165,7 +145,7 @@ public class ElecStatsFragment extends Fragment {
 
         Cursor cUsage = userDb.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
 
-        int i=0;
+        int i = 0;
         while (cUsage.moveToNext()) {
             Log.d("ElecStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
             DataPoint v = new DataPoint(cUsage.getLong(1), cUsage.getLong(2));
@@ -174,18 +154,17 @@ public class ElecStatsFragment extends Fragment {
         }
 
 
-
         cUsage.close();
         return values;
     }
 
 
-    public DataPoint[] generatedTimeData() throws ParseException {
+    // quereies the database for generated energy info
+    private DataPoint[] generatedTimeData() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
 
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-        final SimpleDateFormat sdf = new SimpleDateFormat("ddMM");
 
         String[] projectionGen = {
                 SolarGenerationContract.SolarGenerationEntry._ID,
@@ -199,70 +178,18 @@ public class ElecStatsFragment extends Fragment {
 
         Cursor cGen = userDb.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
 
-        int i=0;
+        int i = 0;
 
-            while (cGen.moveToNext()) {
-                Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
-                DataPoint v = new DataPoint((cGen.getLong(1)), cGen.getLong(2));
-                values[i] = v;
-                i++;
-
-        }
-
-
-
-        cGen.close();
-        return values;
-    }
-
-    public DataPoint[] genUseTimeData() {
-        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
-        SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-
-
-
-        String[] projectionGen = {
-                SolarGenerationContract.SolarGenerationEntry._ID,
-                SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,
-                SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY
-        };
-
-
-
-
-        Cursor cGen = userDb.query(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, projectionGen, null, null, null, null, null);
-
-        String[] projectionUsage = {
-                SolarUsageContract.SolarUsageEntry._ID,
-                SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,
-                SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE};
-
-        
-        int count = (int) DatabaseUtils.queryNumEntries(userDb, SolarUsageContract.SolarUsageEntry.TABLE_NAME);
-
-        DataPoint[] values = new DataPoint[count];
-        Long[] xAxis = new Long[count];
-        Cursor cUsage = userDb.query(SolarUsageContract.SolarUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
-        int i=0;
-        int j=0;
-        while (cUsage.moveToNext()){
-            Long value = cUsage.getLong(2);
-          xAxis[j] = value;
-            j++;
-        }
-        Arrays.sort(xAxis);
         while (cGen.moveToNext()) {
-            DataPoint v = new DataPoint(xAxis[i], cGen.getLong(2));
-
+            Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
+            DataPoint v = new DataPoint((cGen.getLong(1)), cGen.getLong(2));
             values[i] = v;
             i++;
+
         }
 
 
-        cUsage.close();
         cGen.close();
         return values;
     }
-
-
 }
