@@ -18,6 +18,8 @@ import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
+import com.acdos.comp41690.setup.maps.RoofAreaMapActivity;
+import com.acdos.comp41690.setup.maps.SetLocationMapActivity;
 
 /**
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.

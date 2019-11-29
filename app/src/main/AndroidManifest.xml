@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EmailActivity"></activity>
+
+        <activity android:name=".EmailActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -25,7 +26,6 @@
             android:screenOrientation="portrait"
         android:name=".SettingsActivity"
             android:label="Settings"
-            android:screenOrientation="locked"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.SetupPagerActivity"
@@ -53,12 +53,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".setup.RoofAreaMapActivity"
+            android:name=".setup.maps.RoofAreaMapActivity"
             android:label="MapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".setup.SetLocationMapActivity"
+            android:name=".setup.maps.SetLocationMapActivity"
             android:label="SetLocationMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

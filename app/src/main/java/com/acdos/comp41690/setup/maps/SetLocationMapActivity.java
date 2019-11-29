@@ -1,4 +1,4 @@
-package com.acdos.comp41690.setup;
+package com.acdos.comp41690.setup.maps;
 
 import android.content.Intent;
 import android.view.View;
@@ -33,6 +33,9 @@ public class SetLocationMapActivity extends MapActivity {
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        SetLocationDialogFragment setLocationDialogFragment = new SetLocationDialogFragment();
+        setLocationDialogFragment.show(getSupportFragmentManager(), "set_location_alert");
+
         mMap = googleMap;
 
         if (mLocationPermissionGranted) {
@@ -98,6 +101,5 @@ public class SetLocationMapActivity extends MapActivity {
         } else {
             Toast.makeText(this, "You must place a marker to select your location!", Toast.LENGTH_LONG).show();
         }
-
     }
 }
