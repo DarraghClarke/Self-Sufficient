@@ -8,13 +8,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 public class SolarOnlyPagerActivity extends SetupPagerActivity {
     /**
      * The number of pages (wizard steps) in the solar setup.
      */
-    private int NUM_PAGES = 2;
+    private int NUM_PAGES = 3;
     private CustomPager mPager;
     private PagerAdapter pagerAdapter;
 
@@ -42,8 +43,10 @@ public class SolarOnlyPagerActivity extends SetupPagerActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new SetupSolarFragment();
+                    return new QuestionFragment(Constants.QuestionType.REQUEST_LOCATION_QUESTION);
                 case 1:
+                    return new SetupSolarFragment();
+                case 2:
                     return new SetupConfirmFragment();
                 default:
                     return new SetupPageFragment();

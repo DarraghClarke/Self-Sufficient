@@ -20,40 +20,53 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
         <activity
-            android:screenOrientation="locked"
-            android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
+        android:name=".SettingsActivity"
             android:label="Settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.SetupPagerActivity"
             android:label="SetupPagerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.InitialSetupActivity"
             android:label="InitialSetupActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.WaterOnlyPagerActivity"
             android:label="WaterOnlyPagerFragment"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.SolarOnlyPagerActivity"
             android:label="SolarOnlyPagerFragment"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.FullPagerActivity"
             android:label="FullPagerFragment"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.MapActivity"
             android:label="MapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".setup.SetLocationMapActivity"
+            android:label="SetLocationMapActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".setup.SetupWaterActivity"
             android:label="SetupWaterFragmemt"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,9 +74,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ElectricityActivity"
+        <activity
+            android:name=".ElectricityActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".RainActivity"
+        <activity
+            android:name=".RainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>

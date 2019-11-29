@@ -23,26 +23,20 @@ import com.acdos.comp41690.R;
  * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
  * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
  */
-public class QuestionFragment extends Fragment {
+public class LocationQuestionFragment extends Fragment {
     private final String questionType;
     private final int ACTIVITY_RETURN_CODE = 1;
 
-    QuestionFragment(String questionType) {
+    LocationQuestionFragment(String questionType) {
         this.questionType = questionType;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (questionType.equals(Constants.QuestionType.REQUEST_LOCATION_QUESTION)) {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.fragment_setup_location, container, false);
-            return rootView;
-        } else {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.fragment_setup_question, container, false);
-            return rootView;
-        }
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.fragment_setup_question, container, false);
+        return rootView;
     }
 
     @Override
@@ -60,18 +54,6 @@ public class QuestionFragment extends Fragment {
                 imageView.setImageResource(R.drawable.roof);
                 textView.setText(R.string.roof_area_question);
                 break;
-        }
-
-        if (questionType.equals(Constants.QuestionType.REQUEST_LOCATION_QUESTION)) {
-            Button setLocationButton = view.findViewById(R.id.set_location_button);
-            setLocationButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), SetLocationMapActivity.class);
-                    startActivityForResult(intent, 3);
-                }
-            });
-            return;
         }
 
         Button noButton = view.findViewById(R.id.no_button);
@@ -120,21 +102,10 @@ public class QuestionFragment extends Fragment {
             editor.putString(Constants.SharedPrefKeys.ROOF_AREA, String.valueOf(result));
             editor.apply();
 
+
+            Toast.makeText(getActivity(), "Area is: " + result, Toast.LENGTH_SHORT).show();
             ((SetupPagerActivity) getActivity()).moveToNextPage();
         } else if(requestCode == 2 && resultCode == 2){// 2 for next page
-            ((SetupPagerActivity) getActivity()).moveToNextPage();
-        } else if(requestCode == 3 && resultCode == 3){// 3 for next page
-            double latitude = data.getDoubleExtra("latitude", -1);
-            double longitude = data.getDoubleExtra("longitude", -1);
-            Toast.makeText(getActivity(), "Longitude: " + longitude + ", latitude: " + latitude, Toast.LENGTH_SHORT).show();
-
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            SharedPreferences.Editor editor = prefs.edit();
-
-            editor.putFloat("longitude", (float) longitude);
-            editor.putFloat("latitude", (float) latitude);
-            editor.apply();
-
             ((SetupPagerActivity) getActivity()).moveToNextPage();
         }
     }

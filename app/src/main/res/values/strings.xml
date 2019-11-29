@@ -83,4 +83,7 @@
     <string name="roof_area_input">Roof Area in metres squared</string>
     <string name="water_usage_input_dialog">Enter Water Usage in Litres</string>
     <string name="setup_end_text">Thanks for filling out the setup forms, the full experience is just a click away!</string>
+    <string name="set_location">Set location</string>
+    <string name="setup_location_question_text">We need your location so we know the weather conditions for your home. Click Set Location, and tap to place a pin in the map.</string>
+    <string name="setup_location_image_description">picture of house</string>
 </resources>

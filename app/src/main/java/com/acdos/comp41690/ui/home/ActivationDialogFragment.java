@@ -15,7 +15,7 @@ import com.acdos.comp41690.setup.WaterOnlyPagerActivity;
  * Created by Oisin Quinn (@oisin1001) on 2019-11-27.
  */
 public class ActivationDialogFragment extends DialogFragment {
-    String sectionName = "";
+    String sectionName;
 
     ActivationDialogFragment(String sectionName) {
         this.sectionName = sectionName;
@@ -25,7 +25,7 @@ public class ActivationDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("The " + sectionName + "section is disabled! Would you like to go to the setup screen to activate it?")
+        builder.setMessage("The " + sectionName + " section is disabled! Would you like to go to the setup screen to activate it?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (sectionName.equals("water")) {
