@@ -18,7 +18,7 @@ import com.acdos.comp41690.R;
  * Dialog box used by a user to enter existing water tank dimensions
  */
 public class WaterTankDialogFragment extends DialogFragment {
-    private SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    private SharedPreferences prefs;
     ;
 
     @Override
@@ -26,6 +26,8 @@ public class WaterTankDialogFragment extends DialogFragment {
         final Dialog alertDialog = new Dialog(getActivity());
 
         alertDialog.setContentView(R.layout.dialog);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         final EditText tank_size = alertDialog.findViewById(R.id.size_dialog);
         final Button submitButton = alertDialog.findViewById(R.id.submitButtonDialog);

@@ -62,6 +62,5 @@ public class FullPagerActivity extends SetupPagerActivity {
         public int getCount() {
             return 5;
         }
-
     }
 }

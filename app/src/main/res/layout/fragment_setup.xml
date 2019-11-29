@@ -40,7 +40,7 @@
         app:srcCompat="@drawable/self_sufficient"
         android:src="@drawable/self_sufficient" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
