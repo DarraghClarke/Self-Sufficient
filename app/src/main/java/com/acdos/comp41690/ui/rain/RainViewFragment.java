@@ -27,17 +27,14 @@ import java.util.Objects;
 import static com.acdos.comp41690.Constants.SharedPrefKeys.WATER_TANK_SIZE;
 import static java.lang.Thread.sleep;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class RainViewFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ImageView imageView;
     private RainPageViewModel pageViewModel;
-    private int maxLitre = 5500;
-    private int currLitre= 5500;
+    private int maxLitre = 1;
     private int defaultLitre = 0;
+    private int currLitre= defaultLitre;
     SharedPreferences prefs = null;
 
     public static RainViewFragment newInstance(int index) {
@@ -75,6 +72,7 @@ public class RainViewFragment extends Fragment {
         GradientDrawable shapeDrawable = (GradientDrawable) imageView.getDrawable();
         shapeDrawable.setSize(90, 80);
         imageView.setPadding(0, 0 , 0, 0);
+        System.out.println("YES");
         maxLitre = getMaxLitre();
         currLitre = getCurrLitre();
         runUIThread(currLitre);
@@ -119,11 +117,14 @@ public class RainViewFragment extends Fragment {
             val = defaultLitre;
         }
 
+        System.out.println(val + " >" + maxLitre+"? " + (val > maxLitre));
         if(val > maxLitre) {
             Toast.makeText(getContext(), "DB_ERROR: Current volume must be smaller than max volume.", Toast.LENGTH_SHORT).show();
             val = defaultLitre;
             currLitre = defaultLitre;
         }
+
+        System.out.println(val);
         cursor.close();
         return val;
     }
@@ -131,8 +132,10 @@ public class RainViewFragment extends Fragment {
     private int getMaxLitre() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String tankSizeStr = prefs.getString(Constants.SharedPrefKeys.WATER_TANK_SIZE, "0");
-        int tankSize = Integer.parseInt(tankSizeStr);
+        int tankSize = (int)Float.parseFloat(tankSizeStr);
 
+        System.out.println(tankSize);
+        System.out.println(currLitre);
         if(tankSize == 0) {
             currLitre = defaultLitre;
         }

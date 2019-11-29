@@ -182,11 +182,11 @@ public class HomeFragment extends Fragment {
 
         private void setWeather(WeatherStore weather) {
 
-            temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "C");
+            temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "°C");
             temp.setTextSize(90);
             rainFall.setText(""+weather.rain.getAmount());
-            minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"C");
-            maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"C");
+            minTemp.setText("Minimum temperature: "+Math.round((weather.temperature.getMinTemp() -273.15 ))+"°C");
+            maxTemp.setText("Maximum temperature:"+Math.round((weather.temperature.getMaxTemp() -273.15 ))+"°C");
             condDescr.setText(weather.currentCondition.getDescr());
             hum.setText("" + weather.currentCondition.getHumidity() + "%");
             press.setText("" + weather.currentCondition.getPressure() + " hPa");
