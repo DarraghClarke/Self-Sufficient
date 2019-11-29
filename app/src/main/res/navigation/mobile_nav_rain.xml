@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_rain"
-        android:name="com.acdos.comp41690.ui.rain.RainFragment"
+        android:name="com.acdos.comp41690.ui.rain.RainViewFragment"
         android:label="@string/menu_rain"
         tools:layout="@layout/fragment_rain" />
 

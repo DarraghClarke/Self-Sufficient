@@ -32,6 +32,9 @@ import org.json.JSONObject;
  *  https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90
  *  and the android request/volley tutorial
  *  https://developer.android.com/training/volley/simple?fbclid=IwAR26_405eNCLPrpiodtiqnuuA_LnrLijsw_dDLNy_CqvMmQ2kdL_lAlNdn4*/
+/* This file is the implementation of the home screen. It will make http requests to get the data for the weather display
+* then set the appropriate text views with the received data */
+
 public class HomeFragment extends Fragment {
 
     private TextView rainFall;
@@ -44,6 +47,8 @@ public class HomeFragment extends Fragment {
     private TextView hum;
     private TextView alerts;
 
+    //Sets the appropriate textviews, checks if you are using water and or solar, makes the calls to other methods that
+    //Get your weather data
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -104,22 +109,12 @@ public class HomeFragment extends Fragment {
         private final String HERE_BASE_URL = "https://weather.cit.api.here.com/weather/1.0/report.json?product=alerts";
         private final String HERE_BASE_ID = "&app_id=SCLblvFIwikj6SHdpwab&app_code=TvzcBTnBKM-Sh_wH-pqX3w";
 
-        private WeatherStore getWeatherStore(String data) {
-
-
-            try {
-                weather = WeatherJSONParser.getWeather(data);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return weather;
-
-        }
+        //Makes a http request to the HERE api and sets the alerts into the weather store
         private void getAlertData(double longitude, double latitude) {
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 //            double longitude = 2.364286;
 //            double latitude = 48.891784;
-
+            //Android tutorial volley request code
             StringRequest alertRequest = new StringRequest(Request.Method.GET, HERE_BASE_URL + "&longitude=" + longitude + "&latitude=" + latitude +HERE_BASE_ID,
                     new Response.Listener<String>() {
                         @Override
@@ -155,7 +150,7 @@ public class HomeFragment extends Fragment {
             // Add the request to the RequestQueue.
             queue.add(alertRequest);
         }
-
+        //Gets the weather data from Openweather api through volley and sends it to the parser
         private void getWeatherData(double longitude, double latitude) {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -164,7 +159,11 @@ public class HomeFragment extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            weather = getWeatherStore(response);
+                            try {
+                                weather = WeatherJSONParser.getWeather(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             setWeather(weather);
                         }
                     }, new Response.ErrorListener() {
@@ -176,7 +175,7 @@ public class HomeFragment extends Fragment {
             queue.add(stringRequest);
         }
 
-
+        //Sets the appropriate weather data to their text views
         private void setWeather(WeatherStore weather) {
 
             temp.setText("" + Math.round((weather.temperature.getTemp() -273.15 )) + "°C");

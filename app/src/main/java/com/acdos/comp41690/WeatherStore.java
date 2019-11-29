@@ -1,5 +1,8 @@
 package com.acdos.comp41690;
-
+/* This class is used to store the data taken from the OpenWeather and HERE api after it has
+been through the JsonParser class. This data will then be called by the Homefragment to set
+them on their respective text views
+ */
 
 
 public class WeatherStore {
@@ -93,14 +96,6 @@ public class WeatherStore {
     public class Rain {
         private String time;
         private float amount;
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
 
         public float getAmount() {
             return amount;
