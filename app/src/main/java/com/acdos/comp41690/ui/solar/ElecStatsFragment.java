@@ -82,7 +82,7 @@ public class ElecStatsFragment extends Fragment {
     }
 
     public void createGraph(View rootView) throws ParseException {
-        GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
+        GraphView lineGraph = rootView.findViewById(R.id.lineGraph);
         GridLabelRenderer glr = lineGraph.getGridLabelRenderer();
         glr.setPadding(50);
         DataPoint[] data = usageTimeData();
@@ -99,7 +99,6 @@ public class ElecStatsFragment extends Fragment {
                 lineGraphSeries.setThickness(8);
 
               GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
-//            lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
             gridLabel.setHorizontalAxisTitle("Time (in days)");
             gridLabel.setVerticalAxisTitle("Electricity Usage");
                 lineGraphSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
@@ -112,7 +111,6 @@ public class ElecStatsFragment extends Fragment {
 
 
         }
-        // generated over time
         GraphView lineGraphGenerated = rootView.findViewById(R.id.lineGraphGenerated);
         GridLabelRenderer renderer = lineGraphGenerated.getGridLabelRenderer();
         renderer.setPadding(50);
@@ -239,9 +237,7 @@ public class ElecStatsFragment extends Fragment {
                 SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP,
                 SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE};
 
-
-
-//      System.out.println("Count =" + count);
+        
         int count = (int) DatabaseUtils.queryNumEntries(userDb, SolarUsageContract.SolarUsageEntry.TABLE_NAME);
 
         DataPoint[] values = new DataPoint[count];
