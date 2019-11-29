@@ -146,11 +146,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // If the app has never been launched before, start up the setup activity
-        //if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
+        if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
             // Launch set-up view
-          //  Intent intent = new Intent(this, InitialSetupActivity.class);
-            //startActivity(intent);
-        //}
+            Intent intent = new Intent(this, InitialSetupActivity.class);
+            startActivity(intent);
+        }
 
         // Otherwise, continue with the dashboard view
     }

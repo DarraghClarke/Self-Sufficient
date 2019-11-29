@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,12 +26,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Random;
-
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment for displaying stats for the rain section of the app
  */
 public class RainStatsFragment extends Fragment {
 
@@ -60,30 +55,26 @@ public class RainStatsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragement_rain_stats, container, false);
 
-        Button button = root.findViewById(R.id.button);
-        final Random r = new Random();
+        createGraph(root);
 
-        //Graph
-        try {
-            createGraph(root);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         return root;
     }
 
-    private void createGraph(View root) throws ParseException {
-        GraphView lineGraph = (GraphView) root.findViewById(R.id.lineGraph);
+    // Creates and populates the graph
+    private void createGraph(View root) {
+        GraphView lineGraph = root.findViewById(R.id.lineGraph);
+        GridLabelRenderer glr = lineGraph.getGridLabelRenderer();
+        // Ensures all of the graph is displayed
+        glr.setPadding(50);
 
         DataPoint[] data = waterUsage();
 
-        if(!data.equals(null)) {
-            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
+        if(data != null) {
+            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(data);
 
             lineGraph.setTitle("Water Usage Over Time");
             lineGraphSeries.setColor(Color.RED);
@@ -91,32 +82,25 @@ public class RainStatsFragment extends Fragment {
             lineGraphSeries.setDataPointsRadius(10);
             lineGraphSeries.setThickness(8);
             GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
-//          lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4)
+
             gridLabel.setHorizontalAxisTitle("Time (in days)");
             gridLabel.setVerticalAxisTitle("Water Input (liters)");
 
             lineGraphSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
                 @Override
                 public void onTap(Series series, DataPointInterface dataPoint) {
-                    Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), dataPoint.getX() + " litres", Toast.LENGTH_SHORT).show();
                 }
             });
             lineGraph.addSeries(lineGraphSeries);
+            lineGraph.getViewport().setScalable(true);
         }
-
-
-
     }
 
-
-
-
-    private DataPoint[] waterUsage() throws ParseException {
+    private DataPoint[] waterUsage() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
-        final SimpleDateFormat sdf = new SimpleDateFormat("ddMM");
 
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-
 
         String[] projectionUsage = {
                 WaterUsageContract.WaterUsageEntry._ID,
@@ -127,11 +111,11 @@ public class RainStatsFragment extends Fragment {
         int count = (int) DatabaseUtils.queryNumEntries(userDb, WaterUsageContract.WaterUsageEntry.TABLE_NAME);
         DataPoint[] values = new DataPoint[count];
 
-        Cursor cUsage = userDb.query(WaterUsageContract.WaterUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+        Cursor cUsage = userDb.query(WaterUsageContract.WaterUsageEntry.TABLE_NAME, projectionUsage, null,
+                null, null, null, null);
 
         int i=0;
         while (cUsage.moveToNext()) {
-
             Log.d("RainStatsFragment", cUsage.getLong(0) + ", " + cUsage.getLong(1) + ", " + cUsage.getDouble(2));
             DataPoint v = new DataPoint(((cUsage.getLong(1))), cUsage.getLong(2));
             values[i] = v;
