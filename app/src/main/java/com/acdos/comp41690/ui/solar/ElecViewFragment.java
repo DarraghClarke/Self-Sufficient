@@ -85,6 +85,7 @@ public class ElecViewFragment extends Fragment {
         runUIThread(currKWh);
     }
 
+    //Ensure there isn't any delay when updating the UI
     private void runUIThread(int value) {
         currKWh = value;
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
@@ -108,6 +109,7 @@ public class ElecViewFragment extends Fragment {
         });
     }
 
+    //Get current KWh rate
     private int getCurrKWh() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
         SQLiteDatabase userDb = userDataDbHelper.getReadableDatabase();
@@ -133,6 +135,7 @@ public class ElecViewFragment extends Fragment {
         return val;
     }
 
+    //Get solar panel output
     private int getMaxKWh() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
         SQLiteDatabase userDb = userDataDbHelper.getReadableDatabase();

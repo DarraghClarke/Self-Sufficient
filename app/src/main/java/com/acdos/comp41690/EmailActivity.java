@@ -42,6 +42,7 @@ public class EmailActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    // Send intent to email client
     private void sendEMail() {
         String addressList = emailAddress.getText().toString();
         String[] addresses = addressList.split(",");
