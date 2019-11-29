@@ -18,11 +18,13 @@ import com.acdos.comp41690.R;
  * Dialog box used by a user to enter existing water tank dimensions
  */
 public class RoofAreaDialogFragment extends DialogFragment {
-    private SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    private SharedPreferences prefs;
     ;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         final Dialog alertDialog = new Dialog(getActivity());
 
         alertDialog.setContentView(R.layout.dialog);
