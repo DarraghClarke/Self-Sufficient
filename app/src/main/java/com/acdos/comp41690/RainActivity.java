@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,27 +82,23 @@ public class RainActivity extends AppCompatActivity {
 
                 final Dialog addDataAlert = new Dialog(RainActivity.this);
 
-                addDataAlert.setContentView(R.layout.input_data_dialog);
-                RadioGroup radioGroup = addDataAlert.findViewById(R.id.radioGroup);
-                radioGroup.setVisibility(View.INVISIBLE);
-
+                addDataAlert.setContentView(R.layout.input_data_dialog_rain);
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
-
                 inputField.setHint(R.string.water_usage_input_dialog);
-
-                TextView Title = addDataAlert.findViewById(R.id.Title);
-                Title.setText("Water Input");
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
-
                 final Button cancelButton = addDataAlert.findViewById(R.id.cancelButton);
+                final RadioButton addButton = addDataAlert.findViewById(R.id.addButton);
 
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (inputField.getText().length() == 0) {
                             Toast.makeText(RainActivity.this, "Input can not be empty", Toast.LENGTH_SHORT).show();
-                        }  else {
-                            addToDatabase(Integer.valueOf(inputField.getText().toString()));
+                        }  else if (addButton.isChecked() ){
+                            addToDatabase(true, Integer.valueOf(inputField.getText().toString()));
+                        } else {
+                            addToDatabase(false, Integer.valueOf(inputField.getText().toString()));
+
                         }
                         addDataAlert.cancel();
                         finish();
@@ -169,6 +166,7 @@ public class RainActivity extends AppCompatActivity {
         });
     }
 
+    // Code taken from Android Studio's navigation drawer starting code
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -176,6 +174,7 @@ public class RainActivity extends AppCompatActivity {
         return true;
     }
 
+    // Code taken from Android Studio's navigation drawer starting code
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_rain);
@@ -183,8 +182,22 @@ public class RainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    // Open a new activity to send an email via an installed email client
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-    private void addToDatabase(int input) {
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, EmailActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Add new volume to database
+    private void addToDatabase(boolean addSub, int input) {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(RainActivity.this);
         ContentValues value = new ContentValues();
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
@@ -192,11 +205,19 @@ public class RainActivity extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
         int currentVolume = getCurrLitre();
 
-        value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input+currentVolume);
-        value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, sdf.format(timestamp) );
-        userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
+        if(addSub == true) {
+            value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input+currentVolume);
+            value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, sdf.format(timestamp) );
+            userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
+        }
+        else {
+            value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, currentVolume-input);
+            value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, sdf.format(timestamp) );
+            userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
+        }
     }
 
+    //Get the most recent volume from the database
     private int getCurrLitre() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(this);
         SQLiteDatabase userDb = userDataDbHelper.getReadableDatabase();

@@ -81,6 +81,7 @@ public class RainViewFragment extends Fragment {
         runUIThread(currLitre);
     }
 
+    //Ensure there isn't any delay when updating the UI
     private void runUIThread(int value) {
         currLitre = value;
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
@@ -104,6 +105,7 @@ public class RainViewFragment extends Fragment {
         });
     }
 
+    //Get current volume from the database
     private int getCurrLitre() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
         SQLiteDatabase userDb = userDataDbHelper.getReadableDatabase();
@@ -125,10 +127,17 @@ public class RainViewFragment extends Fragment {
             val = currLitre;
         }
 
+        if(val < 0) {
+            addToDatabase(defaultLitre);
+            Toast.makeText(getContext(), "DB_ERROR: Current volume must be bigger than zero.", Toast.LENGTH_SHORT).show();
+            val = defaultLitre;
+        }
+
         cursor.close();
         return val;
     }
 
+    //Get tank size from the SharedPreferences
     private int getMaxLitre() {
         prefs = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getActivity()));
         String tankSizeStr = prefs.getString(Constants.SharedPrefKeys.WATER_TANK_SIZE, "0");
@@ -145,6 +154,7 @@ public class RainViewFragment extends Fragment {
         return tankSize;
     }
 
+    //Add current volume to the database
     private void addToDatabase(int input) {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getContext());
         ContentValues value = new ContentValues();
