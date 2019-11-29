@@ -3,6 +3,7 @@ package com.acdos.comp41690;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,9 +23,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
-
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract;
 import com.acdos.comp41690.ui.rain.RainSectionsPagerAdapter;
@@ -34,9 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 
 public class RainActivity extends AppCompatActivity {
 
@@ -85,8 +81,6 @@ public class RainActivity extends AppCompatActivity {
 
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
 
-                inputField.setText(R.string.water_usage_formula_label);
-
                 inputField.setHint(R.string.water_usage_input_dialog);
 
                 TextView Title = addDataAlert.findViewById(R.id.Title);
@@ -101,7 +95,7 @@ public class RainActivity extends AppCompatActivity {
                         if (inputField.getText().length() == 0) {
                             Toast.makeText(RainActivity.this, "Input can not be empty", Toast.LENGTH_SHORT).show();
                         }  else {
-                            addToDatabase( Integer.valueOf(inputField.getText().toString()));
+                            addToDatabase(Integer.valueOf(inputField.getText().toString()));
                         }
                         addDataAlert.cancel();
                         finish();
@@ -182,10 +176,29 @@ public class RainActivity extends AppCompatActivity {
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
         Date timestamp = getTime();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
+        int currentVolume = getCurrLitre();
 
-        value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input);
+        value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME, input+currentVolume);
         value.put(WaterUsageContract.WaterUsageEntry.COLUMN_NAME_TIMESTAMP, sdf.format(timestamp) );
         userDb.insert(WaterUsageContract.WaterUsageEntry.TABLE_NAME, null, value);
+    }
+
+    private int getCurrLitre() {
+        UserDataDbHelper userDataDbHelper = new UserDataDbHelper(this);
+        SQLiteDatabase userDb = userDataDbHelper.getReadableDatabase();
+
+        String[] projectionUsage = { WaterUsageContract.WaterUsageEntry.COLUMN_NAME_VOLUME };
+
+        Cursor cursor = userDb.query(WaterUsageContract.WaterUsageEntry.TABLE_NAME, projectionUsage, null, null, null, null, null);
+        int val;
+        if(cursor.moveToLast()) {
+            val = cursor.getInt(0);
+        }
+        else {
+            val = 0;
+        }
+        cursor.close();
+        return val;
     }
 
     public static Date getTime(){

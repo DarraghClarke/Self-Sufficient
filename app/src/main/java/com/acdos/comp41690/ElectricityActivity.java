@@ -77,11 +77,9 @@ public class ElectricityActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final Dialog addDataAlert = new Dialog(ElectricityActivity.this);
-                addDataAlert.setTitle("Current: " + "kWh");
 
                 addDataAlert.setContentView(R.layout.input_data_dialog);
                 final RadioButton usageButton = addDataAlert.findViewById(R.id.usageButton);
-                final RadioButton outputButton = addDataAlert.findViewById(R.id.outputButton);
                 final EditText inputField = addDataAlert.findViewById(R.id.dataInputField);
 
                 final Button submitButton = addDataAlert.findViewById(R.id.submitButton);
@@ -159,17 +157,17 @@ public class ElectricityActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.solar, menu);
-        return true;
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_solar);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.solar, menu);
+        return true;
     }
 
     /**
