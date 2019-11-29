@@ -1,4 +1,4 @@
-package com.acdos.comp41690.setup;
+package com.acdos.comp41690.setup.maps;
 
 import android.content.pm.PackageManager;
 import android.location.Location;

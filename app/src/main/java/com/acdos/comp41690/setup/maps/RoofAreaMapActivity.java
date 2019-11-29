@@ -1,4 +1,4 @@
-package com.acdos.comp41690.setup;
+package com.acdos.comp41690.setup.maps;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +37,9 @@ public class RoofAreaMapActivity extends MapActivity {
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        RoofAreaDialogFragment roofAreaDialogFragment = new RoofAreaDialogFragment();
+        roofAreaDialogFragment.show(getSupportFragmentManager(), "roof_area_alert");
+
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 

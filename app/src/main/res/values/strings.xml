@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">COMP41690</string>
+    <string name="app_name">SelfSufficient</string>
     <string name="shared_preferences">com.acdos.comp41690.preferences</string>
     <string name="title_activity_setup">SetupActivity</string>
     <string name="setup">Welcome to SelfSufficient</string>
