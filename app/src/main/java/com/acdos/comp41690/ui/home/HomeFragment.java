@@ -1,8 +1,5 @@
 package com.acdos.comp41690.ui.home;
-/* This file uses code referenced from the open weather api recommended tutorial
-"https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90"
-and the android request/volley tutorial
-https://developer.android.com/training/volley/simple?fbclid=IwAR26_405eNCLPrpiodtiqnuuA_LnrLijsw_dDLNy_CqvMmQ2kdL_lAlNdn4*/
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.Constants;
@@ -31,9 +27,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ *  This file uses code referenced from the open weather api recommended tutorial
+ *  https://www.survivingwithandroid.com/android-openweathermap-app-weather-app/?fbclid=IwAR3_pkIO6kAqLgg5H63m43-QPRGUw7J-7jv7rPVZktDAVrkTBpFZv2eCn90
+ *  and the android request/volley tutorial
+ *  https://developer.android.com/training/volley/simple?fbclid=IwAR26_405eNCLPrpiodtiqnuuA_LnrLijsw_dDLNy_CqvMmQ2kdL_lAlNdn4*/
 public class HomeFragment extends Fragment {
-
-    private HomeViewModel homeViewModel;
 
     private TextView rainFall;
     private TextView condDescr;
@@ -44,15 +43,10 @@ public class HomeFragment extends Fragment {
     private TextView maxTemp;
     private TextView hum;
     private TextView alerts;
-    private ImageView solar;
-    private ImageView water;
+
     @Override
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         windSpeed = root.findViewById(R.id.wind);
@@ -70,7 +64,7 @@ public class HomeFragment extends Fragment {
         final boolean using_water = prefs.getBoolean(Constants.SharedPrefKeys.USING_WATER, false);
 
         if (!using_solar) {
-            solar = root.findViewById(R.id.solar_image);
+            ImageView solar = root.findViewById(R.id.solar_image);
             solar.setImageAlpha(50);
             solar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,7 +75,7 @@ public class HomeFragment extends Fragment {
             });
         }
         if(!using_water) {
-            water = root.findViewById(R.id.water_image);
+            ImageView water = root.findViewById(R.id.water_image);
             water.setImageAlpha(50);
             water.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,8 +88,8 @@ public class HomeFragment extends Fragment {
 
         maxTemp = root.findViewById(R.id.temp_max);
 
-        double longitude = prefs.getFloat("longitude", 0.0f);
-        double latitude = prefs.getFloat("latitude", 0.0f);
+        double longitude = prefs.getFloat(Constants.SharedPrefKeys.LONGITUDE, 0.0f);
+        double latitude = prefs.getFloat(Constants.SharedPrefKeys.LATITUDE, 0.0f);
 
         getWeatherData(longitude, latitude);
         getAlertData(longitude, latitude);

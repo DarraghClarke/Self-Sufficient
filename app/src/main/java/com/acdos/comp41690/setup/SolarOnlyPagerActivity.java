@@ -11,33 +11,35 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
+/**
+ * SolarOnlyPagerActivity used for setting up just the solar section of the app
+ *
+ * Based off https://developer.android.com/training/animation/screen-slide
+ */
 public class SolarOnlyPagerActivity extends SetupPagerActivity {
-    /**
-     * The number of pages (wizard steps) in the solar setup.
-     */
-    private int NUM_PAGES = 3;
-    private CustomPager mPager;
-    private PagerAdapter pagerAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = findViewById(R.id.pager);
+        // Instantiates the pager, adapter and links both together
+        CustomPager mPager = findViewById(R.id.pager);
         setViewPager(mPager);
 
-        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
     }
 
+    /**
+     * Internal class used to define the pages available to the user, and the associated order
+     */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        // Defines the pages and their order
         @NonNull
         @Override
         public Fragment getItem(int position) {
@@ -55,7 +57,7 @@ public class SolarOnlyPagerActivity extends SetupPagerActivity {
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return 3;
         }
 
     }

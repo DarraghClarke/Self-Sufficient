@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -16,28 +14,23 @@ import androidx.fragment.app.Fragment;
 
 import com.acdos.comp41690.R;
 
+/**
+ * Fragment used in setup to let the user select to activate the solar section, water section or both
+ */
 public class OnboardingTypeSelectionFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_setup_onboarding_type, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_setup_onboarding_type, container, false);
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
-        ImageView imageView = view.findViewById(R.id.question_image);
-        TextView textView = view.findViewById(R.id.question_text);
-
-
-
-               //imageView.setImageResource(R.drawable.roof);
-               //textView.setText(R.string.onboarding_question);
-
         final Switch waterSwitch = view.findViewById(R.id.water_switch);
         final Switch solarSwitch = view.findViewById(R.id.solar_switch);
         Button submit = view.findViewById(R.id.button);
 
+        // Depending on what switches are checked, a different pager activity is loaded
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,9 +47,6 @@ public class OnboardingTypeSelectionFragment extends Fragment {
                     Toast.makeText(getActivity(),"Please select at least one option", Toast.LENGTH_SHORT).show();
                   }
                 }
-
         });
-
     }
-
 }

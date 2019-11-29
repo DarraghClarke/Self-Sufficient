@@ -22,11 +22,10 @@ import com.acdos.comp41690.R;
 import java.util.Objects;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
+ * Standalone activity used to calculate the recommended water tank size for the user
  */
 public class SetupWaterActivity extends FragmentActivity {
-    final double drainageCoeffient = 0.8;
+    final double drainageCoefficient = 0.8;
     final double filterEfficiency = 0.95;
     RadioButton fivePercentButton;
     RadioButton fiveWeeksButton;
@@ -71,6 +70,7 @@ public class SetupWaterActivity extends FragmentActivity {
            public void onTextChanged(CharSequence s, int start, int before, int count) {
            }
 
+           // When the text is changed, we change the text shown to the user with the recommended tank size
            @Override
            public void afterTextChanged(Editable s) {
                if (waterUsage.getText().length() != 0 && harvestableRoofArea.getText().length() != 0) {
@@ -101,12 +101,13 @@ public class SetupWaterActivity extends FragmentActivity {
             }
         });
 
-        //this will submit the users input
+        // this will submit the users input
         final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 float result = SetupWaterActivity.this.tankSizeAmount;
-                // To save
+
+                // Saves the value in SharedPreferences
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupWaterActivity.this);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(Constants.SharedPrefKeys.WATER_TANK_SIZE, String.valueOf(result));
@@ -118,14 +119,13 @@ public class SetupWaterActivity extends FragmentActivity {
                 finish();
             }
         });
-
-
     }
 
+    // Calculates the water tank size
     public int tankSizeCalculator() {
         int averageRainFall = 800;
-        int weeklyBased = (int) Math.round((roofArea * drainageCoeffient * filterEfficiency * averageRainFall));
-        int usageBased = (int) Math.round((usage * 5));
+        int weeklyBased = (int) Math.round((roofArea * drainageCoefficient * filterEfficiency * averageRainFall));
+        int usageBased = Math.round((usage * 5));
 
         if (fiveWeeksButton.isChecked()) {
             tankSizeAmount = weeklyBased;

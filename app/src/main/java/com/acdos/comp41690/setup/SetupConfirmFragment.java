@@ -15,10 +15,12 @@ import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.MainActivity;
 import com.acdos.comp41690.R;
 
+/**
+ * The last fragment used in the setup, stating that setup is complete
+ */
 public class SetupConfirmFragment extends Fragment {
 
-    SetupConfirmFragment() {
-    }
+    SetupConfirmFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,14 +32,17 @@ public class SetupConfirmFragment extends Fragment {
 
         Button confirm = view.findViewById(R.id.Confirm);
 
+        // When the user confirms that they are finished setup, we mark setup as complete in SharedPreferences
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor editor = prefs.edit();
+               SharedPreferences.Editor editor = prefs.edit();
 
+               // We use the class name of the activity to know exactly how much of the app is completed
                 String activityClassName = getActivity().getLocalClassName();
 
+                // I know hardcoding the names isn't best practice, but this was the best
+                // solution I could find
                 switch (activityClassName) {
                     case "setup.SolarOnlyPagerActivity":
                         editor.putBoolean(Constants.SharedPrefKeys.USING_SOLAR, true);
@@ -53,8 +58,10 @@ public class SetupConfirmFragment extends Fragment {
 
                 editor.apply();
 
-                //launch app proper
+                // Saves that general setup is completed
                 prefs.edit().putBoolean(Constants.SharedPrefKeys.FIRST_RUN, false).apply();
+
+                // Starts MainActivity
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }

@@ -50,7 +50,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".setup.MapActivity"
+            android:name=".setup.RoofAreaMapActivity"
             android:label="MapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

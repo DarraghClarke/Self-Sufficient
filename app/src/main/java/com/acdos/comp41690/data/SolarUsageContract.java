@@ -3,14 +3,13 @@ package com.acdos.comp41690.data;
 import android.provider.BaseColumns;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-08.
+ * Class that represents the table name and columns associated with the usage of solar energy
+ * Used to ensure consistency when accessing the solar_usage table
  */
 public final class SolarUsageContract {
-    // To prevent someone from accidentally instantiating the contract class,
-    // make the constructor private.
     private SolarUsageContract() {}
 
-    /* Inner class that defines the table contents */
+    // Inner class with constants that represent the columns and table name
     public static class SolarUsageEntry implements BaseColumns {
         public static final String TABLE_NAME = "solar_usage";
         public static final String COLUMN_NAME_USAGE = "usage";

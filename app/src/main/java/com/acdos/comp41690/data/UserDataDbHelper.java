@@ -5,22 +5,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.acdos.comp41690.data.SolarUsageContract.SolarUsageEntry;
 import com.acdos.comp41690.data.SolarGenerationContract.SolarGenerationEntry;
+import com.acdos.comp41690.data.SolarUsageContract.SolarUsageEntry;
 import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
-import com.acdos.comp41690.ui.solar.ElecStatsFragment;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-08.
+ * Class used to access all data stored by the user, including water usage, electricity usage
+ * and solar energy generated
  *
- * To access this database, follow the instructions detailed here:
- * https://developer.android.com/training/data-storage/sqlite.html
+ * This class uses SQLiteOpenHelper to simplify accessing and creating the database
+ *
+ * Developed using code from https://developer.android.com/training/data-storage/sqlite.html
  */
 public class UserDataDbHelper extends SQLiteOpenHelper {
-    // If you change the database schema, you must increment the database version.
     public static final String DATABASE_NAME = "info.db";
+    // This number must be incremented when the database schema changes
     public static final int DATABASE_VERSION = 3;
 
+    // SQL queries used to create all required tables
     private static final String SQL_CREATE_SOLAR_USAGE =
             "CREATE TABLE " + SolarUsageEntry.TABLE_NAME + " (" +
                     SolarUsageEntry._ID + " INTEGER PRIMARY KEY," +
@@ -39,10 +41,14 @@ public class UserDataDbHelper extends SQLiteOpenHelper {
                     WaterUsageEntry.COLUMN_NAME_TIMESTAMP + " INTEGER," +
                     WaterUsageEntry.COLUMN_NAME_VOLUME + " REAL)";
 
-
-    private static final String SQL_DELETE_ENTRIES =
+    private static final String SQL_DELETE_SOLAR_USAGE =
             "DROP TABLE IF EXISTS " + SolarUsageEntry.TABLE_NAME;
 
+    private static final String SQL_DELETE_SOLAR_GENERATION =
+            "DROP TABLE IF EXISTS " + SolarGenerationEntry.TABLE_NAME;
+
+    private static final String SQL_DELETE_WATER_USAGE =
+            "DROP TABLE IF EXISTS " + WaterUsageEntry.TABLE_NAME;
 
     public UserDataDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,12 +61,11 @@ public class UserDataDbHelper extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_ENTRIES);
+        // This is a naive solution, but implementing a proper onUpgrade version is complicated and
+        // not predicted to be needed. For now, we just drop all tables
+        db.execSQL(SQL_DELETE_SOLAR_GENERATION);
+        db.execSQL(SQL_DELETE_SOLAR_USAGE);
+        db.execSQL(SQL_DELETE_WATER_USAGE);
         onCreate(db);
-    }
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
     }
 }

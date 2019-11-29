@@ -14,7 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.acdos.comp41690.R;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
+ * Empty Fragment used as the default in Pager activities. It should be accessible by the user.
+ *
  * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
  */
 public class SetupPageFragment extends Fragment {
