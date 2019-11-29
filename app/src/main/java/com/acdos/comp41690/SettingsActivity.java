@@ -3,8 +3,10 @@ package com.acdos.comp41690;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -158,6 +160,9 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.settings_main, rootKey);
 
             EditTextPreference roofArea = findPreference(Constants.SharedPrefKeys.ROOF_AREA);
+            EditTextPreference waterTankSize = findPreference(Constants.SharedPrefKeys.WATER_TANK_SIZE);
+            EditTextPreference solarPanelOutput = findPreference(Constants.SharedPrefKeys.SOLAR_PANEL_OUTPUT);
+            EditTextPreference kwhRate = findPreference(Constants.SharedPrefKeys.KWH_RATE);
             usingWater = findPreference(Constants.SharedPrefKeys.USING_WATER);
             usingSolar = findPreference(Constants.SharedPrefKeys.USING_SOLAR);
 
@@ -165,17 +170,41 @@ public class SettingsActivity extends AppCompatActivity {
             usingWater.setOnPreferenceChangeListener(this);
 
             if (roofArea != null) {
-//                float value = getPreferenceManager().getSharedPreferences().getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0.0f);
-//                roofArea.setText(String.valueOf(value));
-//                roofArea.setOnBindEditTextListener(
-//                        new EditTextPreference.OnBindEditTextListener() {
-//                            @Override
-//                            public void onBindEditText(@NonNull EditText editText) {
-//                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-//                            }
-//                        });
+                roofArea.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                            }
+                        });
             }
-
+            if (waterTankSize != null) {
+                waterTankSize.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                            }
+                        });
+            }
+            if (solarPanelOutput != null) {
+                solarPanelOutput.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                            }
+                        });
+            }
+            if (kwhRate != null) {
+                kwhRate.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                            }
+                        });
+            }
         }
 
         //Used to unlock the solar and rain sections of the app

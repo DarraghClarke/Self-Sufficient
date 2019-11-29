@@ -1,7 +1,9 @@
 package com.acdos.comp41690.setup;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,10 @@ import androidx.preference.PreferenceManager;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.MainActivity;
 import com.acdos.comp41690.R;
+import com.acdos.comp41690.data.SolarGenerationContract;
+import com.acdos.comp41690.data.SolarUsageContract;
+import com.acdos.comp41690.data.UserDataDbHelper;
+import com.acdos.comp41690.data.WaterUsageContract.WaterUsageEntry;
 
 /**
  * The last fragment used in the setup, stating that setup is complete
@@ -61,6 +67,9 @@ public class SetupConfirmFragment extends Fragment {
                 // Saves that general setup is completed
                 prefs.edit().putBoolean(Constants.SharedPrefKeys.FIRST_RUN, false).apply();
 
+                addSolarInfo();
+                addWaterInfo();
+
                 // Starts MainActivity
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -68,5 +77,58 @@ public class SetupConfirmFragment extends Fragment {
         });
 
         return view;
+    }
+
+    // Placeholder data used to show the examiner how graphs look with data across multiple days
+    private void addWaterInfo() {
+        UserDataDbHelper dbHelper = new UserDataDbHelper(getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 5);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 26);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 12);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 27);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 15);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 28);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+        values.put(WaterUsageEntry.COLUMN_NAME_VOLUME, 10);
+        values.put(WaterUsageEntry.COLUMN_NAME_TIMESTAMP, 29);
+        db.insert(WaterUsageEntry.TABLE_NAME, null, values);
+    }
+
+
+    // Placeholder data used to show the examiner how graphs look with data across multiple days
+    private void addSolarInfo() {
+        UserDataDbHelper dbHelper = new UserDataDbHelper(getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 15);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 26);
+        db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 20);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 27);
+        db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 12);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 28);
+        db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_USAGE, 34);
+        values.put(SolarUsageContract.SolarUsageEntry.COLUMN_NAME_TIMESTAMP, 29);
+        db.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 30);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 26);
+        db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 10);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 27);
+        db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 40);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 28);
+        db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, 60);
+        values.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP, 29);
+        db.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, values);
     }
 }
