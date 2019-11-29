@@ -17,7 +17,7 @@ import com.acdos.comp41690.setup.WaterOnlyPagerActivity;
 public class ActivationDialogFragment extends DialogFragment {
     private String sectionName;
 
-    ActivationDialogFragment(String sectionName) {
+    public ActivationDialogFragment(String sectionName) {
         this.sectionName = sectionName;
     }
 
