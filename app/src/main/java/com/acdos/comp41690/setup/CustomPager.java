@@ -6,34 +6,24 @@ import android.view.MotionEvent;
 
 import androidx.viewpager.widget.ViewPager;
 
+/**
+ * Custom ViewPager class that disables swiping between pages. Used in the setup PagerActivity.
+ */
 public class CustomPager extends ViewPager {
-
-    private boolean enabled;
 
     public CustomPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.enabled = false;
     }
 
+    // We override the methods, preventing any page changes from occurring
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (this.enabled) {
-            return super.onTouchEvent(event);
-        }
-
         return false;
     }
 
+    // We override the methods, preventing any page changes from occurring
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (this.enabled) {
-            return super.onInterceptTouchEvent(event);
-        }
-
         return false;
-    }
-
-    public void setPagingEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

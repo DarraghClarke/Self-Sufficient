@@ -11,27 +11,29 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
+/**
+ * SetupPagerActivity used for setting up both the solar and water sections of the app
+ *
+ * Based off https://developer.android.com/training/animation/screen-slide
+ */
 public class FullPagerActivity extends SetupPagerActivity {
-    /**
-     * The number of pages (wizard steps) in the full setup process.
-     */
-    private int NUM_PAGES=5;
-    private CustomPager mPager;
-    private PagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = findViewById(R.id.pager);
-        pagerAdapter = new FullPagerActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
+        // Instantiates the pager, adapter and links both together
+        CustomPager mPager = findViewById(R.id.pager);
+        PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
 
         setViewPager(mPager);
     }
 
+    /**
+     * Internal class used to define the pages available to the user, and the associated order
+     */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -58,7 +60,7 @@ public class FullPagerActivity extends SetupPagerActivity {
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return 5;
         }
 
     }

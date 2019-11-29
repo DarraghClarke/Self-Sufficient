@@ -12,10 +12,10 @@ import com.acdos.comp41690.setup.SolarOnlyPagerActivity;
 import com.acdos.comp41690.setup.WaterOnlyPagerActivity;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-27.
+ * Dialog box shown to a user if they try to use a section of the app that hasn't been activated yet
  */
 public class ActivationDialogFragment extends DialogFragment {
-    String sectionName;
+    private String sectionName;
 
     ActivationDialogFragment(String sectionName) {
         this.sectionName = sectionName;
@@ -42,6 +42,7 @@ public class ActivationDialogFragment extends DialogFragment {
                         dismiss();
                     }
                 });
+
         // Create the AlertDialog object and return it
         return builder.create();
     }

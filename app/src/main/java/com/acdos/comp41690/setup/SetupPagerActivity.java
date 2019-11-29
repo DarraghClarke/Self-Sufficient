@@ -3,11 +3,12 @@ package com.acdos.comp41690.setup;
 import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/training/animation/screen-slide
+ * Parent Pager activity used for setup to display multiple steps of setup, letting the user navigate
+ * linearly through set-up steps without using multiple activities
+ *
+ * Code based off https://developer.android.com/training/animation/screen-slide
  */
 public class SetupPagerActivity extends FragmentActivity {
 
@@ -21,22 +22,23 @@ public class SetupPagerActivity extends FragmentActivity {
         this.mPager = viewPager;
     }
 
+    // We override the back button, so it brings you to the previous page if possible instead of
+    // to the previous Activities
     @Override
     public void onBackPressed() {
         if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
             super.onBackPressed();
         } else {
-            // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
 
+    // Method linked to the "Continue" button in the layout
     public void onContinueButtonClick(View v) {
         moveToNextPage();
     }
 
+    // Moves the pager to the next page
     public void moveToNextPage() {
         mPager.setCurrentItem(mPager.getCurrentItem()+1);
     }

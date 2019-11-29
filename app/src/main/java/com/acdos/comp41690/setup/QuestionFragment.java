@@ -81,7 +81,7 @@ public class QuestionFragment extends Fragment {
             public void onClick(View view) {
                 switch (questionType) {
                     case Constants.QuestionType.ROOF_AREA_QUESTION:
-                        Intent intent = new Intent(getContext(), MapActivity.class);
+                        Intent intent = new Intent(getContext(), RoofAreaMapActivity.class);
                         startActivityForResult(intent, 1);
                         break;
                     case Constants.QuestionType.WATER_TANK_QUESTION:

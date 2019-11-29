@@ -19,6 +19,11 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.navigation.NavigationView;
 
+/**
+ * Settings Activity used to let the user change their SharedPreferences
+ *
+ * Based off code from https://developer.android.com/guide/topics/ui/settings
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -28,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //Add Toolbar
+        // Code taken from Android Studio's navigation drawer set-up starter code
         Toolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
 
@@ -46,6 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        // Code taken from Android Studio's navigation drawer set-up starter code
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -86,6 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    // Code taken from Android Studio's navigation drawer set-up starter code
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,6 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    // Code taken from Android Studio's navigation drawer set-up starter code
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -114,6 +122,8 @@ public class SettingsActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    // Fragment used to display preferences to the user
+    // Uses the androidx Preference library to do this
     public static class AppPreferenceFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

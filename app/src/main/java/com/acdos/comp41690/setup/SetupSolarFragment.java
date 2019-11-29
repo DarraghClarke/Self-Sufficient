@@ -17,8 +17,7 @@ import com.acdos.comp41690.R;
 ;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
+ * Fragment used to setup the solar panels with information
  */
 public class SetupSolarFragment extends Fragment {
 
@@ -30,26 +29,26 @@ public class SetupSolarFragment extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(
                 R.layout.fragment_setup_solar, container, false);
 
-
-
         Button confirm = view.findViewById(R.id.submitButton);
 
         final EditText solar_panel_output = view.findViewById(R.id.solar_panel_output);
         final EditText kwh_rate = view.findViewById(R.id.kwh_rate);
 
+        // If the EditText components have valid inputs, it saves them to SharedPreferences and advances
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = prefs.edit();
 
-                if (solar_panel_output.getText().length()!=0 && kwh_rate.getText().length()!=0) {
+                if (solar_panel_output.getText().length() != 0 && kwh_rate.getText().length() != 0) {
                     editor.putString(Constants.SharedPrefKeys.SOLAR_PANEL_OUTPUT, solar_panel_output.getText().toString());
                     editor.putString(Constants.SharedPrefKeys.KWH_RATE, kwh_rate.getText().toString());
                     editor.apply();
-                }
 
-                ((SetupPagerActivity) getActivity()).moveToNextPage();
+                    // Move to the next stage of setup
+                    ((SetupPagerActivity) getActivity()).moveToNextPage();
+                }
             }
         });
 

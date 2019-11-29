@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.acdos.comp41690.R;
 
 /**
- * Created by Oisin Quinn (@oisin1001) on 2019-11-11.
- * Based off https://developer.android.com/reference/kotlin/androidx/viewpager/widget/ViewPager.html
+ * Initial screen shown to the user, welcoming them to the app
  */
 public class SplashScreenFragment extends Fragment {
 
