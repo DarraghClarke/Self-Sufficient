@@ -39,21 +39,21 @@
         android:layout_height="58dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="35dp"
-        android:checkedButton="@+id/volumeButton"
+        android:checkedButton="@+id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/volumeButton"
+            android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:text="@string/enter_volume" />
+            android:text="@string/add_water" />
 
         <RadioButton
-            android:id="@+id/tankButton"
+            android:id="@+id/minusButton"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:text="@string/enter_tank_size" />
+            android:text="@string/subtract_water" />
     </RadioGroup>
 
     <EditText

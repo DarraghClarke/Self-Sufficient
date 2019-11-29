@@ -170,6 +170,7 @@ public class ElectricityActivity extends AppCompatActivity {
         });
     }
 
+    // Code taken from Android Studio's navigation drawer starting code
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_solar);
@@ -177,11 +178,26 @@ public class ElectricityActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    // Code taken from Android Studio's navigation drawer starting code
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.solar, menu);
         return true;
+    }
+
+    // Open a new activity to send an email via an installed email client
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, EmailActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**

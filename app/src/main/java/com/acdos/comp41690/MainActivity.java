@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    // Open a new activity to send an email via an installed email client
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
