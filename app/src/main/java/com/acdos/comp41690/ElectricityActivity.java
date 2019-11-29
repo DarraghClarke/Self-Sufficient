@@ -35,6 +35,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+
 public class ElectricityActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -178,7 +179,7 @@ public class ElectricityActivity extends AppCompatActivity {
             userDb.insert(SolarUsageContract.SolarUsageEntry.TABLE_NAME, null, value);
         } else {
             value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_GENERATED_ENERGY, input);
-            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,sdf.format(timestamp)  );
+            value.put(SolarGenerationContract.SolarGenerationEntry.COLUMN_NAME_TIMESTAMP,sdf.format(timestamp) );
             userDb.insert(SolarGenerationContract.SolarGenerationEntry.TABLE_NAME, null, value);
         }
     }

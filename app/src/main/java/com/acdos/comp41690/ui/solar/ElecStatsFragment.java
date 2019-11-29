@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,11 +26,20 @@ import com.acdos.comp41690.data.SolarGenerationContract;
 import com.acdos.comp41690.data.SolarUsageContract;
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -70,60 +80,80 @@ public class ElecStatsFragment extends Fragment {
         final Random r = new Random();
 
         //Graph
-        createGraph(rootView);
+        try {
+            createGraph(rootView);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         //usage over time
 
         return rootView;
     }
-    public void createGraph(View rootView){
+
+    public void createGraph(View rootView) throws ParseException {
         GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
         DataPoint[] data = usageTimeData();
 
-        if(!data.equals(null)) {
-            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
 
-            lineGraph.setTitle("Electricty Usage Over Time");
-            lineGraphSeries.setColor(Color.RED);
-            lineGraphSeries.setDrawDataPoints(true);
-            lineGraphSeries.setDataPointsRadius(10);
-            lineGraphSeries.setThickness(8);
-            lineGraph.addSeries(lineGraphSeries);
+            if (!data.equals(null)) {
+                LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<DataPoint>(data);
+
+
+                lineGraph.setTitle("Electricty Usage Over Time");
+                lineGraphSeries.setColor(Color.RED);
+                lineGraphSeries.setDrawDataPoints(true);
+                lineGraphSeries.setDataPointsRadius(10);
+                lineGraphSeries.setThickness(8);
+
+              GridLabelRenderer gridLabel = lineGraph.getGridLabelRenderer();
+//            lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
+            gridLabel.setHorizontalAxisTitle("Time (in days)");
+            gridLabel.setVerticalAxisTitle("Electricity Usage");
+                lineGraphSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                    @Override
+                    public void onTap(Series series, DataPointInterface dataPoint) {
+                        Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                lineGraph.addSeries(lineGraphSeries);
+
+
         }
         // generated over time
         GraphView lineGraphGenerated = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
         DataPoint[] dataGenerated = generatedTimeData();
 
-        if(!dataGenerated.equals(null)) {
+
+        if (!data.equals(null)) {
             LineGraphSeries<DataPoint> lineGraphSeriesGenerated = new LineGraphSeries<DataPoint>(dataGenerated);
 
 
-            lineGraphGenerated.setTitle("Generated Electricty Usage Over Time");
+            lineGraphGenerated.setTitle("Generated Electricity Usage Over Time");
             lineGraphSeriesGenerated.setColor(Color.RED);
             lineGraphSeriesGenerated.setDrawDataPoints(true);
             lineGraphSeriesGenerated.setDataPointsRadius(10);
             lineGraphSeriesGenerated.setThickness(8);
-            lineGraphGenerated.addSeries(lineGraphSeriesGenerated);
+            GridLabelRenderer gridLabel = lineGraphGenerated.getGridLabelRenderer();
+            gridLabel.setVerticalAxisTitle("Electricity Generated");
+//          lineGraph.getGridLabelRenderer().setNumHorizontalLabels(4);
+            gridLabel.setHorizontalAxisTitle("Time (in days)");
+
+
+            lineGraphSeriesGenerated.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
+            lineGraph.addSeries(lineGraphSeriesGenerated);
         }
-
-        //generated over usage
-//        GraphView lineGraphGenUse = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
-//        DataPoint[] dataGenUse = genUseTimeData();
 //
-//        if(!dataGenUse.equals(null)) {
-//            LineGraphSeries<DataPoint> lineGraphSeriesGenUse = new LineGraphSeries<DataPoint>(dataGenUse);
-//
-//
-//        lineGraphGenUse.setTitle("Generated Electricty Usage Over Time");
-//        lineGraphSeriesGenUse.setColor(Color.RED);
-//        lineGraphSeriesGenUse.setDrawDataPoints(true);
-//        lineGraphSeriesGenUse.setDataPointsRadius(10);
-//        lineGraphSeriesGenUse.setThickness(8);
-//        lineGraphGenUse.addSeries(lineGraphSeriesGenUse);
-//        }
-
 
 
     }
+
+
+
     public DataPoint[] usageTimeData() {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
@@ -151,17 +181,18 @@ public class ElecStatsFragment extends Fragment {
         }
 
 
+
         cUsage.close();
         return values;
     }
 
 
-    public DataPoint[] generatedTimeData() {
+    public DataPoint[] generatedTimeData() throws ParseException {
         UserDataDbHelper userDataDbHelper = new UserDataDbHelper(getActivity());
 
 
         SQLiteDatabase userDb = userDataDbHelper.getWritableDatabase();
-
+        final SimpleDateFormat sdf = new SimpleDateFormat("ddMM");
 
         String[] projectionGen = {
                 SolarGenerationContract.SolarGenerationEntry._ID,
@@ -179,7 +210,7 @@ public class ElecStatsFragment extends Fragment {
 
             while (cGen.moveToNext()) {
                 Log.d("ElecStatsFragment", cGen.getLong(0) + ", " + cGen.getLong(1) + ", " + cGen.getDouble(2));
-                DataPoint v = new DataPoint(cGen.getLong(1), cGen.getLong(2));
+                DataPoint v = new DataPoint((cGen.getLong(1)), cGen.getLong(2));
                 values[i] = v;
                 i++;
 
