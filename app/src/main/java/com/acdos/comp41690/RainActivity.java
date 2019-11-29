@@ -3,6 +3,7 @@ package com.acdos.comp41690;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -23,9 +24,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.acdos.comp41690.data.WaterUsageContract;
+import com.acdos.comp41690.ui.home.ActivationDialogFragment;
 import com.acdos.comp41690.ui.rain.RainSectionsPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -36,12 +39,15 @@ import java.text.SimpleDateFormat;
 
 public class RainActivity extends AppCompatActivity {
 
+    SharedPreferences prefs = null;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rain);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         //Add Tab stuff
         RainSectionsPagerAdapter sectionsPagerAdapter = new RainSectionsPagerAdapter(this, getSupportFragmentManager());
@@ -134,12 +140,20 @@ public class RainActivity extends AppCompatActivity {
                     return true;
                 }
 
-                if(id == R.id.nav_solar) {
-                    Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
-                    assert mAppBarConfiguration.getDrawerLayout() != null;
-                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
-                    startActivity(i);
-                    return true;
+                if (id == R.id.nav_solar) {
+
+                    if(prefs.getBoolean(Constants.SharedPrefKeys.USING_SOLAR, false)) {
+                        Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
+                        assert mAppBarConfiguration.getDrawerLayout() != null;
+                        mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                        startActivity(i);
+                        return true;
+                    }
+                    else {
+                        ActivationDialogFragment dialogFragment = new ActivationDialogFragment("solar");
+                        dialogFragment.show(getSupportFragmentManager(), "solar_activation");
+                        return false;
+                    }
                 }
 
                 if(id == R.id.nav_settings) {

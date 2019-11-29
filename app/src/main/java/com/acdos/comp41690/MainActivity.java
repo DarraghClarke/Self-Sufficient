@@ -19,6 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
 import com.acdos.comp41690.setup.InitialSetupActivity;
+import com.acdos.comp41690.ui.home.ActivationDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 
 /**
@@ -68,19 +69,33 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (id == R.id.nav_solar) {
-                    Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
-                    assert mAppBarConfiguration.getDrawerLayout() != null;
-                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
-                    startActivity(i);
-                    return true;
+                    if(prefs.getBoolean(Constants.SharedPrefKeys.USING_SOLAR, false)) {
+                        Intent i = new Intent(getApplicationContext(), ElectricityActivity.class);
+                        assert mAppBarConfiguration.getDrawerLayout() != null;
+                        mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                        startActivity(i);
+                        return true;
+                    }
+                    else {
+                        ActivationDialogFragment dialogFragment = new ActivationDialogFragment("solar");
+                        dialogFragment.show(getSupportFragmentManager(), "solar_activation");
+                        return false;
+                    }
                 }
 
                 if (id == R.id.nav_rain) {
-                    Intent i = new Intent(getApplicationContext(), RainActivity.class);
-                    assert mAppBarConfiguration.getDrawerLayout() != null;
-                    mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
-                    startActivity(i);
-                    return true;
+                    if(prefs.getBoolean(Constants.SharedPrefKeys.USING_WATER, false)) {
+                        Intent i = new Intent(getApplicationContext(), RainActivity.class);
+                        assert mAppBarConfiguration.getDrawerLayout() != null;
+                        mAppBarConfiguration.getDrawerLayout().closeDrawer(GravityCompat.START);
+                        startActivity(i);
+                        return true;
+                    }
+                    else {
+                        ActivationDialogFragment dialogFragment = new ActivationDialogFragment("water");
+                        dialogFragment.show(getSupportFragmentManager(), "water_activation");
+                        return false;
+                    }
                 }
 
                 if(id == R.id.nav_settings) {
@@ -130,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // If the app has never been launched before, start up the setup activity
-        if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
+        //if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
             // Launch set-up view
-            Intent intent = new Intent(this, InitialSetupActivity.class);
-            startActivity(intent);
-        }
+          //  Intent intent = new Intent(this, InitialSetupActivity.class);
+            //startActivity(intent);
+        //}
 
         // Otherwise, continue with the dashboard view
     }
