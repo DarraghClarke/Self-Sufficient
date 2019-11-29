@@ -1,9 +1,9 @@
 package com.acdos.comp41690.setup;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceManager;
 
+import com.acdos.comp41690.Constants;
 import com.acdos.comp41690.R;
 
 import java.util.Objects;
@@ -31,7 +33,7 @@ public class SetupWaterActivity extends FragmentActivity {
     RadioGroup formulaSelector;
     float roofArea;
     float usage;
-    int tankSizeInteger;
+    float tankSizeAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,40 +42,44 @@ public class SetupWaterActivity extends FragmentActivity {
         fivePercentButton = findViewById(R.id.fivePercent);
         fiveWeeksButton = findViewById(R.id.fiveWeeks);
         formulaSelector = findViewById(R.id.toggle);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        final Float roof_area = prefs.getFloat("Roof_Area", 0);
+        final Float roof_area = Float.parseFloat(Objects.requireNonNull(prefs.getString(Constants.SharedPrefKeys.ROOF_AREA, "0.0f")));
 
         final EditText waterUsage = findViewById(R.id.water_usage);
         final TextView tankSize = findViewById(R.id.tank_Size);
 
         formulaSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                                                       public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                                                           tankSize.setText(tankSizeCalculator() + " Litres");//5 weeks of water usage
-                                                       }
-                                                   }
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+               tankSize.setText(tankSizeCalculator() + " Litres"); // 5 weeks of water usage
+           }
+       }
         );
         final EditText harvestableRoofArea = findViewById(R.id.harvestable_roof_area);
         harvestableRoofArea.setText(roof_area.toString());
+
+        if (!TextUtils.isEmpty(harvestableRoofArea.getText())) {
+            roofArea = Float.valueOf(harvestableRoofArea.getText().toString());
+        }
+
         harvestableRoofArea.addTextChangedListener(new TextWatcher() {
-                                                       @Override
-                                                       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                                       }
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+           }
 
-                                                       @Override
-                                                       public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                                       }
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+           }
 
-                                                       @Override
-                                                       public void afterTextChanged(Editable s) {
-                                                           if (waterUsage.getText().length() != 0 && harvestableRoofArea.getText().length() != 0) {
-                                                               roofArea = Float.valueOf(harvestableRoofArea.getText().toString());
+           @Override
+           public void afterTextChanged(Editable s) {
+               if (waterUsage.getText().length() != 0 && harvestableRoofArea.getText().length() != 0) {
+                   roofArea = Float.valueOf(harvestableRoofArea.getText().toString());
 
-                                                               tankSize.setText(tankSizeCalculator() + " Litres");//5 weeks of yearly rainfall
-                                                           }
-                                                       }
-                                                   }
+                   tankSize.setText(tankSizeCalculator() + " Litres");//5 weeks of yearly rainfall
+               }
+           }
+       }
         );
 
         waterUsage.addTextChangedListener(new TextWatcher() {
@@ -99,12 +105,11 @@ public class SetupWaterActivity extends FragmentActivity {
         final Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int result = tankSizeInteger;
-//            //To save
-                final SharedPreferences prefs = Objects.requireNonNull(getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE));
-
+                float result = SetupWaterActivity.this.tankSizeAmount;
+                // To save
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupWaterActivity.this);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("Water_Tank_Size", result);
+                editor.putString(Constants.SharedPrefKeys.WATER_TANK_SIZE, String.valueOf(result));
                 editor.apply();
 
                 Toast.makeText(getBaseContext(), "Area is: " + result, Toast.LENGTH_SHORT).show();
@@ -122,12 +127,11 @@ public class SetupWaterActivity extends FragmentActivity {
         int weeklyBased = (int) Math.round((roofArea * drainageCoeffient * filterEfficiency * averageRainFall));
         int usageBased = (int) Math.round((usage * 5));
 
-
         if (fiveWeeksButton.isChecked()) {
-            tankSizeInteger = weeklyBased;
+            tankSizeAmount = weeklyBased;
             return weeklyBased;
         } else {
-            tankSizeInteger = usageBased;
+            tankSizeAmount = usageBased;
             return usageBased;
         }
     }

@@ -2,9 +2,7 @@ package com.acdos.comp41690;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,64 +90,20 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.settings_main, rootKey);
 
-            EditTextPreference numberPreference = findPreference(getString(R.string.settings_num_articles_key));
+            EditTextPreference roofArea = findPreference(Constants.SharedPrefKeys.ROOF_AREA);
 
-            if (numberPreference != null) {
-                numberPreference.setOnBindEditTextListener(
-                        new EditTextPreference.OnBindEditTextListener() {
-                            @Override
-                            public void onBindEditText(@NonNull EditText editText) {
-                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                            }
-                        });
+            if (roofArea != null) {
+//                float value = getPreferenceManager().getSharedPreferences().getFloat(Constants.SharedPrefKeys.ROOF_AREA, 0.0f);
+//                roofArea.setText(String.valueOf(value));
+//                roofArea.setOnBindEditTextListener(
+//                        new EditTextPreference.OnBindEditTextListener() {
+//                            @Override
+//                            public void onBindEditText(@NonNull EditText editText) {
+//                                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+//                            }
+//                        });
             }
 
         }
-
-//        @Override
-//        public void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            addPreferencesFromResource(R.xml.settings_main);
-//
-//            Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
-//            bindPreferenceSummaryToValue(orderBy);
-//
-//            Preference pref = findPreference("edit");
-//            prefEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-//            prefEditText.setSingleLine(true);
-//
-//            Preference numArticles = findPreference(getString(R.string.settings_num_articles_key));
-//            bindPreferenceSummaryToValue(numArticles);
-//        }
-//
-//        @Override
-//        public boolean onPreferenceChange(Preference preference, Object value) {
-//            String stringValue = value.toString();
-//            if (preference instanceof ListPreference) {
-//                ListPreference listPreference = (ListPreference) preference;
-//                int prefIndex = listPreference.findIndexOfValue(stringValue);
-//                if (prefIndex >= 0) {
-//                    CharSequence[] labels = listPreference.getEntries();
-//                    preference.setSummary(labels[prefIndex]);
-//                }
-//            } else {
-//                preference.setSummary(stringValue);
-//            }
-//            return true;
-//        }
-//
-//        private void bindPreferenceSummaryToValue(Preference preference) {
-//            preference.setOnPreferenceChangeListener(this);
-//            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
-//            String preferenceString = preferences.getString(preference.getKey(), "");
-//            onPreferenceChange(preference, preferenceString);
-//        }
     }
 }
-
-//    Float("Roof_Area",
-//          Float("Water_Tank_Size" //should maybe become int imo
-//
-//                  Float("Solar_Panel_Output",
-//          Float("kwh_rate",
-//          Boolean firstrun

@@ -216,7 +216,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void submitSelection(View view) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("area", SphericalUtil.computeArea(polygon.getPoints()));
-        setResult(Activity.RESULT_OK,returnIntent);
+        setResult(1,returnIntent);
         finish();
     }
 }

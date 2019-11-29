@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         if (prefs.getBoolean(Constants.SharedPrefKeys.FIRST_RUN, true)) {
             // Launch set-up view
             Intent intent = new Intent(this, InitialSetupActivity.class);
-            prefs.edit().putBoolean(Constants.SharedPrefKeys.FIRST_RUN, false).apply();
             startActivity(intent);
         }
 //         Launch dashboard view
