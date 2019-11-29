@@ -1,20 +1,15 @@
 package com.acdos.comp41690.ui.solar;
 
-import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +22,6 @@ import com.acdos.comp41690.data.SolarUsageContract;
 import com.acdos.comp41690.data.UserDataDbHelper;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -36,10 +30,7 @@ import com.jjoe64.graphview.series.Series;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -92,6 +83,8 @@ public class ElecStatsFragment extends Fragment {
 
     public void createGraph(View rootView) throws ParseException {
         GraphView lineGraph = (GraphView) rootView.findViewById(R.id.lineGraph);
+        GridLabelRenderer glr = lineGraph.getGridLabelRenderer();
+        glr.setPadding(50);
         DataPoint[] data = usageTimeData();
 
 
@@ -120,7 +113,9 @@ public class ElecStatsFragment extends Fragment {
 
         }
         // generated over time
-        GraphView lineGraphGenerated = (GraphView) rootView.findViewById(R.id.lineGraphGenerated);
+        GraphView lineGraphGenerated = rootView.findViewById(R.id.lineGraphGenerated);
+        GridLabelRenderer renderer = lineGraphGenerated.getGridLabelRenderer();
+        renderer.setPadding(50);
         DataPoint[] dataGenerated = generatedTimeData();
 
 
@@ -145,7 +140,7 @@ public class ElecStatsFragment extends Fragment {
                     Toast.makeText(getActivity(), " Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
                 }
             });
-            lineGraph.addSeries(lineGraphSeriesGenerated);
+            lineGraphGenerated.addSeries(lineGraphSeriesGenerated);
         }
 //
 

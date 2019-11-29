@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
                         public void onResponse(String response) {
                             try {
                                 JSONObject jObj = new JSONObject(response);
-                                JSONArray alerts = jObj.getJSONArray("alerts");
+                                JSONArray alerts = jObj.getJSONObject("alerts").getJSONArray("alerts");
 
                                 if(alerts.length()>0) {
                                     JSONObject ob =alerts.getJSONObject(0);
