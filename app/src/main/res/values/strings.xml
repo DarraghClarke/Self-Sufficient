@@ -84,4 +84,7 @@
     <string name="water_usage_input_dialog">Enter Water Usage in Litres</string>
     <string name="setup_end_text">Thanks for filling out the setup forms, the full experience is just a click away!</string>
     <string name="email_mesage"><![CDATA[Hey! I\'m now using SelfSufficient! Its a new sustainable energy & water app and is helping me collect rainwater! Try it out: https://play.google.com/selfsufficient]]></string>
+    <string name="water_input">Water Input</string>
+    <string name="enter_tank_size">Enter Tank Size</string>
+    <string name="enter_volume">Enter Volume</string>
 </resources>
